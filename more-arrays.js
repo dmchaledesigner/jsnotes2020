@@ -8,13 +8,13 @@
 var myPlaces = ['Dublin', 'london', 'paris', 'new york'];
 
 // Write the second array
-var friendPlaces =  ['Dublin', 'sydney', 'paris', 'barcelona'];
+var friendPlaces = ['Dublin', 'sydney', 'paris', 'barcelona'];
 
 
 
 
 // Run the first array through a for loop to print the objects
-for(var i = 0; i < myPlaces.length; i++){
+for (var i = 0; i < myPlaces.length; i++) {
 	// print the array to test it works
 	// console.log(myPlaces[i]);
 
@@ -22,11 +22,11 @@ for(var i = 0; i < myPlaces.length; i++){
 
 
 	// inner array (friendsPlaces)
-	for(var j = 0; j < friendPlaces.length; j++){
+	for (var j = 0; j < friendPlaces.length; j++) {
 
 
 		// NOW TO COMPARE THE TWO WE USE....THE COMPARISON OPERATOR OF COURSE!
-		if(myPlaces[i] === friendPlaces[j]){
+		if (myPlaces[i] === friendPlaces[j]) {
 
 			console.log('Match: ' + myPlaces[i])
 
@@ -76,7 +76,7 @@ console.log(fruits.join(", "));  //use the to.String() as a method.
 
 var fruitsString = "Apple, Banana, Kiwi, Orange, Pears";
 var fruitsArray = fruitsString.split(', ');
-console. log(fruitsArray);
+console.log(fruitsArray);
 
 
 
@@ -88,7 +88,7 @@ console. log(fruitsArray);
 
 myArray = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
 
-for(var i >= 10; var i = myArray.length - 1;  i--){
+for (var i >= 10; var i = myArray.length - 1; i--) {
 	console.log(myArray[i]);
 }
 
@@ -105,16 +105,16 @@ myArray = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
 var text = "";
 
 
-	text += "<ul>"; //open the UL element
+text += "<ul>"; //open the UL element
 
-	//Run the loop with the List Items
-	for(var i = 0; i <= myArray.length; i++){
+//Run the loop with the List Items
+for (var i = 0; i <= myArray.length; i++) {
 
-		text += "<li>" + myArray[i] + "</li>";
+	text += "<li>" + myArray[i] + "</li>";
 
-	}
+}
 
-	text += "</ul>"; // close the UL element
+text += "</ul>"; // close the UL element
 
 
 
@@ -132,17 +132,17 @@ var cards = ['Diamond', 'Spade', 'Heart', 'Club'];
 var currentCard = 'Heart';
 
 // while loop with a condition 'if card is not...'
-while(currentCard !== 'Spade'){
+while (currentCard !== 'Spade') {
 
-		// print the current card
-		console.log(currentCard);
+	// print the current card
+	console.log(currentCard);
 
 
-		// Now create a random number to flip through the cards. Math.floor() will round off a number from a decimal. Math.random() will create a random number
-		var randomNumber = Math.floor(Math.random() * 4);
+	// Now create a random number to flip through the cards. Math.floor() will round off a number from a decimal. Math.random() will create a random number
+	var randomNumber = Math.floor(Math.random() * 4);
 
-		// assign the cards array with the parameter randomNumber to the currentCard variable
-		currentCard = cards[randomNumber];
+	// assign the cards array with the parameter randomNumber to the currentCard variable
+	currentCard = cards[randomNumber];
 
 }
 
