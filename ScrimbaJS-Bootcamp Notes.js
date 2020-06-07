@@ -1781,6 +1781,23 @@ const results = restaurants.find(
 console.log(results);
 
 
+// or we can do something like this
+
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const found = arr.find(el => el > 5);
+
+console.log(found);
+
+
+
+
+// .indexOf();
+const arr = ['Nick', 'Frank', 'Joe', 'Frank'];
+const foundIndex = arr.indexOf('Frank');
+
+console.log(foundIndex); //reuslt 1
+
+
 
 
 
@@ -1850,7 +1867,7 @@ menuItems.reduce((accumulator, menuItem) => {
 }, 0); // start the value of the menuItem at 0 and then add menuItem.price as per iteration
 
 
-//asign the above to a var
+//assign the above to a var
 
 const total = menuItems.reduce((accumulator, menuItem) => {
 	return accumulator + menuItem.price;

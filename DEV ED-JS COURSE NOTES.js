@@ -610,10 +610,17 @@ console.log(newVideos);
 const movies = ['fight club', 'the joker', 'the batman', 'the dark knight'];
 
 
-//find(); and .includes();
+//find(); and .includes(); 
 // when using find, it iterates over the array and STOPS when the condition is met.
 const favMovie = movies.find(movie => movie.includes('club')); // find the movie that includes club
 console.log(favMovie); // result 'fight club' 
+
+// or we can do something like this...
+
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const found = arr.find(el => el > 5);
+
+console.log(found);
 
 
 
@@ -889,6 +896,11 @@ anotherArray[anotherArray.lastIndexOf('Tesla')]; // Result: 'Tesla'
 
 
 
+// .indexOf();
+const arr = ['Nick', 'Frank', 'Joe', 'Frank'];
+const foundIndex = arr.indexOf('Frank');
+
+console.log(foundIndex); //reuslt 1
 
 
 
