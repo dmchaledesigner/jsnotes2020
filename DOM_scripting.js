@@ -8,14 +8,14 @@ DOM Scripting =======
 
 // the document in the console
 
-	// go into dev tools and type 'document' to dislay full object of the DOM
-	// to access a node list for instance the title object
-	// type document.title to view the title etc
-	// to change it
-	document.title = "new site title";
+// go into dev tools and type 'document' to dislay full object of the DOM
+// to access a node list for instance the title object
+// type document.title to view the title etc
+// to change it
+document.title = "new site title";
 
-	// we can also use the window object
-	// type 'window' into the console and return
+// we can also use the window object
+// type 'window' into the console and return the window object
 
 
 
@@ -41,28 +41,28 @@ document.getElementsByClassName() // finds all elements by css class name - use 
 
 /* It's great news that you don't need a library anymore to check if an element has a class or not, because you can now simply do it with a call to classList.contains("class-name")*/
 
-		/* Here's an example. Say you've got the following HTML:
+/* Here's an example. Say you've got the following HTML:
 
-			<div id="box1" class="active"></div>
-			<div id="box2"></div>
-		*/
+	<div id="box1" class="active"></div>
+	<div id="box2"></div>
+*/
 
-		const box1 = document.querySelector('#box1');
-		const box2 = document.querySelector('#box2');
+const box1 = document.querySelector('#box1');
+const box2 = document.querySelector('#box2');
 
-		// check if an element has a class or not
-		box1.classList.contains('active'); // true
-		box2.classList.contains('active') // false
+// check if an element has a class or not
+box1.classList.contains('active'); // true
+box2.classList.contains('active') // false
 
-			if(box1.classList.contains('active')){
-				//do something
-			} else{
-				// do something else
-			}
+if (box1.classList.contains('active')) {
+	//do something
+} else {
+	// do something else
+}
 
 
 
- // Add one or more classespermalink
+// Add one or more classespermalink
 element.classList.add("some-class"); // result <div id="my-element" class="some-class"></div>
 
 // adding 2 classes
@@ -80,12 +80,12 @@ element.classList.replace("old-class", "new-class")
 
 // toggle a class
 element.classList.toggle('myclass') // if element has named class it will remove or add it
-	
-	//eg
 
-		button.addEventListener('click', function(){
-			element.classList.toggle('some-class-name');
-		});
+//eg
+
+button.addEventListener('click', function () {
+	element.classList.toggle('some-class-name');
+});
 
 
 // get element with an id of 'myBtn and then get the value of the attribute 'onClick'
@@ -181,22 +181,22 @@ console.log(y); // will return all node inside the parent
 
 // looping over classes
 
-	var list = document.querySelectorAll('.list-items'); // get all list items (<li class="list-items">)
+var list = document.querySelectorAll('.list-items'); // get all list items (<li class="list-items">)
 
-	for(items of list){ // using the 'for of' loop, iterate over all items and print to console
-		console.log(items);
-	}
-
-
-	// inside a call back
-	list.forEach(function(items){
-		console.log(items);
-	})
+for (items of list) { // using the 'for of' loop, iterate over all items and print to console
+	console.log(items);
+}
 
 
-	// arrow function
-	list.forEach(items => items.classList.replace('.list-items', 'new-items'));
-	console.log(item);
+// inside a call back
+list.forEach(function (items) {
+	console.log(items);
+})
+
+
+// arrow function
+list.forEach(items => items.classList.replace('.list-items', 'new-items'));
+console.log(item);
 
 
 
@@ -207,7 +207,7 @@ console.log(y); // will return all node inside the parent
  changing HTML Styles
  ======================*/
 
- //.style.color
+//.style.color
 document.getElementById('root').style.color = 'red';
 
 
@@ -251,8 +251,8 @@ When a user strokes a key
 
 // onclick()
 
-function changeText(id){
-id.innerHTML = 'this text is changed'
+function changeText(id) {
+	id.innerHTML = 'this text is changed'
 }
 //html: <h1 onclick="changeText(this)">Click here</h1>
 
@@ -261,14 +261,14 @@ id.innerHTML = 'this text is changed'
 
 // Event Listeners = fires when a user clicks a button
 
-document.getElementById('btn').addEventListener('click', function(){
-alert('this has been clicked!');
+document.getElementById('btn').addEventListener('click', function () {
+	alert('this has been clicked!');
 });
 
 
 //  using a function
-function myFunction(){
-alert("this has been clicked");
+function myFunction() {
+	alert("this has been clicked");
 }
 
 document.getElementById('btn').addEventListener("click", myFunction);
