@@ -1438,6 +1438,7 @@ function Dragon(life, name, level, color, spell) {
         };
 */
 
+
 // using the object.create() method by inheritance - now we have all functions wwe built for the Enemy Constructor
 Dragon.prototype = Object.create(Enemy.prototype);
 
@@ -1449,7 +1450,8 @@ Dragon.prototype.magicSpell = function () {
 
 
 
-// create a new dragon
+
+// create a new dragon constructor object
 const petDragon = new Dragon("70%", "Kevin", "level 5", "Green", "Fire");
 console.log(petDragon); // result is life: "70%", name: "Kevin", level: "level 5", color: "Green", spell: "Fire"
 /*now we have created a new object which inherits the values from the enemy function and has more key:value pairs

@@ -7,19 +7,19 @@
 // * Can only hold one object
 // * Cannot make other objects from a single literal object
 
-(function(){
+(function () {
 
 
-var person = {
-    firstName : "John",
-    lastName  : "Doe",
-    age       : 50,
-    eyeColor  : "blue"
-};
+	var person = {
+		firstName: "John",
+		lastName: "Doe",
+		age: 50,
+		eyeColor: "blue"
+	};
 
-console.log(person.firstName + " is " + person.age + " years old.");
+	console.log(person.firstName + " is " + person.age + " years old.");
 
-// John is 50 years old
+	// John is 50 years old
 
 }());
 
@@ -33,18 +33,18 @@ console.log(person.firstName + " is " + person.age + " years old.");
 
 //Eg1
 
-(function(){
+(function () {
 
 
 	functio Car = {
 
-			model: "M3",
-			year: 2002,
-			color: "blue",
-			driver: function(name){
-					var infront = "The person driving is " + name;
-					return infront;
-							}
+		model: "M3",
+		year: 2002,
+		color: "blue",
+		driver: function (name) {
+			var infront = "The person driving is " + name;
+			return infront;
+		}
 
 	};
 
@@ -61,26 +61,26 @@ console.log(person.firstName + " is " + person.age + " years old.");
 //Eg2
 
 
-(function(){
+(function () {
 
 
-		var thingsToDo = {
+	var thingsToDo = {
 
-				'motogp' : function(name){
-							alert('Lets go to see ' + name);
-							},
+		'motogp': function (name) {
+			alert('Lets go to see ' + name);
+		},
 
-				'formula1' : function(){
-							 alert('Lets go to see ' + name);
-							 },
+		'formula1': function () {
+			alert('Lets go to see ' + name);
+		},
 
-				'liverpool' : function(){
-							alert('Lets go to see ' + name);
-							},
-		};
+		'liverpool': function () {
+			alert('Lets go to see ' + name);
+		},
+	};
 
 
-		thingsToDo['motogp']("Rossi");
+	thingsToDo['motogp']("Rossi");
 
 
 }());
@@ -92,13 +92,13 @@ console.log(person.firstName + " is " + person.age + " years old.");
 //**********************
 
 // base object
-function bmw(model, body, speed, series){
+function bmw(model, body, speed, series) {
 
-			this.model = model;
-			this.body = body;
-			this.speed = speed;
-			this.speed = series;
-			
+	this.model = model;
+	this.body = body;
+	this.speed = speed;
+	this.speed = series;
+
 
 };
 
@@ -123,19 +123,19 @@ console.log("The model is " + car2.model + " has a top speed of " + car2.speed +
 // A CONTRUCTOR OBJECT = The preffered Version (inside a variable)
 //***************************************************************
 
-var BmwCar = function car(model, body){	// Note. When declaring an object inside a variable, the first letter of the var name must be in capitals.
+var BmwCar = function car(model, body) {	// Note. When declaring an object inside a variable, the first letter of the var name must be in capitals.
 
-			this.model = model;
-			this.body = body;
-			this.speed = function(distance, time){
-							var total = (distance * time);
-							return total;
-							}
+	this.model = model;
+	this.body = body;
+	this.speed = function (distance, time) {
+		var total = (distance * time);
+		return total;
+	}
 
 };
 
 
-var m3 = new BmwCar ("M3", "Saloon");
+var m3 = new BmwCar("M3", "Saloon");
 
 console.log("The model is " + m3.model + " " + " The average speed was " + m3.speed(30, 5));
 
@@ -147,12 +147,12 @@ console.log("The model is " + m3.model + " " + " The average speed was " + m3.sp
 //===========================================
 
 // the constructor prototype
-function Person(first, last, eyeColor, age){
+function Person(first, last, eyeColor, age) {
 
-		this.firstName = first;
-		this.lastName = last;
-		this.eyes = eyeColor;
-		this.years = age;
+	this.firstName = first;
+	this.lastName = last;
+	this.eyes = eyeColor;
+	this.years = age;
 
 }
 
