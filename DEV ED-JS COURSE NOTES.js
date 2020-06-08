@@ -1,4 +1,4 @@
-//DEV ED JS COURSE NOTES
+//DEVED JS COURSE NOTES
 
 // EXTRA NOTES ON THE BASICS
 
@@ -29,6 +29,8 @@ const lastName;
 
 
 // CONDITIONALS
+//===========================================
+
 // Never use double equals on comparisons, always use triple
 if (5 === 6) {
     // do something
@@ -62,7 +64,15 @@ const allowedIn =
 
 
 
+
+
+
+
+
+
 // FUNCTIONS
+//===========================================
+
 
 function greet() {
     const name = prompt('Hey there, what is your name?'); // create a prompt
@@ -143,6 +153,8 @@ console.log(max(2, 4)); // result 8
 
 
 // arrays
+//===========================================
+
 
 const listUsers = ['David', 'Gary', 'Shaun', 'Stephen'];
 
@@ -227,6 +239,8 @@ console.log(otherArray);
 
 
 // switch statement (instead of usin multple if() statements)
+//===========================================
+
 
 const fruit = 'banana';
 let count = 0;
@@ -442,6 +456,8 @@ print(mySelectBox);
 
 
 // scope
+//===========================================
+
 
 // global scope - can pass them into function scope or block scope
 let food = 'apple';
@@ -567,6 +583,8 @@ element.addEventListener('click', (event) => {
 
 
 // arrays
+//===========================================
+
 
 
 // map function to loop over arrays - outputs a new array
@@ -715,6 +733,8 @@ console.log(allRating);
 
 
 // 14 MUST KNOW ARRAY METHODS
+//===========================================
+
 
 // associate array
 let stocks = [
@@ -808,6 +828,7 @@ stocks.reduce((accumulator, stock) => accumulator + stock.price, 0); // no retur
 
 // using reduce() to get items from an Associate array and turn into its own array. take the item name for example
 
+
 const menuItems = [
     { item: "Blue Cheese Salad", price: 8 },
     { item: "Spicy Chicken Rigatoni", price: 18 },
@@ -830,6 +851,8 @@ console.log(names);  //result ["Blue Cheese Salad", "Spicy Chicken Rigatoni", "P
 
 
 //includes(), indexOf(), lastIndexOf(), sort(), join(), toString();
+//===========================================
+
 
 
 let stocks = [
@@ -931,6 +954,8 @@ const allnewArray = [
 
 
 // sort() - orderng arrays by numberic or alphabetical order
+//===========================================
+
 
 const items = ['Banana', 'Orange', 'Apple', 'Mango']
 items.sort(); // result "Apple", "Banana", "Mango", "Orange"
@@ -965,6 +990,8 @@ console.log(newRatings); // result is now [92, 56, 5, 79, 56, 35, 21, 6, 41, 9]
 
 
 // slice() - takes two values, a beginning and an end value based on indexing, so .slice(0, 3) means start at the first item and stop and the 3rd(4th) item
+//===========================================
+
 
 const fruit = ['Banana', 'Orange', 'Apple', 'Mango']
 const myFruits = [...items.slice(0, 2)];
@@ -1005,6 +1032,8 @@ console.log(newArray); //result: ["Banana", "Orange", "Apple", "Cherry"]
 
 
 // ternary operator - shorthand if statement
+//===========================================
+
 
 const games = [
     {
@@ -1050,6 +1079,8 @@ console.log(myGame);
 
 
 // arrow functions
+//===========================================
+
 
 const games = [
     {
@@ -1146,6 +1177,8 @@ user.showProfileName();
 
 
 // binding  - bind() call() apply() - three methods that really do the same thing, but lets stick with reply
+//===========================================
+
 
 
 // create an object
@@ -1194,6 +1227,8 @@ console.log(registeredUser()); // result is the alert message 'David' which is t
 
 
 // constructor function (with a function)
+//===========================================
+
 
 // constructor starts off with a capital letter
 function User(name, age) {
@@ -1208,4 +1243,146 @@ const user1 = new User('David', 42);
 
 console.log(user1); // here we get the new object we mde from the constructor
 console.log(user1.sendName()); // here we get the function from the user1 constructor
+
+
+
+
+
+// Prototyyping in Constructor functions
+//===========================================
+
+// Note this code (same as above)
+
+function User(name, age) {
+    this.name = name;
+    this.age = age;
+    this.sendName = function () { // we can use prototying for these type of funtions
+        console.log(this.name);
+    }
+}
+
+const user1 = new User('David', 42);
+
+console.log(user1);
+/* The result is: {name: "David", age: 42, sendName: ƒ} 
+    See how the console is evoking the entire object  - including the function which has to be called separately in order for it to work
+    Note the result: {name: "David", age: 42, sendName: ƒ} - apart values in the params, it is also displaying the function we are NOT using as its not in th
+*/
+
+
+// eg....
+// Constructor Function
+
+function Todo(name, completed) {
+    this.name = name;
+    this.completed = completed;
+    this.getTodoName = function () {
+        console.log(this.name);
+    };
+    this.checkCompleted = function () {
+        console.log('check');
+    };
+    this.deleteTodo = function () {
+        console.log('deleted');
+    };
+
+
+}
+
+let myTodo = new Todo('david', false);
+console.log(myTodo); // result Todo {name: "david", completed: false, getTodoName: ƒ, checkCompleted: ƒ, deleteTodo: ƒ}
+
+
+// adding a prototype and removing the inner functions
+//===========================================
+
+// remove the functions from the constructor
+
+function Todo(name, completed) {
+    this.name = name;
+    this.completed = completed;
+}
+
+// then add a function as a prototype so the 'uncalled' functions are only called when needed
+// lets add the getToDo functiond
+Todo.prototype.getTodoName = function () {
+    console.log(this.name);
+}
+
+// now when we call a new instance of the constructor we dont get the function.
+let myTodo = new Todo('david', false);
+console.log(myTodo); // result: {name: "david", completed: false}
+// now if we go into developer tools we can open up the object, see the prototype method. open this and we can see the function we now added via prototyping
+
+// lets evoke the getTodoName function
+console.log(myTodo.getTodoName()); // result: 'David' , so it workss!
+
+
+// if we want to add another key:value pair to the constructor we can also do this by using constructor
+Todo.prototype.nationality = 'irish';
+console.log(myTodo.nationality); //result: Irish
+
+
+
+
+
+// Prototypal Inheritence
+//============
+// The method of creating a second constructor object and
+// inheriting (or passing) the key:value pairs and prototypes from the first constructor object
+
+
+
+
+// Primary Constructor Object - create an object based on a human character
+
+function Enemy(life, name, level) {
+
+    this.life = life;
+    this.name = name;
+    this.level = level;
+
+}
+
+
+// now add the extra functions we want to include as part of the Enemy constructor
+
+Enemy.prototype.getInfo = function () { // this function, called getInfo, will get the life, name and level of this constructor using .prototype
+    console.log(this.life, this.name, this.level);
+};
+
+Enemy.prototype.isBlocked = function () {
+    console.log(`${this.name} is now blocked!`);
+};
+
+Enemy.prototype.attacked = function () {
+    console.log(`${this.name} has been attacked!!`);
+};
+
+const char1 = new Enemy("50%", "David", "Level 4"); // creating a new object from our constructor called Enemy
+console.log(char1); // Result:  Enemy {life: "50%", name: "David", level: "Level 4"} - note we do not have the function problem 
+
+// now test one of the prototypes, lets say, the getInfo function
+console.log(char1.getInfo()); // Result is "50% David Level 4" because that is the console log from the function itself so it works fine.
+
+
+
+// creating a new constructor and inheriting the keys from the Enemy contructor
+
+//first we create an object based on a dragon character
+function Dragon(life, name, level, color, spell) { //we take in the params from the other object and add extra ones if we need (ie color and spell)
+
+    Enemy.call(this, life, name, level); // here we call the Enemy object by using call. 'this' refers to the drafon object - params are copied from the Enemy params
+    // now add the extra params as per normal object
+    this.color = color;
+    this.spell = spell;
+
+}
+
+
+// create a new dragon
+const petDragon = new Dragon("70%", "Kevin", "level 5", "Green", "Fire");
+console.log(petDragon); // result is life: "70%", name: "Kevin", level: "level 5", color: "Green", spell: "Fire"
+
+
 
