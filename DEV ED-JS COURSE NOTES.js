@@ -1383,6 +1383,96 @@ function Dragon(life, name, level, color, spell) { //we take in the params from 
 // create a new dragon
 const petDragon = new Dragon("70%", "Kevin", "level 5", "Green", "Fire");
 console.log(petDragon); // result is life: "70%", name: "Kevin", level: "level 5", color: "Green", spell: "Fire"
+// now we have create a new object which inherits the values from the enemy function and has more key:value pairs
 
 
+
+// lets add a prototype function to the dragon, so....
+
+Dragon.prototype.magicSpell = function () {
+    console.log(`${this.name} has a spell of ${this.spell} and its swesome!!`);
+}
+
+// lets call this magicSpell function on the new dragon we created
+console.log(petDragon.magicSpell()); // Result:' Kevin has a spell of Fire and its swesome!!'
+
+
+
+// but what about the prototype functions we create in the Enemy Object?
+// this is how we carry them over.... we use,  Object.create();
+
+
+// review and see final code
+
+// Enemy Constructor
+function Enemy(life, name, level) {
+
+    this.life = life;
+    this.name = name;
+    this.level = level;
+
+}
+
+
+// Dragon Constructor that inherits values buy adding params inside the .call() method
+function Dragon(life, name, level, color, spell) {
+
+    Enemy.call(this, life, name, level); // note the call() method. 'this' refers to the dragon constructor
+    this.color = color;
+    this.spell = spell;
+
+}
+
+// inherit the prototypes that were created for the Enemy object as below
+/*
+        Enemy.prototype.getInfo = function () { // this function, called getInfo, will get the life, name and level of this constructor using .prototype
+        console.log(this.life, this.name, this.level);
+};
+
+        Enemy.prototype.isBlocked = function () {
+            console.log(`${this.name} is now blocked!`);
+        };
+
+        Enemy.prototype.attacked = function () {
+            console.log(`${this.name} has been attacked!!`);
+        };
+*/
+
+// using the object.create() method by inheritance - now we have all functions wwe built for the Enemy Constructor
+Dragon.prototype = Object.create(Enemy.prototype);
+
+
+// magicSpell function prototype - the newly created function for the dragon Object only
+Dragon.prototype.magicSpell = function () {
+    console.log(`${this.name} has a spell of ${this.spell} and its swesome!!`);
+}
+
+
+
+// create a new dragon
+const petDragon = new Dragon("70%", "Kevin", "level 5", "Green", "Fire");
+console.log(petDragon); // result is life: "70%", name: "Kevin", level: "level 5", color: "Green", spell: "Fire"
+/*now we have created a new object which inherits the values from the enemy function and has more key:value pairs
+
+See the printout to the console....look at prototypes and see the functions have been added
+
+Dragon {life: "70%", name: "Kevin", level: "level 5", color: "Green", spell: "Fire"}
+color: "Green"
+level: "level 5"
+life: "70%"
+name: "Kevin"
+spell: "Fire"
+__proto__: Enemy
+__proto__:
+attacked: ƒ () - here
+getInfo: ƒ () - here
+isBlocked: ƒ () - and here!!!
+constructor: ƒ Enemy(life, name, level)
+
+*/
+
+
+
+// and now lets test the ptototypes we carried over 
+console.log(petDragon.getInfo()); // result: '70% Kevin level 5
 
