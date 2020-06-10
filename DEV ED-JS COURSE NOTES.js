@@ -1478,3 +1478,134 @@ constructor: ƒ Enemy(life, name, level)
 // and now lets test the ptototypes we carried over 
 console.log(petDragon.getInfo()); // result: '70% Kevin level 5
 
+
+/*
+
+Recap:
+
+1. create a constructor function
+2. To add funtions to the constructor, use the prototype method to add these functions
+    obj.prototype.functionName = function(){
+            console.log(this.key);
+    }
+3. create new instance of the constructor with the new keyword
+    const myObj = new Obj("value", "value", "value");
+    then console.log(myObj) .. only values will be assigned to the new object, go into developer tools to see the fucntions inside the prototype
+    To access the function created by using the prototype method, we do this
+    console.log(myObj.functionName()); // this is inside the prototype via dev tools
+
+
+4. Passing from one constructor to another
+    1. create a new constructor
+
+    2. pass in the same params and add new ones as needed, into the object params
+
+    3. Inside the second object use the .call() to inherit the params
+            obj1.call(this, life, name, level); // this refers to the second object
+
+    4. Then with the additional params we added,
+            Use this.paramName = paramName
+
+    5. Next we need to inherit the prototype  functions from object one to object two (we do this OUTSIDE the second constructor, just below it)
+            For this we use the Object.create() method
+            object2.prototype = Object.create(object1.prototype);
+            Now we have carried over the functions from the first object to the second
+
+    6. Finally, we create the new instance of the second object
+            const anotherObject = new object2("value", "value", "value");
+            console.log(anotherObject); // will log the anotherObject info
+            console.log(anotherObject.functionName()); // will log the anotherObject function we passed from object 1, to object 2
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Using constructor with Classes
+
+/* An easier way to create constructors with ES6 is classes.
+Similar to creating classes in React!
+*/
+
+class Enemy {
+    constructor(life, name, level) {
+        this.life = life;
+        this.name = name;
+        this.level = level;
+    }
+
+    // now we can place functions here (outside the constructor but inside the object
+    getInfo() {
+        console.log(this.life, this.name, this.level);
+    }
+}
+
+
+const turtle = new Enemy(19, 'Donatello', 10);
+console.log(turtle);
+
+
+/* Result: 
+
+Enemy {life: 19, name: "Donatello", leve: 10}
+leve: 10
+life: 19
+name: "Donatello"
+__proto__:
+constructor: class Enemy (here is our class name)
+getInfo: ƒ getInfo() (here is our function)
+__proto__: Object
+
+*/
+
+
+//now lets call the function getInfo
+console.log(turtle.getInfo()); // Result "19 "Donatello" 10"
+
+
+
+
+
+
+// inheritance - passing from one constructor to another using classes
+
+
+
+// again we have our first constructor
+class Enemy {
+    constructor(life, name, level) {
+        this.life = life;
+        this.name = name;
+        this.level = level;
+    }
+
+    // now we can place functions here (outside the constructor but inside the object
+    getInfo() {
+        console.log(this.life, this.name, this.level);
+    }
+}
+
+
+// then we create our second constructor
+class Dragon extends Enemy { // like react, we use 'extends' and we do not use 'call()' for class constructors
+    constructor(life, name, level, magic, rating) { //we carry over the params from object 1 and add our own
+        super(life, name, level); // like REACT we use super() and pass in the same params again from object one only
+        this.magic = magic;
+        this.rating = rating;
+    }
+}
+
+
+const dragoon = new Dragon("50%", "Dragooon", 5, "Fire", 9.5);
+console.log(dragoon); // result {life: "50%", name: "Dragooon", level: 5, magic: "Fire", rating: 9.5} - always check console for function prototype !!!
+
+console.log(dragoon.getInfo());  // result: 10 50% Dragooon 5 , which is life, name and level.
