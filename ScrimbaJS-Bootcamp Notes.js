@@ -24,8 +24,7 @@ name = 'kevin';
 // 1) must be initialized with value
 // 2) can't be reassigned after declaration
 
-const myArray = ['first', 'second', 'third', 'forth'];
-myArray.pop();
+
 
 
 
@@ -180,15 +179,14 @@ if (NaN === NaN) {
 
 
 // here is how we correct this, using 'real Boolean values'
-
 if (Boolean(value) === Boolean(value)) {
-	// this condition is now true
+	console.log('this statement is true')
 }
 
 
 // so for the Nan issue we simply write
 
-if (Boolean(Nan) === Boolean(Nan)) {
+if (Boolean(NaN) === Boolean(NaN)) {
 	console.log('this condition is true')
 } else {
 	console.log('this condition is false')
@@ -226,6 +224,11 @@ console.log(greeting);
 // var x = (condition) ? true : false
 
 let greeting = (age < 10) ? 'hey there' : 'thats an interesting age';
+//can write without () condition
+let greeting = age < 10 ? 'hey there' : 'thats an interesting age';
+//hpwever () is better used for a comparison and legibility
+let greeting = (age < 20 && /* something */) ? 'hey there' : 'thats an interesting age';
+
 console.log(greeting);
 
 
@@ -263,12 +266,14 @@ let greeting = age < 10 ? "Hey there" : age > 18 ? "Greetings" : age > 10 ? "Wha
 console.log(greeting);
 
 
+//however its best to write and if else statement instead of a ternary with multiple outputs has can be hard to read sometimes. Next level of conditions would be a switch statement.
 
 
 
 
 // Challenge 1: Check if the user is allowed to add an "iPad" to its shopping cart.
 // Write a ternary that sets the shoppingCart variable to "iPad" if the user is authenticated, 
+
 // and an empty string if the user isn't authenticated
 
 const isAuthenticated = true;
@@ -325,15 +330,30 @@ el.addEventListener('click', event => {
 	console.log(event.target);
 });
 
-// implicid return
-// if we are returning a var inside the function we can remove the {} and use ()
-myFunction = (a, b) => (
-					const myConst = a + b;
-)
+// implicid returning - removing the need for the return keyword
 
-		// eg, chat app
+// this is normal arrow function
+const myFunction = (a, b) => {
+	return a - b;
+}
+myFunction(14, 4); // result is 10;
 
-		const user1 = "Reed";
+
+// implicit return is having to NOT use the return keyword and replacing the {} with ()
+const myFunction = (a, b) => (a - b);
+
+myFunction(14, 4); // result is 10;
+
+
+
+
+
+
+
+
+// eg, chat app
+
+const user1 = "Reed";
 const user2 = "Doug";
 
 // const message = `User (user) says: (text)`;
@@ -366,20 +386,29 @@ console.log(`${greeting}`); // result is 'hello there';
 
 
 
+
 // Challenge: Write a function splitBill() that lets you know how much 
 // you need to pay to split any bill between you and your friends. 
 // It should return a message with a number. 
 
 
+
 function splitBill(amount, numPeople) {
-	return `Each person needs to pay ${amount / numPeople}` // using template literal for a string with JS inside
+	return `Each person needs to pay ${amount / numPeople}`; // using template literal for a string with JS inside
 }
+
 
 console.log(splitBill(10, 2))  // 5
 console.log(splitBill(16, 4)) // 4
 console.log(splitBill(350, 9)) // 38.8
 
+// using arrow
 
+const splitBill = (amount, person) => {
+	return `Amount per person will pay is ${amount / person}`;
+}
+
+console.log(splitBill(500, 20)); // result: Amount per person will pay is 25
 
 
 
@@ -507,7 +536,8 @@ function convertToCelcius(celsius, decimalPlaces) {
 
 }
 
-console.log(convertToCelcius(21, 2)) // now we are putting values on for celcius AND decimal place numbers we want, so 2
+console.log(convertToCelcius(21, 2)) // the 2 is the value of the decimalPlaces param in the second argument
+// now we are putting values on for celcius AND decimal place numbers we want, so 2 is the second param
 
 
 // however toFixed() converts numbers to a string by default so we need to use another method
@@ -556,6 +586,21 @@ const firstLetterUpper = function capitalize(name) {
 }
 
 console.log(capitalize(username));
+
+// or
+
+
+const username = 'david';
+
+function capitalize(name) {
+	// take the first letter and change to uppercase, then remove the first letter and attach the rest
+	// So D + avid
+	const capital = name.charAt(0).toUpperCase() + name.slice(1);
+	return capital; // return the const to the function
+
+}
+console.log(capitalize(username)); // result David
+
 
 
 
@@ -1061,25 +1106,28 @@ console.log(monthlyTotal); // result: 2794 - which is the total of all object ke
 
 
 
-
+const
 
 
 // Object.entries()
 
-const users = {
-	id: '2345234': {
+const users = [
+	{
+		id: 2345234,
 		name: "John",
 		age: 29
-								  },
-'8798129': {
-	name: "Jane",
+	},
+	{
+		id: 8798129,
+		name: "Jane",
 		age: 42
-},
-'1092384': {
-	name: "Fred",
+	},
+	{
+		id: 1092384,
+		name: "Jane",
 		age: 17
-}
-								};
+	}
+];
 
 //iterate over the nested object and get an each person obect ito an array
 // we could use .map() and .filter()
@@ -1477,6 +1525,14 @@ console.log(favouriteSongs);
 console.log(favouriteSongs[favouriteSongs.length - 1]) // logs out last item in the array. Remember 0 based index.
 
 favouriteSongs.pop(); // removes last item in the array
+
+/* example 
+
+const myArray = ['first', 'second', 'third', 'forth'];
+myArray.pop();
+console.log(myarray) Result:  ["first", "second", "third"]
+
+*/
 
 console.log(favouriteSongs[favouriteSongs.length - 1]) // again 0 based index
 
@@ -1881,6 +1937,7 @@ console.log(total); // result: 105
 
 
 //spread operator is also good with arrays instead of using the concat() operator;
+// it clones the original array and and does not mutate
 let arr = [1, 2, 3];
 let arr2 = [4, 5];
 
@@ -1888,8 +1945,33 @@ arr = [...arr, ...arr2];
 console.log(arr); // [ 1, 2, 3, 4, 5 ] 
 
 
+// we can also do .push()
 
 
+let arr = [1, 2, 3];
+let newArray = [];
+
+arr.forEach(item => {
+	newArray.push(item);
+});
+
+console.log(newArray);
+
+
+
+
+// or we can use Array.from()
+
+let arr = [1, 2, 3];
+let newArray = Array.from(arr);
+console.log(newArray);
+
+
+
+let arr = [1, 2, 3];
+for (const item in arr) {
+	console.log(item)
+}
 
 
 
