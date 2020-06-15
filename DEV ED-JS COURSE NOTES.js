@@ -227,6 +227,7 @@ food.forEach(function (foodItem) {
 // loop and push into a new array
 var otherArray = [];
 var fruits = ["strawberry", "orange", "pear", "lemon"];
+
 fruits.forEach(function (item) {
     otherArray.push(item);
 });
@@ -786,7 +787,7 @@ stocks.find(stock = stock.name === 'tesla')
 
 
 // find() with includes()
-const results = stocks.find(stock => stockt.name.toLowerCase().includes('net') && stock.price > 1000)
+const results = stocks.find(stock => stock.name.toLowerCase().includes('net') && stock.price > 1000)
 console.log(results);
 
 
@@ -1205,7 +1206,7 @@ console.log(user()); // nothing will happen, - we get undefined. The function is
 
 // how to bind!!
 
-// first we need to create a variable and BIND an isntance of the function using the bind() method
+// first we need to create a variable and BIND an instance of the function using the bind() method
 const registeredUser = user.bind(person); // dont do user().bind as we dont want to evoke it, we only need an instance of it.
 
 // now when we call registeredUser we treat it like a new function

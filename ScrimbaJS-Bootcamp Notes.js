@@ -362,7 +362,7 @@ function sendUserMessage(user, text) {
 	console.log(`User ${user} says: ${text}`); // using template notation to output data to the console
 }
 
-sendUserMessage(user1, 'Hey there'); // first param is the user1var and a the second param is a string
+sendUserMessage(user1, 'Hey there'); // first param is the user1var and a the second param is a  
 sendUserMessage(user2, "What's up?");
 
 // User Reed says: Hey there
@@ -671,8 +671,8 @@ const objectLiteral = {};
 
 
 
-// Initialize the object
-const gimli = {
+// Initialize the standard object
+const Gimli = {
 	name: "Gimli",
 	race: "dwarf",
 	weapon: "axe",
@@ -681,7 +681,7 @@ const gimli = {
 	},
 };
 
-const item = gimi
+const item = Gimli
 
 
 
@@ -2214,7 +2214,7 @@ p.addEventListener('click', () => console.log('clicked')); // add a click event 
 </header>*/
 
 // get the a tags
-const links document.querySelectorAll('a');
+const links = document.querySelectorAll('a');
 
 // create the loop in a forEach which is used with working with the DOM
 // then if one of the links has a href of '/login' - check to see if it meets the condition
@@ -2231,6 +2231,11 @@ links.forEach((link) => {
 const divs = document.getElementsByTagName('div')
 console.log(divs); // result: html collection which doesnt have a node list 
 // if we use divs.forEach(div => {console.log(div)}) result: foreach is not a function
+// we must convert the divs variable to an array so we can use array methods
+
+// here is now we do it...
+
+
 
 
 
