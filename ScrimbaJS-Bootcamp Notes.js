@@ -1281,30 +1281,46 @@ function Book(id, title, author, themes = []) {
 }
 
 Book.prototype.addTheme = function (newTheme) {
-	this.themes = [...this.themes, newTheme];
+	this.themes = [...this.themes, newTheme]; // here we are adding newTheme param onto a copy of the themes array
 }
 
 const book1 = new Book(1, "Lord of the Rings", "JRR Tolkien");
 const book2 = new Book(2, "The Trial", "Franz Kafka");
 
-book1.addTheme("Fantasy");
+book1.addTheme("Fantasy"); // here we are adding the 'fantasy' string to our themes array via the addTheme prototype function
 book2.addTheme("Corruption");
 
-console.log(book1.themes);
+console.log(book1.themes); // here we are calling the 'themes' parameter in the Book constructor to show all the themes we have passed into the array  
 console.log(book2.themes);
 
 
 
+
+
 // Classes
+//=============
 // Classes are a cleaner way to work with constructor objects and prototyping
 // classes === constructor functions
 // classes - create objects with shared methods
 
 // function Student() {}
-class Student { }; // same as a regular constructor function without the '()' 
+class Student {
+	constructor(param1, param2, param3) {
+		this.param1 = param1;
+		this.param2 = param2;
+		this.param3 = param3;
+	}
+
+	// additional functions can be placed here
+
+	myFunction() {
+		//this.param1 + this.param2 ......whatever
+	}
+
+}; // same as a regular constructor function without the '()' 
 
 
-// using classes with contructor function
+// using classes with constructor function
 /* when using classes we need to add the constructor(){} and place our data inside it.
 Inside the params we can add whatever data we need to create instances as before
 for example...
@@ -1333,7 +1349,7 @@ class Student {
 	}
 
 	addSubject() {
-		// code goes here
+		this.subjects = [...this.subjects, subjects];
 	}
 }
 
@@ -2234,6 +2250,16 @@ console.log(divs); // result: html collection which doesnt have a node list
 // we must convert the divs variable to an array so we can use array methods
 
 // here is now we do it...
+
+// using ES6 spead operator
+
+const spanList = [...document.querySelectorAll("span")];
+
+//or we can use Array.from() with a forEach()
+const myElements = document.querySelectorAll('.viewcount');
+let myArray = Array.from(elList).forEach(function (el) {
+	el.classList.replace('el', 'm-new-class');
+});
 
 
 
