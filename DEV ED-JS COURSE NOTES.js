@@ -1267,7 +1267,7 @@ const user1 = new User('David', 42);
 console.log(user1);
 /* The result is: {name: "David", age: 42, sendName: ƒ} 
     See how the console is evoking the entire object  - including the function which has to be called separately in order for it to work
-    Note the result: {name: "David", age: 42, sendName: ƒ} - apart values in the params, it is also displaying the function we are NOT using as its not in th
+    Note the result: {name: "David", age: 42, sendName: ƒ} - apart values in the params, it is also displaying the function we are NOT using as its to be called seperately however, if we are get rid of the function call when we call a constructor we can use prototype
 */
 
 
@@ -1369,6 +1369,7 @@ console.log(char1.getInfo()); // Result is "50% David Level 4" because that is t
 
 
 // creating a new constructor and inheriting the keys from the Enemy contructor
+// ==============================================================================
 
 //first we create an object based on a dragon character
 function Dragon(life, name, level, color, spell) { //we take in the params from the other object and add extra ones if we need (ie color and spell)
@@ -1379,6 +1380,8 @@ function Dragon(life, name, level, color, spell) { //we take in the params from 
     this.spell = spell;
 
 }
+
+Dragon.prototype = Object.create(Enemy.prototype);
 
 
 // create a new dragon
@@ -1507,7 +1510,7 @@ Recap:
     4. Then with the additional params we added,
             Use this.paramName = paramName
 
-    5. Next we need to inherit the prototype  functions from object one to object two (we do this OUTSIDE the second constructor, just below it)
+    5. Next we need to inherit the prototype functions from object one to object two (we do this OUTSIDE the second constructor, just below it)
             For this we use the Object.create() method
             object2.prototype = Object.create(object1.prototype);
             Now we have carried over the functions from the first object to the second
@@ -1610,3 +1613,158 @@ const dragoon = new Dragon("50%", "Dragooon", 5, "Fire", 9.5);
 console.log(dragoon); // result {life: "50%", name: "Dragooon", level: 5, magic: "Fire", rating: 9.5} - always check console for function prototype !!!
 
 console.log(dragoon.getInfo());  // result: 10 50% Dragooon 5 , which is life, name and level.
+
+
+
+
+
+
+
+
+
+// Async JS
+
+
+/* SYNC CODE is when code runes line by line, from top to bottom
+once something is evoked it is removed from the page unless needed later on, is recalled
+its a step by step line by line execution
+
+see example below...
+*/
+
+
+function someFunction() {
+    console.log('function code 2');
+    console.log('function code 3');
+}
+
+
+console.log('function code 1');
+
+someFunction();
+
+console.log('function code 4');
+
+/* Result is (in order)
+
+    function code 1
+    function code 2
+    function code 3
+    function code 4
+    
+    So as we can , console , then evoked function and finally another console.
+
+    )*/
+
+
+
+
+/* ASYNC CODE is when code runes line by line, but the code is passed to the browser if
+something is declared but isnt due for execution, therefore the rest of our JS code continues to run. 
+
+see example below...
+*/
+
+
+
+console.log('here we have one thing goin on');
+
+setTimeout(() => {
+    console.log('Are you sure its not something else')
+}, 2000);
+
+
+console.log('no, we are done');
+
+/* Result is (in order)
+
+here we have one thing goin on
+we are done
+Are you sure its not something else
+
+
+
+What happens is the first console is exectuted, the the setTimeout is run, but held in the browser
+as needed for further execution as it has a delay of 2 seconds, however in the meantime the code keeps running
+and the last console is run first.
+
+another example is addEventListener... event is held but not triggered but rest of the code keeps running.
+
+*/
+
+
+
+
+
+// fixing Callback with promises
+
+
+// States of a promise:
+// pending - when a promise is used the action is always pending until it decides to be fulfilled or rejected
+// fulfilled - when a promised is successfully executed
+// rejected - when the code fails to execute
+
+
+let p = new Promise((resolve, reject) => {
+
+    let a = 1 + 1;
+    if (a === 2) {
+        resolve('success');
+    } else {
+        reject('failed');
+    }
+});
+
+p.then((message) => {
+    console.log(`this is the message of ${message}`); // the resolve value
+}).catch((message) => {
+    console.log(`this is the message of ${message}`); // the reject value
+})
+
+// mote how then and catch are chained
+
+console.log(p);
+
+
+
+/* REMEMBER:
+
+IF something is resolved, the next call is then()
+IF something is rejected, the next call is catch()
+both are chained together
+
+myPromise.then( () => ).catch( ()=> )
+
+*/
+
+const promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve('done'), 1000);
+});
+
+promise.then(() => console.log('success')).catch(() => console.log('failure'));
+// result: 'success'
+
+
+
+// to get the done from the setTimeout
+// we use one param as there is one param in resolve, the string
+
+const promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve('done'), 1000);
+});
+
+promise.then(value => console.log(value)).catch(() => console.log('failure'));
+
+
+// show a rejection
+const promise = new Promise((resolve, reject) => {
+    setTimeout(() => reject(Error('Promise failed.')), 1000);
+});
+
+promise.then(value => console.log(value)).catch(() => console.log('failure'));
+
+
+
+
+// using promises to fix callback hell
+

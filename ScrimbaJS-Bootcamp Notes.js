@@ -612,6 +612,26 @@ const firstLetterUpper = (name) => {
 console.log(capitalize(username));
 
 
+// also written as 
+
+
+const user = 'david';
+
+
+function upper(name) {
+	const first = name.charAt(0).toUpperCase();
+	const rest = name.slice(1);
+
+	return `${first}${rest}`;
+}
+
+
+
+console.log(upper(user));
+
+
+
+
 
 
 
@@ -713,6 +733,8 @@ const favouritePlaces = {
 console.log(favouritePlaces)
 
 // https://www.digitalocean.com/community/tutorials/understanding-objects-in-javascript
+
+
 
 
 
@@ -908,6 +930,9 @@ console.log(Object.assign({}, user, newUser));
 // but the user object is still modified
 
 
+
+
+
 // solution - the spread operator '...' (3 dots)
 // - create a new object and use the spread oerator on the objects we want to include
 
@@ -929,7 +954,21 @@ console.log(myNewObject);
 // username: "ReedBarger"
 // verified: true
 
+//or we could still use the Object.assign() like this
 
+const obj1 = {
+	x: 1,
+	x: 2
+}
+
+const obj2 = {
+	y: 3,
+	z: 4
+}
+
+
+const myObj = Object.assign(obj1, obj2);
+console.log(myObj);
 
 
 
@@ -2390,5 +2429,105 @@ document.body.addEventListener('mouseover', event => {
 
 
 
+// Promises
 
 
+
+// Promises ASYNC Code and working with API's
+/* A promise is like a life promise, when someone says they 'promise' to do something
+it is either completed or rejected */
+
+
+
+
+// callbacks -> promises
+
+// States of a promise:
+// pending - when a promise is used the action is always pending until it decides to be fulfilled or rejected
+// fulfilled - when a promised is successfully executed
+// rejected - when the code fails to execute
+
+
+// creating a promise - uses a callback arrow function and takes 2 x params, resolve and reject
+new Promise((resolve, reject) => {
+
+	// do something
+
+});
+
+// then we chain on then() which is attached to the 'resolve' and catch() which is attached to reject using callback arrow functions
+promise.then(() => console.log('success')).catch(() => console.log('failed'));
+
+
+// example
+const promise = new Promise((resolve, reject) => {
+	setTimeout(() => resolve('done'), 1000);
+});
+
+promise.then(() => console.log('success')).catch(() => console.log('failure')); //result 'success'
+
+// resolve is attached the .then() - so if the resolve parami is executed, it will go straight to then()
+// reject is attached to .catch() - so if the code fails, it goes to the catch() function
+
+
+const promise = new Promise((resolve, reject) => {
+	setTimeout(() => resolve('done'), 1000);
+});
+
+promise.then(value => console.log(value)).catch(() => console.log('failure')); // result: 'done' - from the setTimeout function
+
+
+// show a rejection
+const promise = new Promise((resolve, reject) => {
+	setTimeout(() => reject(Error('Promise failed.')), 1000);
+});
+
+promise.then(value => console.log(value)).catch(() => console.log('failure'));
+
+
+
+
+
+
+
+
+// API - Application Programming Interface: software to communicate with other software
+// API - helpful service
+// REST API
+
+// CRUD 
+// create POST
+// read GET
+// update PUT / PATCH
+// delete DELETE
+
+// http://jsonplaceholder.typicode.com/posts
+// JSON - JavaScript Object Notation
+// fetch(url)
+// jsonplaceholder.typicode.com
+
+// GET /posts/1 - single blog post
+fetch('https://jsonplaceholder.typicode.com/posts/1')
+	.then(response => response.json()) // converts the response to json data
+	.then(data => console.log(data.title)) // here we are logging the title of the first post in the API
+
+
+
+// POST REQUEST /posts
+
+// create the post we want to add inside an object
+const blogPost = {
+	title: "Cool post",
+	body: "lkajsdflkjasjlfda",
+	userId: 1
+}
+
+fetch('https://jsonplaceholder.typicode.com/posts', { // the function to add our post to the API
+	method: "POST", // this section must be added as per API documentation
+	headers: {
+		"Content-Type": "application/json"
+	},
+	body: JSON.stringify(blogPost) // convert the post to json data
+})
+	.then(response => response.json())
+	.then(data => console.log(data))
