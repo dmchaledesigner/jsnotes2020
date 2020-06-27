@@ -1594,11 +1594,18 @@ console.log(favouriteSongs[favouriteSongs.length - 1]) // again 0 based index
 
 
 
+// array to string and back again using .split()
+// =================================
+
+const myArray = ['this is one block', 'and another block', 'i am the last block'];
+
+const string = myArray.toString(); // converts to a string with
+const newArray = string.split(',');
+console.log(newArray);
 
 
 
-
-
+const newArray = string.split(',', 1); // limits to 1 array element
 
 
 
@@ -2451,7 +2458,8 @@ it is either completed or rejected */
 // creating a promise - uses a callback arrow function and takes 2 x params, resolve and reject
 new Promise((resolve, reject) => {
 
-	// do something
+	// resolve()
+	// reject()
 
 });
 
@@ -2483,6 +2491,80 @@ const promise = new Promise((resolve, reject) => {
 });
 
 promise.then(value => console.log(value)).catch(() => console.log('failure'));
+
+
+
+// Promise.all()
+/* 
+this will call two or more promises to execute at the same time.
+If one promise is delayed, then the one that isnt will wait, til they run together
+
+example....
+
+*/
+
+const youTube = new Promise((resolve, reject) => {
+
+	setTimeout(() => {
+		console.log('getting stuff from youtube');
+		resolve({ videos: [1, 2, 3, 4, 5] })
+	}, 2000);
+});
+
+const faceBook = new Promise((resolve, reject) => {
+	setTimeout(() => {
+		console.log('Now facebook feed has loaded');
+		resolve({ feed: ['all', 'user1', 'user 2'] });
+	}, 5000); // note the diffence in timing from this and above
+})
+
+
+const theConsole = Promise.all([youTube, faceBook]).then((result) => console.log(result));
+
+console.log(theConsole);
+
+
+/* 
+Result: 
+
+getting stuff from youtube // our console logs fom the youtube
+Now facebook feed has loaded // our console log  from the facebook
+
+(2) [{…}, {…}]
+0: {videos: Array(5)} then we get the videos array from the resolve
+1: {feed: Array(3)} then we get the feed array from facebook
+
+*/
+
+
+
+const recordedVideo1 = new Promise((resolve, reject) => {
+	resolve('This is the first Video');
+})
+
+
+const recordedVideo2 = new Promise((resolve) => {
+	resolve('This is the second Video');
+})
+
+
+const recordedVideo3 = new Promise((resolve) => {
+	resolve('This is the third Video');
+})
+
+Promise.all([recordedVideo1, recordedVideo2, recordedVideo3]).then(item => {
+	const myString = item.toString(); // converts array to multple string
+	console.log(myString);
+
+	const myArray = myString.split(','); // converts string to 3 string array
+	console.log(myArray);
+
+});
+
+
+
+
+
 
 
 
@@ -2531,3 +2613,75 @@ fetch('https://jsonplaceholder.typicode.com/posts', { // the function to add our
 })
 	.then(response => response.json())
 	.then(data => console.log(data))
+
+
+
+
+
+// better ways of understanding API and fetch
+// ============================================== 
+
+
+// https://scotch.io/tutorials/how-to-use-the-javascript-fetch-api-to-get-data
+// the api: https://randomuser.me/
+
+
+// simple code to remember
+
+fetch(url) // Call the fetch function passing the url of the API as a parameter
+	.then(response => response.json()) // converts the response to json data
+	.then(data => {
+		const title = data.title;
+		const imageUrl = data.img;
+	})
+	.catch(error => {
+		console.log(Error('Data did not load'));
+	});
+
+
+
+
+/* the html
+
+<body>
+<h1>Authors</h1>
+<ul id="authors"></ul>
+</body>
+	
+*/
+
+// function to create element
+function createNode(element) {
+	return document.createElement(element);
+}
+
+//appending
+function append(parent, el) {
+	return parent.appendChild(el);
+}
+
+
+// vars
+const ul = document.getElementById('authors');
+const url = 'https://randomuser.me/api/?results=10';
+
+fetch(url)
+	.then((resp) => resp.json())
+	.then(data => {
+		let authors = data.results; // get all data. .results comes from the api. see url above
+
+		return authors.map(author => {
+			let li = createNode('li'),
+				img = createNode('img'),
+				span = createNode('span');
+			img.src = author.picture.medium;
+			span.innerHTML = `${author.name.first} ${author.name.last}`;
+
+			append(li, img); // apend img to the url
+			append(li, span); // append span to the li
+			append(ul, li); // append the li to the ul
+		})
+	})
+	.catch(error => {
+		console.log(JSON.stringify(error));
+	}); 

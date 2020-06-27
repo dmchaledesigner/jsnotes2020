@@ -1766,5 +1766,32 @@ promise.then(value => console.log(value)).catch(() => console.log('failure'));
 
 
 
-// using promises to fix callback hell
+
+// Promise.all()
+
+
+const recordedVideo1 = new Promise((resolve, reject) => {
+    resolve('This is the first Video');
+})
+
+
+const recordedVideo2 = new Promise((resolve) => {
+    resolve('This is the second Video');
+})
+
+
+const recordedVideo3 = new Promise((resolve) => {
+    resolve('This is the third Video');
+})
+
+Promise.all([recordedVideo1, recordedVideo2, recordedVideo3]).then(item => {
+    const myString = item.toString(); // converts array to multple string
+    console.log(myString);
+
+    const myArray = myString.split(','); // converts string to 3 string array
+    console.log(myArray);
+
+});
+
+
 
