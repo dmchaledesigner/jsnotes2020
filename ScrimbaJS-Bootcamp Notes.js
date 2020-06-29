@@ -2633,6 +2633,7 @@ fetch(url) // Call the fetch function passing the url of the API as a parameter
 	.then(data => {
 		const title = data.title;
 		const imageUrl = data.img;
+		console.log(title, imageUrl);
 	})
 	.catch(error => {
 		console.log(Error('Data did not load'));
@@ -2662,7 +2663,7 @@ function append(parent, el) {
 
 
 // vars
-const ul = document.getElementById('authors');
+const ulList = document.getElementById('authors');
 const url = 'https://randomuser.me/api/?results=10';
 
 fetch(url)
@@ -2673,15 +2674,47 @@ fetch(url)
 		return authors.map(author => {
 			let li = createNode('li'),
 				img = createNode('img'),
-				span = createNode('span');
-			img.src = author.picture.medium;
+				span = createNode('span'),
+				img.src = author.picture.medium;
 			span.innerHTML = `${author.name.first} ${author.name.last}`;
 
 			append(li, img); // apend img to the url
 			append(li, span); // append span to the li
-			append(ul, li); // append the li to the ul
+			append(ulList, li); // append the li to the ul
 		})
 	})
 	.catch(error => {
 		console.log(JSON.stringify(error));
-	}); 
+	});
+
+
+// The JSON.stringify() method converts a JavaScript object or value to a JSON string,
+
+
+
+
+
+// Challenge: 
+// The JSON Placeholder API has /users endpoint, 
+// just like the one we saw in the tutorial for /posts
+// Get the user with ID 3 and log their name and company they work for.
+// Handle errors if something does not quite work. 
+
+// Here's the endpoint: https://jsonplaceholder.typicode.com/users/3
+
+fetch("https://jsonplaceholder.typicode.com/users/3")
+	.then(response => {
+		if (!response.ok) {
+			throw new Error(response.status);
+		}
+		return response.json();
+	})
+	.then(person => {
+		console.log(`${person.name} works for ${person.company.name}`);
+	})
+	.catch(err => console.log(err));
+
+
+
+
+
