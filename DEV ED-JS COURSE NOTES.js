@@ -1177,7 +1177,7 @@ user.showProfileName();
 
 
 
-// binding  - bind() call() apply() - three methods that really do the same thing, but lets stick with reply
+// binding  - bind() call() apply() - three methods that really do the same thing, but lets stick with bind()
 //===========================================
 
 
@@ -1297,7 +1297,7 @@ console.log(myTodo); // result Todo {name: "david", completed: false, getTodoNa
 // adding a prototype and removing the inner functions
 //===========================================
 
-// remove the functions from the constructor
+// removing the empty the functions from the constructor when evoked
 
 function Todo(name, completed) {
     this.name = name;
@@ -1746,6 +1746,8 @@ promise.then(() => console.log('success')).catch(() => console.log('failure'));
 
 
 
+
+
 // to get the done from the setTimeout
 // we use one param as there is one param in resolve, the string
 
@@ -1767,7 +1769,7 @@ promise.then(value => console.log(value)).catch(() => console.log('failure'));
 
 
 
-// Promise.all()
+// Promise.all() - will output an array on result
 
 
 const recordedVideo1 = new Promise((resolve, reject) => {
@@ -1794,4 +1796,45 @@ Promise.all([recordedVideo1, recordedVideo2, recordedVideo3]).then(item => {
 });
 
 
+// using setTimout function to make all three promises load at the same time
 
+const video1 = new Promise((resolve, reject) => {
+
+    setTimeout(() => {
+        resolve('this is video 1');
+    }, 3000)
+});
+
+
+const video2 = new Promise((resolve, reject) => {
+
+    setTimeout(() => {
+        resolve('this is video 2');
+    }, 1000)
+});
+
+
+
+const video3 = new Promise((resolve, reject) => {
+
+    setTimeout(() => {
+        resolve('this is video 4');
+    }, 6000)
+});
+
+
+
+
+const allVideos = Promise.all([video1, video2, video3])
+allVideos.then((item) => {
+    console.log(item);
+}).catch(() => {
+    console.log('these items did not load');
+})
+
+
+console.log(allVideos);
+
+
+// wait a total of 6 seconds for the longest time
+// Result: ["this is video 1", "this is video 2", "this is video 4"] array
