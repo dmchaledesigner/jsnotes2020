@@ -2564,6 +2564,50 @@ Promise.all([recordedVideo1, recordedVideo2, recordedVideo3]).then(item => {
 
 
 
+// using setTimeout Function to call in 3 promises at the same time 
+
+const video1 = new Promise((resolve, reject) => {
+
+	setTimeout(() => {
+		resolve('this is video 1');
+	}, 3000)
+});
+
+
+const video2 = new Promise((resolve, reject) => {
+
+	setTimeout(() => {
+		resolve('this is video 2');
+	}, 1000)
+});
+
+
+
+const video3 = new Promise((resolve, reject) => {
+
+	setTimeout(() => {
+		resolve('this is video 4');
+	}, 6000)
+});
+
+
+
+
+const allVideos = Promise.all([video1, video2, video3])
+allVideos.then((item) => {
+	console.log(item);
+
+}).catch(() => {
+
+	console.log('these items did not load');
+})
+
+
+console.log(allVideos);
+
+
+
+
 
 
 
@@ -2638,6 +2682,20 @@ fetch(url) // Call the fetch function passing the url of the API as a parameter
 	.catch(error => {
 		console.log(Error('Data did not load'));
 	});
+
+
+// another example
+
+
+fetch('https://jsonplaceholder.typicode.com/posts/')
+	.then(response => response.json())
+	.then(data => {
+
+		const allData = data.map(item => ([item.title, item.id]));
+		console.log(allData);
+
+	})
+
 
 
 
@@ -2716,5 +2774,46 @@ fetch("https://jsonplaceholder.typicode.com/users/3")
 
 
 
+
+
+
+
+
+// practicing fetch with API above
+
+fetch('https://jsonplaceholder.typicode.com/posts/')
+	.then(response => response.json())
+	.then(data => {
+
+		const results = data.map((item) => {
+			let number = item.id;
+			if (number <= 6) {
+				console.log(item);
+			}
+
+		})
+
+
+	}).catch(error => {
+		console.log(JSON.stringify(error));
+	});
+
+
+
+// another
+
+fetch('https://jsonplaceholder.typicode.com/posts/')
+	.then(response => response.json())
+	.then(data => {
+
+		const allData = data.map(item => ([item.id, item.tite])); // array with 2 keys from the data object
+		console.log(allData);
+
+	}
+
+// Asynchronous JavaScript: From Callback Hell to Async and Await
+//=========================
+
+// Explanation here: https://www.toptal.com/javascript/asynchronous-javascript-async-await-tutorial
 
 
