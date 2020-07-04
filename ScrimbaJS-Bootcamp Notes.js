@@ -457,7 +457,7 @@ function handleLikePost() { // outer function
 	console.log('like count:', likeCount);
 }
 
-const like = handleLikePost(); // assign the outer function to a variable
+const like = handleLikePost(2); // assign the outer function to a variable with the value of 2 in the param
 
 console.log(like()); // call the function, result:  1
 console.log(like()); // call the function, result:  2
@@ -504,6 +504,32 @@ const countingDown = countdown(20, 5);
 console.log(countingDown()); //20
 console.log(countingDown()); //15
 console.log(countingDown()); //10
+
+
+
+
+
+
+
+
+
+// Single Responsibility Functions - another instance of using closure functions with fetch 
+
+// take a simple closure function for example
+
+function handleLikePost(step) {
+	let likeCount = 0;
+	return function addLIke() {
+		likeCount += step;
+		return likeCount;
+	}
+}
+
+const doubleLike = handleLikePost(2);
+
+console.log(doubleLike());
+console.log(doubleLike());
+console.log(doubleLike());
 
 
 
