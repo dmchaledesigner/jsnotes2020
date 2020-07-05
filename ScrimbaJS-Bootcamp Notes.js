@@ -2931,6 +2931,49 @@ fetch('https://jsonplaceholder.typicode.com/posts/')
 
 	}
 
+
+
+// API fetch with closures
+
+// outer function
+function getData(url) {
+			return function (route) { // inner function
+				fetch(`${url}${route}`)
+					.then((response) => response.json())
+					.then((data) => {
+						const allData = data;
+						allData.map((item) => {
+							console.log([item.title, item.body]);
+						})
+					})
+
+			}
+		};
+
+
+const myPosts = getData('https://jsonplaceholder.typicode.com'); // evoke the first function and url param
+
+myPosts('/posts'); // use myposts as a function and use the relative path as the url
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Asynchronous JavaScript: From Callback Hell to Async and Await
 //=========================
 
