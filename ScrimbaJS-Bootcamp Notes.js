@@ -415,10 +415,69 @@ console.log(splitBill(500, 20)); // result: Amount per person will pay is 25
 
 
 
-/* closures in Functions  */
 
-//closures help us to keep track of certain values.
-// Take a look at the code below;
+
+
+
+/* closures in Functions  
+
+closures help us to keep track of certain values.
+	A clousre is just a function inside another function that:
+	1) uses variables from its parent scope and
+	2) is exposed to the outside world.
+
+*/
+
+// A simple example is
+
+function outerFunc() {
+	let outerVar = 'I am outside!';
+
+	function innerFunc() {
+		console.log(outerVar); // => logs "I am outside!"
+	}
+
+	return innerFunc;
+}
+
+const myInnerFunc = outerFunc();
+myInnerFunc();
+
+// or 
+
+
+
+function outerFunction(outerVariable) {
+
+	return function InnerFunction(innerVariable) {
+		console.log(`This is the ${outerVariable}`);
+		console.log(`This is the ${innerVariable}`);
+
+	}
+}
+
+
+const outer = outerFunction('outer'); // call the param value of the outer function
+outer('Inner'); // now evoke the outer and THEN set a value for the inner param
+// This is the outer
+// This is the Inner
+
+
+
+
+/* 
+Now innerFunc() is executed outside of its lexical scope. And what’s important:
+innerFunc() still has access to outerVar from its lexical scope, even being executed outside of its lexical scope.
+In other words, innerFunc() closes over (a.k.a. captures, remembers) the variable outerVar from its lexical scope.
+In other words, innerFunc() is a closure because it closes over the variable outerVar from its lexical scope.
+
+
+
+	 */
+
+
+
+// Take a look at the next example code below;
 
 function handleLikePost() {
 	let likeCount = 0;
@@ -462,6 +521,11 @@ const like = handleLikePost(2); // assign the outer function to a variable with 
 console.log(like()); // call the function, result:  1
 console.log(like()); // call the function, result:  2
 console.log(like()); // call the function, result:  3
+
+
+
+
+
 
 
 
@@ -513,25 +577,55 @@ console.log(countingDown()); //10
 
 
 
-// Single Responsibility Functions - another instance of using closure functions with fetch 
+// Single Responsibility Closure Functions - another instance of using closure functions with fetch 
 
 // take a simple closure function for example
 
-function handleLikePost(step) {
-	let likeCount = 0;
-	return function addLIke() {
-		likeCount += step;
-		return likeCount;
+function getData(baseUrl) { // the outer function will hold the main url
+	return function (route) { // the inner function will be the path such as /posts, or /comments
+		fetch(`${baseUrl}${route}`) // the 2 params put together to form the url and the path type
+			.then(response => response.json())
+			.then(data => console.log(data));
 	}
 }
+// evoke outer function to a variable with param value
+const getSocialMediaData = getData('https://jsonplaceholder.typicode.com'); // outer function param
+// evoke inner function with inner param
+getSocialMediaData('/comments'); // inner function param
+getSocialMediaData('/posts');
 
-const doubleLike = handleLikePost(2);
-
-console.log(doubleLike());
-console.log(doubleLike());
-console.log(doubleLike());
 
 
+// now to get say the title from the data, we need to run .map() over the data like so,
+
+
+function createElement(element) {
+	return document.createElement(element);
+}
+
+function append(parent, child) {
+	return parent.appendChild(child);
+}
+
+function getData(url) {
+
+	return function (route) {
+
+		fetch(`${url}${route}`)
+			.then((response) => response.json())
+			.then((data) => {
+				data.map((item) => {
+					console.log(item.title);
+				})
+			})
+	}
+
+
+}
+
+
+const posts = getData('https://jsonplaceholder.typicode.com');
+posts('/posts');
 
 
 
@@ -1939,7 +2033,7 @@ console.log(found);
 const arr = ['Nick', 'Frank', 'Joe', 'Frank'];
 const foundIndex = arr.indexOf('Frank');
 
-console.log(foundIndex); //reuslt 1
+console.log(foundIndex); //result 1
 
 
 
@@ -2309,7 +2403,7 @@ const links = document.querySelectorAll('a');
 //remember we wrap a in [] as we are looking for an attribute of href='/login'
 // then assign it to a var and print it to the console
 links.forEach((link) => {
-	if (link.match(a[href = "/login"])) {
+	if (link.matches(a[href = "/login"])) {
 		const loginLink = link;
 		console.log(loginLink);
 	}
