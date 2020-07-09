@@ -2734,7 +2734,7 @@ console.log(allVideos);
 
 
 
-
+// fetch() - getting calling from an API
 
 
 // API - Application Programming Interface: software to communicate with other software
@@ -2791,6 +2791,7 @@ fetch('https://jsonplaceholder.typicode.com/posts', { // the function to add our
 
 
 // simple code to remember
+const url = 'https://jsonplaceholder.typicode.com/posts/';
 
 fetch(url) // Call the fetch function passing the url of the API as a parameter
 	.then(response => response.json()) // converts the response to json data
@@ -2799,8 +2800,8 @@ fetch(url) // Call the fetch function passing the url of the API as a parameter
 		const imageUrl = data.img;
 		console.log(title, imageUrl);
 	})
-	.catch(error => {
-		console.log(Error('Data did not load'));
+	.catch((error) => {
+		console.log(Error(error));
 	});
 
 
@@ -2847,7 +2848,7 @@ const url = 'https://randomuser.me/api/?results=10';
 fetch(url)
 	.then((resp) => resp.json())
 	.then(data => {
-		let authors = data.results; // get all data. .results comes from the api. see url above
+		let authors = data.results; // get all data. .results comes from the api. open url above and see 'results' holds all the data
 
 		return authors.map(author => {
 			let li = createNode('li'),
@@ -2929,31 +2930,171 @@ fetch('https://jsonplaceholder.typicode.com/posts/')
 		const allData = data.map(item => ([item.id, item.tite])); // array with 2 keys from the data object
 		console.log(allData);
 
+	})
+
+
+
+
+
+
+// Higher order functions (closures)
+
+
+// First Recap on closures - to be able to call a function and its param from inside another function - child to parent
+function counted() {
+
+	let count = 0;
+
+	return function () {
+
+		count++;
+		return count;
+	}
+}
+
+const countMe = counted();
+
+console.log(countMe()); // returns 1
+console.log(countMe()); // returns 2
+console.log(countMe()); // returns 3
+
+
+
+
+
+
+// same as above but with using params
+function counted(steps) {
+
+	let count = 0;
+
+	return function () {
+		count += steps;
+		return count;
 	}
 
+}
 
 
-// API fetch with closures
+const countMe = counted(2); // assign the outer function to a variable
+console.log(countMe());  // then conssole that variable with function params as countMe is now a function
+console.log(countMe()); // returns 4
+console.log(countMe()); // returns 6
 
-// outer function
+
+
+
+
+// Higher Order functions  - a partial application function using params in both parent and child function to get url and relative path combined
 function getData(url) {
-			return function (route) { // inner function
-				fetch(`${url}${route}`)
-					.then((response) => response.json())
-					.then((data) => {
-						const allData = data;
-						allData.map((item) => {
-							console.log([item.title, item.body]);
-						})
-					})
+	return function (route) { // inner function
+		fetch(`${url}${route}`)
+			.then((response) => response.json())
+			.then((data) => {
+				const allData = data;
+				allData.map((item) => {
+					console.log([item.title, item.body]);
+				})
+			})
 
-			}
-		};
+	}
+};
 
 
 const myPosts = getData('https://jsonplaceholder.typicode.com'); // evoke the first function and url param
 
-myPosts('/posts'); // use myposts as a function and use the relative path as the url
+myPosts('/posts'); // use myposts as a function and use the relative path as the url. then function is evoked and the result is all the posts from the complete url
+
+
+
+
+// Partial application function using a callback
+
+function getData(url, route) { // holds two paramaters: one for the url and for the relative path after the url
+	fetch(`${url}${route}`) // here both params are joined by template literals to make the total url string
+		.then(response => response.json()) // the data is converted to json format
+		.then((data) => console.log(data)) // the console logs the data
+		.catch(() => console.log('failure'));
+}
+
+
+getData('https://jsonplaceholder.typicode.com', '/posts'); // the outer function is called putting in the two values from the params in the function call. url + path
+getData('https://jsonplaceholder.typicode.com', '/comments'); // here the two params are again the url, but the route paramater is now '/comments'
+
+
+
+// the issue: we are calling the same url in each function paramater as a value. what if we could move this into another function and just make the call for the route...
+
+
+
+function getData(url) {
+	return function (route) {
+		fetch(`${url}${route}`)
+			.then((response) => response.json())
+			.then((data) => console.table(data))
+	}
+}
+
+const allData = getData('https://jsonplaceholder.typicode.com');
+allData('/posts')
+allData('/comments')
+
+
+
+// now lets make it that we can iterate over all our posts since its an array and get the post title. this is where we use our callback function
+
+function getData(url) { //our first function
+	return function (route) { // our second function
+		return function (callback) { // our third function
+			fetch(`${url}${route}`)
+				.then((response) => response.json())
+				.then((data) => callback(data))
+		}
+	}
+}
+
+// what we have done with adding the callback function is just added another returned function and passed in the fetch block
+// then we use the placeholder value of 'callback' into the third function and added it into the .then() instead of using console.log
+
+
+// as previous, we assign the outer function to a variable which will pass the url as the first function param value
+const allData = getData('https://jsonplaceholder.typicode.com');
+
+
+// then we assign the /posts' value, which will be from the first inner returned function that holds the placeholder 'route'
+const postData = allData('/posts'); // returns an array of objects
+
+// and same for the 
+const commentsData = allData('/comments'); // returns an array of objects
+
+
+// for the third function (the inner most function that has the param of callback), we see the data is attached to this function
+// So now that we have we can use this function to get what we need from the data invidually
+
+// for the postData we again use it as a function since we need to get the callback as we did to get the url and the route
+
+// get the postData function and pass in a function. then iterate over the array and get the data from the callback, and get the title
+postData((posts) => {
+	posts.forEach(item => {
+		console.log(item.title);
+	});
+
+});
+
+
+//same as this.... but with returned arrow function
+
+postData(function (posts) { // create function inside the function
+	posts.forEach(function (item) { // use a foreach over the posts paramater from the postData param and use a foreach to iterate over the array
+		console.log(item.title); // console. log the title or by adding it via .innerHTML from a var created or whatever you want to output it
+	})
+
+}) // close the postData function
+
+
+
+
+
 
 
 
