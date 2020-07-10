@@ -1681,7 +1681,7 @@ console.log(mycar.show());
 
 // Arrays
 
-
+// array methods here: https://morioh.com/p/d05e069353a9?f=5c224490c513a556c9042463
 
 // Challenge: 
 // 1. Create an array - favouriteSongs[] -  and add your 3 favourite songs using push()

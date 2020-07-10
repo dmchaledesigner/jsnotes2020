@@ -155,6 +155,8 @@ console.log(max(2, 4)); // result 8
 // arrays
 //===========================================
 
+// array methods here: https://morioh.com/p/d05e069353a9?f=5c224490c513a556c9042463
+
 
 const listUsers = ['David', 'Gary', 'Shaun', 'Stephen'];
 
