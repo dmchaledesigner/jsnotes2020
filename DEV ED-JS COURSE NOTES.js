@@ -164,8 +164,8 @@ listUsers.pop() // The pop() method removes the last element of an array
 listUsers.push() // inside the params we can add an item or another to the array
 listUsers.shift() //removes the first element of an array
 listUsers.unshift() // adds new items to the beginning of an array
-listUsers.indexOf() // returns an index number of the element we are targetting
-listUsers.find() // returns the value of the first element in an array that pass a test, (and does not check the remaining values)
+listUsers.indexOf( // returns an index number of the element we are targetting
+    listUsers.find() // returns the value of the first element in an array that pass a test, (and does not check the remaining values)
 const myArray = [...listUsers, 'new item']; // spread operator. copies the array into a new var and adds a new item
 
 // well we could do something like this
@@ -647,8 +647,16 @@ console.log(found);
 
 
 //filter(); - outputs a new array
+
+/* The following illustrates the syntax of the js filter() method: */
+arrayObject.filter(callback, contextObject);
+//also written as
+const results = array.filter(item => item.key.toLowerCase());
+
+
+
 const codes = ['css', 'javascript', 'html', 'php', 'jQuery'];
-const shortLanguages = codes.filter(code => code.length >= 4); // get the items with chars greater or equal to 4
+const shortLanguages = codes.filter(item => item.length >= 4); // get the items with chars greater or equal to 4
 console.log(shortLanguages); // result: ["javascript", "html", "jQuery"] is a new array
 
 
@@ -687,8 +695,34 @@ console.log(results);
 
 
 
+// more .filter() examples 
 
 
+let language = [
+    { name: 'php', student: 100 },
+    { name: 'java', student: 500 },
+    { name: 'c', student: 50 },
+    { name: 'python', student: 200 },
+    { name: 'javascript', student: 1000 }
+];
+
+const popularLanguages = language.filter(item => item.student > 400);
+console.log(popularLanguages);
+
+
+
+
+// Suppose, you have a numeric array in javascript and you want to find even numbers in it using the array filter().
+
+let num = [1, 2, 3, 4, 5, 6, 10, 12, 16, 20, 22];
+let result = num.filter(item => {
+    return item % 2 === 0;
+});
+console.log(result);
+
+// or without the remove the curly braces and return keyword
+let num = [1, 2, 3, 4, 5, 6, 10, 12, 16, 20, 22];
+let result = num.filter(item => item % 2 === 0);
 
 // .some() and .every() - used to test and verify - true or false
 
@@ -992,19 +1026,35 @@ console.log(newRatings); // result is now [92, 56, 5, 79, 56, 35, 21, 6, 41, 9]
 
 
 
+// add three strings to an array
+
+const string1 = ' this is the first element';
+const string2 = 'this is the second element';
+const string3 = 'this is the third element';
+
+let myArray = []; // create empty array
+
+myArray.push(string1, string2, string3); // use push() method to add all three strings
+console.log(myArray); //result: ["this is the first", "this is the second", "this is the final string"]
+
+
+
+
+
 // slice() - takes two values, a beginning and an end value based on indexing, so .slice(0, 3) means start at the first item and stop and the 3rd(4th) item
 //===========================================
 
 
 const fruit = ['Banana', 'Orange', 'Apple', 'Mango']
-const myFruits = [...items.slice(0, 2)];
+const myFruits = [...fruits.slice(0, 2)];
 console.log(myFruits); // result ["Banana", "Orange"]
 
 
 
 // lets expand on this...
-const replaceItem = fruit.indexOf(item => item === 'Mango');
-const newArray = [...fruit.slice(0, replaceItem), 'Cherry'];
+
+const replaceItem = fruit.indexOf(item => item === 'Mango'); // get the item we want to to replace in the original array
+const newArray = [...fruit.slice(0, replaceItem), 'Cherry']; // create a new array, pass in the original array and use slice(from, to), using third param of the new item
 console.log(newArray); //result: ["Banana", "Orange", "Apple", "Cherry"]
 
 

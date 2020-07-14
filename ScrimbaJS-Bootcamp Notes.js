@@ -874,6 +874,8 @@ console.log(favouritePlaces)
 
 
 
+
+
 // object - passed by reference
 const obj = {};
 const anotherObj = obj;
@@ -882,6 +884,35 @@ anotherObj = 1;
 console.log('obj', obj);
 console.log('another obj', anotherObj);
 
+
+
+
+
+// Dynamic Objects with ES6
+const yellow = '#ff0';
+const blue = '#00f';
+const orange = '#f60';
+
+const myColors = {
+	red: '#FF0000',
+	yellow: yellow,
+	blue: blue,
+	orange: orange
+}
+
+
+//with ES6, if the key is the same name as the value we can do this...
+const myColors = {
+	red: '#FF0000',
+	yellow,
+	blue,
+	orange
+}
+
+
+// translated to one line we get
+const myColors = { red: '#FF0000', yellow, blue, orange }
+console.log(myColors.yellow);
 
 
 
@@ -1195,9 +1226,6 @@ console.log(values); // result: ["John", 29] in a new array called values
 
 
 // but there is an easier way to get the values...
-
-
-
 
 
 
@@ -2558,9 +2586,11 @@ document.body.addEventListener('mouseover', event => {
 
 // Promises
 
+// async code is code that continues to run despite other code being run next in the callstack.
+/* Say we have function within a function, the outer function has to run before the inner function runs. But what if there is a problem with the outer or inner function? the whole function errors and then we are left with nothing.
+Using asyc with promises helps us to write cleaner code, without the use of functions inside functions that error out */
 
-
-// Promises ASYNC Code and working with API's
+// https://www.toptal.com/javascript/asynchronous-javascript-async-await-tutorial
 /* A promise is like a life promise, when someone says they 'promise' to do something
 it is either completed or rejected */
 
@@ -2578,8 +2608,12 @@ it is either completed or rejected */
 // creating a promise - uses a callback arrow function and takes 2 x params, resolve and reject
 new Promise((resolve, reject) => {
 
-	// resolve()
-	// reject()
+	// use code to execute such as timeout here where something need to wait
+	// let that code resolve using 'resolve' keyword set in the param of the new promise
+	// if rejected, the catch() is called
+	// resolve = then()
+	// reject = catch()
+
 
 });
 
@@ -2663,12 +2697,12 @@ const recordedVideo1 = new Promise((resolve, reject) => {
 })
 
 
-const recordedVideo2 = new Promise((resolve) => {
+const recordedVideo2 = new Promise((resolve, reject) => {
 	resolve('This is the second Video');
 })
 
 
-const recordedVideo3 = new Promise((resolve) => {
+const recordedVideo3 = new Promise((resolve, reject) => {
 	resolve('This is the third Video');
 })
 
@@ -3095,6 +3129,92 @@ postData(function (posts) { // create function inside the function
 
 
 
+// using partial application function (with callback and HTML)
+
+
+function getData(url) { // first function takes in the url placeholder
+	return function (route) { // second function takes in the route placeholder
+		return function (callback) { // third funtion takes in the callback placeholder for the data 
+			fetch(`${url}${route}`)
+				.then((response) => response.json())
+				.then((data) => callback(data))
+		}
+	}
+
+}
+
+const allData = getData('https://jsonplaceholder.typicode.com'); // assign the url to the first function and put inside a const
+
+const postsData = allData('/posts'); // assign the second function to another const
+
+
+postsData((posts) => { // this is the final function, the callback where we use the data from the callback and ise a value called posts
+	posts.map((item) => { // the 'post' parameter is used to run the map method over it 
+
+		let titles = item.title; //assign the titles to a var
+		console.log(
+
+			`<ul><li>${titles}</li></ul>` // using template literals to combine html with the title variable
+			// we can also assign this to a const and then add this to a page using inner html or whatever.
+		);
+	})
+})
+
+
+
+
+// Promises using ASYNC / AWAIT
+
+/* Using async and await are ways to simplify promises. 
+Basically we are using our promise inside a function. This is the ONLY way async will work.
+We cannot use await until we are inside a function that is declared using the await keyword
+
+Async functions are promises by default and is a cleaner way of creating promises
+
+Take this code for example...
+
+*/
+
+
+/*
+AFTER the url is called,
+THEN the request is made and converted to a json object
+THEN that data is console logged
+*/
+fetch('https://jsonplaceholder.typicode.com/posts/1')
+	.then((response) => response.json())
+	.then((data) => console.log(data));
+
+
+// NOW with async code we can turn this into a function using the async keyword
+
+
+async function getPostData() {
+	// code here
+}
+
+
+// using an arrow function, it would look like this.
+// Notnice how we put the 'async' keywork before the callback paramater
+const getPostData = async () => {
+	// code here
+}
+
+
+// when we use the async keyword with a function, it will ALWAYS return a promise. Lets check that out
+
+async function getPostData() {
+	// code goes here
+}
+
+//evoke the function and chain on then() like we do for normal promises
+
+getPostData().then(() => console.log('working')); // result is 'working' and we also see our promise is resolved.
+
+
+
+// NOTE: as always, if the function runs ok ,then the .then() will execute because there is no error
+// notice how we are not calling a value so the param inside then() is empty as we are consoling, not getting a value from the function
 
 
 
@@ -3107,17 +3227,5 @@ postData(function (posts) { // create function inside the function
 
 
 
-
-
-
-
-
-
-
-
-// Asynchronous JavaScript: From Callback Hell to Async and Await
-//=========================
-
-// Explanation here: https://www.toptal.com/javascript/asynchronous-javascript-async-await-tutorial
 
 
