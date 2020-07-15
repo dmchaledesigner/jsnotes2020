@@ -415,6 +415,48 @@ console.log(splitBill(500, 20)); // result: Amount per person will pay is 25
 
 
 
+/* callback functions */
+
+// In JavaScript, the callback function is that. Which is called after some block of code is executed.
+
+let numbers = [1, 2, 3, 5, 8, 9, 10, 12]; // find all the even numbers in the array
+
+
+//normal function that does the calculation
+evenNumbers = (value) => {
+	return value % 2 == 0;
+}
+
+const even = numbers.filter(evenNumber); // where we are passing the first function as a 'callback' function put into a variable
+console.log(even); // result: [2, 8, 10, 12]
+
+
+
+// using arrow function
+let numbers = [1, 2, 3, 5, 8, 9, 10, 12];
+
+
+const even = numbers.filter((item) => item % 2 == 0);
+console.log(even);
+
+
+
+
+
+//another instance of a callback is when we use eventListeners
+// we create a function and pass that into the eventListener method
+
+let btn = document.querySelector('#my-btn');
+
+function btnClicked() {
+	// do something here
+}
+
+btn.addEventListener('click', btnClicked);
+
+
+
+
 
 
 
@@ -961,11 +1003,38 @@ delete colors['yellow Color']
 
 
 
+// Object to an Array 
+const peopleObj = {
+	jim: {
+		name: "jim",
+		age: 20
+	},
+	tim: {
+		name: "tim",
+		age: 22
+	}
+}
+
+
+const peopleArray = Object.values(peopleObj)
+
+//or using map()
+const peopleArray = Object.keys(peopleObj).map(item => peopleObj[item])
+
+/*
+Remember!!!:
+Object Values - will get the value from the pair
+Object Keys - will get the key from the pair
+Object Entries - will get all entries
+
+*/
 
 
 
 
-// obect destructering
+
+
+// object destructuring
 
 const user = {
 	name: "Reed",
@@ -1293,10 +1362,29 @@ console.log(monthlyTotal); // result: 2794 - which is the total of all object ke
 
 
 
-const
 
 
-// Object.entries()
+// Object.entries() // we returns an array of arrays - one array per key value pair
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+
+
+// Basic Example
+
+const obj = {
+	foo: 'bar',
+	baz: 42
+};
+
+console.log(Object.entries(obj));
+// Reuslt: [Array(2), Array(2)]  =>  ["foo", "bar"] ["baz", 42]
+
+
+
+
+
+
+
+
 
 const users = [
 	{
@@ -3186,7 +3274,8 @@ fetch('https://jsonplaceholder.typicode.com/posts/1')
 	.then((data) => console.log(data));
 
 
-// NOW with async code we can turn this into a function using the async keyword
+// NOW we can use the promise above inside a function using the 'async' keyword
+// by using the async keyword prepended to a function, and evoke it, we see the function is now a promise in itself.
 
 
 async function getPostData() {
@@ -3201,7 +3290,8 @@ const getPostData = async () => {
 }
 
 
-// when we use the async keyword with a function, it will ALWAYS return a promise. Lets check that out
+// as said, when we use the async keyword with a function, it will ALWAYS return a promise.
+// Lets check that out
 
 async function getPostData() {
 	// code goes here
@@ -3215,6 +3305,46 @@ getPostData().then(() => console.log('working')); // result is 'working' and we 
 
 // NOTE: as always, if the function runs ok ,then the .then() will execute because there is no error
 // notice how we are not calling a value so the param inside then() is empty as we are consoling, not getting a value from the function
+
+
+
+
+// what about resolving and rejecting like normal promises?
+async function getPostData() {
+	return 'works here too';
+}
+
+// well if the code inside a function is executed successfully, then the async keywork automatically passes it to the .then() callback, so if we wanted to get the value of the  function from it being returned we can do this...
+
+async function getPostData() {
+	return 'works here too';
+}
+
+getPostData().then((value) => console.log(value)); // result: works here too
+
+
+// lets use a promise inside the function so we can see how this all works
+
+async function getBlogPost() { // create the async function
+
+	const myPromise = new Promise((resolve, reject) => { // create our new promise
+
+		setTimeout(() => (
+			resolve('Blog post loaded')), 3000);
+	});
+
+	myPromise
+		.then((value) => console.log(value))
+		.finally(() => console.log('function completed'))
+
+}
+
+//now, evoke getBlogPost
+getBlogPost(); // result: Blog post loaded, function completed
+// Note how the setTimeout function runs and when its completed, it gives the resolve value, THEN the finally() is fun right after it. This is where async is great, because it waits until one block of code is run before it continues
+
+// The function above can be made easier. If we look at the code, there is three function blocks to run it, which is quite alot of code to run a simple Timeout function, before we used Promise.all() to make sure any amount of new promises run together, but with async code we have our promises INSIDE an ASYNC function to run our promises instead of seperate blocks brought into one.
+
 
 
 
