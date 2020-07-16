@@ -1433,6 +1433,7 @@ function Dragon(life, name, level, color, spell) { //we take in the params from 
 
 }
 
+// We to us the Object.create() to carry over a new Enemy Object and 
 Dragon.prototype = Object.create(Enemy.prototype);
 
 
@@ -1443,7 +1444,7 @@ console.log(petDragon); // result is life: "70%", name: "Kevin", level: "level 5
 
 
 
-// lets add a prototype function to the dragon, so....
+// lets add a prototype function to the dragon...
 
 Dragon.prototype.magicSpell = function () {
     console.log(`${this.name} has a spell of ${this.spell} and its swesome!!`);
@@ -1576,7 +1577,51 @@ Recap:
 
 
 
+function Enemy(life, name, level) {
+    this.life = life;
+    this.name = name;
+    this.level = level;
 
+}
+
+Enemy.prototype.getLife = function () {
+    console.log(this.life);
+}
+
+const char1 = new Enemy("50%", "David", "Level 4");
+console.log(char1); // {life: "50%", name: "David", level: "Level 4"}
+
+
+const char2 = new Enemy("20%", "Kevin", 3);
+
+Enemy { life: "20%", name: "Kevin", level: 3 }
+
+function Dragon(life, name, level, magic, spell) {
+
+    Enemy.call(this, life, name, level);
+    this.magic = magic;
+    this.spell = spell;
+
+}
+
+
+Dragon.prototype = Object.create(Enemy.prototype);
+
+const dragon1 = new Dragon("90%", "Devil", "Level 10", true, "fire");
+
+console.log(dragon1);
+// {life: "90%", name: "Devil", level: "Level 10", magic: true, spell: "fire"}level: "Level 10"life: "90%"magic: truename: "Devil"spell: "fire"__proto__: Enemy__proto__: getLife: ƒ ()arguments: nullcaller: nulllength: 0name: ""prototype: {constructor: ƒ}__proto__: ƒ ()[[FunctionLocation]]: VM1527:8[[Scopes]]: Scopes[2]constructor: ƒ Enemy(life, name, level)__proto__: Object
+
+
+console.log(dragon1.getLife());
+
+
+Dragon.prototype.allDragon = function () {
+    console.log(`My name is ${this.name}`);
+}
+
+
+dragon1.allDragon(); // My name is Devil
 
 
 
@@ -1846,6 +1891,8 @@ Promise.all([recordedVideo1, recordedVideo2, recordedVideo3]).then(item => {
     console.log(myArray);
 
 });
+
+
 
 
 // using setTimout function to make all three promises load at the same time

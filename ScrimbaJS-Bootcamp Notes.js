@@ -1350,14 +1350,82 @@ const monthlyTotal = Object.values(monthlyExpenses).reduce((accumulator, cost) =
 // note the zero after the end of the function.
 // this indicates the base number (where we want to start from)
 
-
-// we could shorten it down by removing the '{}' and 'return'
-// this is know an 'an impliced return'
-const monthlyTotal = Object.values(monthlyExpenses).reduce((accumulator, expense) =>
-	accumulator + expense, 0
-);
-
 console.log(monthlyTotal); // result: 2794 - which is the total of all object key values 
+
+
+
+// we can also use reduce() to iterate over an array and give back max or min values inside the array
+// REMEMBER we can also pass a function as a callback inside the reduce() method
+
+const values = [45, 67, 34, 456, 65, 3, 67, 2];
+
+function findMaxValue(acc, item) {
+
+	if (item > acc) {
+		acc = item;
+	}
+
+	return acc;
+}
+
+
+let biggestNumber = values.reduce(findMaxValue);
+console.log(biggestNumber);
+
+
+
+const users = [
+	{
+		id: 2345234,
+		name: "John",
+		age: 29
+	},
+	{
+		id: 8798129,
+		name: "Jane",
+		age: 42
+	},
+	{
+		id: 1092384,
+		name: "Jane",
+		age: 17
+	}
+];
+
+
+//iterate over the nested object and get a each person object ito an array
+// we could use .map() and .filter()
+
+// but if we need to chain then its best to use .reduce()
+
+
+
+const usersOver20 = Object.entries(users).reduce((accumulator, [id, user]) => {
+
+	if (user.age > 20) {
+		accumulator.push({ ...user, id }); // spread in the user and add the id
+	}
+
+	return accumulator;
+}, []); // the callback array is used as we want to start from an empty array
+
+
+console.log(usersOver20);
+// result: [{name: "John", age: 29, id: "2345234"}, {name: "Jane", age: 42, id: "8798129"}]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1383,43 +1451,6 @@ console.log(Object.entries(obj));
 
 
 
-
-
-
-const users = [
-	{
-		id: 2345234,
-		name: "John",
-		age: 29
-	},
-	{
-		id: 8798129,
-		name: "Jane",
-		age: 42
-	},
-	{
-		id: 1092384,
-		name: "Jane",
-		age: 17
-	}
-];
-
-//iterate over the nested object and get an each person obect ito an array
-// we could use .map() and .filter()
-// but if we need to chain then its best to use .reduce()
-
-const usersOver20 = Object.entries(users).reduce((accumulator, [id, user]) => {
-
-	if (user.age > 20) {
-		accumulator.push({ ...user, id }); // spread in the user and add the id
-	}
-
-	return acc;
-}, []); // the callback array is used as we want to start from an empty array
-
-
-console.log(usersOver20);
-// result: [{name: "John", age: 29, id: "2345234"}, {name: "Jane", age: 42, id: "8798129"}]
 
 
 
@@ -1997,243 +2028,6 @@ console.log(newTemps);
 
 
 
-
-
-
-
-// array methods - map() filter() reduce() spread operator '...' 
-
-
-
-// ...spread operator
-
-// avoiding mutations or updating instances of an original array.
-// say we have an array as so...
-
-const lunchMenuIdeas = ['Harvest Salad', 'Southern Fried Chicken'];
-
-// we want to add to this array inside a new array. 
-// what seems to correct to do is this we assign it
-
-const allMenuIdea = lunchMenuIdeas;
-allMenuIdea.push('club sandwich');
-
-console.log(allMenuIdea) // ['Harvest Salad', 'Southern Fried Chicken', 'club sandwich'];
-//now if we console.log the lunchMenuIdes, we also get
-console.log(allMenuIdea) // ['Harvest Salad', 'Southern Fried Chicken', 'club sandwich'];
-
-// so in fact what we have done here is reference the lunchMenuIdeas with the new array and updated both
-// what we need to do is, create a 'copy' and make sure the original array is left alone.
-// we can do this using the spread operator '...'
-
-const lunchMenuIdeas = ['Harvest Salad', 'Southern Fried Chicken'];
-// assign a copy of the lunchMenuIdea array to a new var and without using push(), just add the new item
-const allMenuIdea = [...lunchMenuIdeas, 'club sandwich'];
-console..log(allMenuIdea);
-
-// this approach is better as we do not need to use .shift() or .unshift() as we can simply add arrays together using spread
-// for example..
-
-const array1 = [1, 2, 3, 4, 5];
-const array2 = [6, 7, 8];
-
-const completeArray = [...array1, ...array2, 9, 10, 11, 12];
-console.log(completeArray); // result: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-console.log(array1); // result: [1, 2, 3, 4, 5]
-console.log(array2); // result: [6, 7, 8]
-
-
-
-
-
-
-
-
-// find an item and replace it using .findIndex()
-
-// previously we could use .indexOf() to find an element
-const items = [23, 3452, 334, 31];
-
-var i = items.indexOf(3452);
-items[i] = 20200;
-console.log(items); // [23,20200,334,31];
-
-
-
-
-//however now we can use the findIndex() operator on the array
-
-const items = [23, 3452, 334, 31];
-const myItem = items.findIndex(item => item === 23);
-items[myItem] = 400;
-
-console.log(items); // result: [400, 3452, 334, 31]
-
-// for 
-const index = items.findIndex(x =>
-	x.jerseyNumber === 9 && x.school === 'Ohio State'
-)
-
-items[index].lastName = 'Utah'
-items[index].firstName = 'Johnny'
-
-
-
-
-
-
-
-
-
-
-// subsets of data - a slice of an array (used for search values)
-// the .filter() method - returns a number of items if condition is met
-// take this array of object data we are using for a 'search restaraunt app'
-
-const restaurants = [
-	{ name: 'Cap City Diner', milesAway: 2.2 },
-	{ name: 'Chop Shop', milesAway: 4.1 },
-	{ name: 'Northstar Cafe', milesAway: 0.9 },
-	{ name: 'City Tavern', milesAway: 0.5 },
-	{ name: 'Shake Shack', milesAway: 5.3 }
-]
-
-// we can use .filter() to get the name of all restaraunts beginning with 'C'
-
-// here we create a var and use .filter and .startsWith to get the name beginning with C
-const results = restaurants.filter(restaurant => restaurant.name.startsWith('C'))
-console.log(results);
-
-// what it we want to get places that start with C and are within a 2mile radius?
-// we can use ternary for this inside the above filter method
-
-const results = restaurants.filter(
-	restaurant => restaurant.name.startsWith('C') && restaurant.milesAway < 2)
-
-console.log(results);
-
-
-// we want to return one item we can use .find()
-// unlike .filter() which returns many items that meet a condition, 
-// .find() will return one value that meets a condition
-// in other words when it iterates over an array, its stops and returns the first item that is validated
-
-// find a restaraunt that begins with 'north' and is less than 2miles away
-const restaurants = [
-	{ name: 'Cap City Diner', milesAway: 2.2 },
-	{ name: 'Chop Shop', milesAway: 4.1 },
-	{ name: 'Northstar Cafe', milesAway: 0.9 },
-	{ name: 'City Tavern', milesAway: 0.5 },
-	{ name: 'Shake Shack', milesAway: 5.3 }
-]
-
-
-const results = restaurants.find(
-	restaurant => restaurant.name.toLowerCase().includes('north') && restaurant.milesAway < 2)
-
-
-console.log(results);
-
-
-// or we can do something like this
-
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const found = arr.find(el => el > 5);
-
-console.log(found);
-
-
-
-
-// .indexOf();
-const arr = ['Nick', 'Frank', 'Joe', 'Frank'];
-const foundIndex = arr.indexOf('Frank');
-
-console.log(foundIndex); //result 1
-
-
-
-
-
-
-
-
-// reduce - probably the most important method for arrays
-// read up on reduce() here:  https://alligator.io/js/finally-understand-reduce/
-
-// take the following array, we want to iterate over the array and add the price values together
-
-const menuItems = [
-	{ item: "Blue Cheese Salad", price: 8 },
-	{ item: "Spicy Chicken Rigatoni", price: 18 },
-	{ item: "Ponzu Glazed Salmon", price: 23 },
-	{ item: "Philly Cheese Steak", price: 13 },
-	{ item: "Baked Italian Chicken Sub", price: 12 },
-	{ item: "Pan Seared Ribeye", price: 31 }
-];
-
-// reduce looks like this:  menuItems.reduce()
-
-// what we need to know is...
-
-// reduce iterates over all elements of the array
-// reduce uses a callback function: array.reduce( () => {} );
-// reduce takes 2 parameters, the function and initial value of the operation we are doing
-
-//  so as we have price, we want to set the value to 0 as we are counting up to a total
-//  array.reduce( () => {}, 0 );
-
-// reduce uses whats called 'accumulator' which is basically a storage device that is returned to the function.
-
-// accumulator must be run
-// accumulator must be returned 
-
-// with the accumulator there needs to be a second argument, named like using map or filter
-// that is a target name for the iteration
-
-array.reduce((accumulator, menuItem) => {
-	return accumulator + menuItem;
-}, 0);
-
-
-// so how do we get the value of all the price amounts in total?
-// we need to iterate over each item and add the price to the accumulator as it loops over each item
-
-// look at the array.
-// iterate over each item starting from the value 0 (the 2nd paramater we set already)
-// then add each price (menuItems.price) to the accumulator
-// return the accumulator to the reduce() function
-
-const menuItems = [
-	{ item: "Blue Cheese Salad", price: 8 },
-	{ item: "Spicy Chicken Rigatoni", price: 18 },
-	{ item: "Ponzu Glazed Salmon", price: 23 },
-	{ item: "Philly Cheese Steak", price: 13 },
-	{ item: "Baked Italian Chicken Sub", price: 12 },
-	{ item: "Pan Seared Ribeye", price: 31 }
-];
-
-
-menuItems.reduce((accumulator, menuItem) => {
-	// lets run accumulator and menuItem.price through the console to test
-	console.log(`accumulator: ${accumulator}, price: ${menuItem.price}`);
-	return accumulator + menuItem.price; //  add price value to the accumulator
-}, 0); // start the value of the menuItem at 0 and then add menuItem.price as per iteration
-
-
-//assign the above to a var
-
-const total = menuItems.reduce((accumulator, menuItem) => {
-	return accumulator + menuItem.price;
-}, 0);
-
-console.log(total); // result: 105
-
-
-
-
-
-
 //spread operator is also good with arrays instead of using the concat() operator;
 // it clones the original array and and does not mutate
 let arr = [1, 2, 3];
@@ -2416,11 +2210,6 @@ console.log(regularDishes);
 
 
 
-
-
-
-
-
 // looping over arrays -another way
 
 const numbers = [1, 2, 3, 4, 5];
@@ -2436,6 +2225,319 @@ numbers.forEach(number => {
 });
 
 
+
+
+
+
+
+// array methods - map() filter() reduce() spread operator '...' 
+
+
+// ...spread operator
+
+// avoiding mutations or updating instances of an original array.
+// say we have an array as so...
+
+const lunchMenuIdeas = ['Harvest Salad', 'Southern Fried Chicken'];
+
+// we want to add to this array inside a new array. 
+// what seems to correct to do is this we assign it
+
+const allMenuIdea = lunchMenuIdeas;
+allMenuIdea.push('club sandwich');
+
+console.log(allMenuIdea) // ['Harvest Salad', 'Southern Fried Chicken', 'club sandwich'];
+//now if we console.log the lunchMenuIdes, we also get
+console.log(allMenuIdea) // ['Harvest Salad', 'Southern Fried Chicken', 'club sandwich'];
+
+// so in fact what we have done here is reference the lunchMenuIdeas with the new array and updated both
+// what we need to do is, create a 'copy' and make sure the original array is left alone.
+// we can do this using the spread operator '...'
+
+const lunchMenuIdeas = ['Harvest Salad', 'Southern Fried Chicken'];
+// assign a copy of the lunchMenuIdea array to a new var and without using push(), just add the new item
+const allMenuIdea = [...lunchMenuIdeas, 'club sandwich'];
+console..log(allMenuIdea);
+
+// this approach is better as we do not need to use .shift() or .unshift() as we can simply add arrays together using spread
+// for example..
+
+const array1 = [1, 2, 3, 4, 5];
+const array2 = [6, 7, 8];
+
+const completeArray = [...array1, ...array2, 9, 10, 11, 12];
+console.log(completeArray); // result: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+console.log(array1); // result: [1, 2, 3, 4, 5]
+console.log(array2); // result: [6, 7, 8]
+
+
+
+
+
+
+
+
+// find an item and replace it using .findIndex()
+
+// previously we could use .indexOf() to find an element
+const items = [23, 3452, 334, 31];
+
+var i = items.indexOf(3452);
+items[i] = 20200;
+console.log(items); // [23,20200,334,31];
+
+
+
+
+//however now we can use the findIndex() operator on the array
+
+const items = [23, 3452, 334, 31];
+const myItem = items.findIndex(item => item === 23);
+items[myItem] = 400;
+
+console.log(items); // result: [400, 3452, 334, 31]
+
+// for 
+const index = items.findIndex(x =>
+	x.jerseyNumber === 9 && x.school === 'Ohio State'
+)
+
+items[index].lastName = 'Utah'
+items[index].firstName = 'Johnny'
+
+
+
+
+
+
+
+
+
+
+// subsets of data - a slice of an array (used for search values)
+// the .filter() method - returns a number of items if condition is met
+// take this array of object data we are using for a 'search restaraunt app'
+
+const restaurants = [
+	{ name: 'Cap City Diner', milesAway: 2.2 },
+	{ name: 'Chop Shop', milesAway: 4.1 },
+	{ name: 'Northstar Cafe', milesAway: 0.9 },
+	{ name: 'City Tavern', milesAway: 0.5 },
+	{ name: 'Shake Shack', milesAway: 5.3 }
+]
+
+// we can use .filter() to get the name of all restaraunts beginning with 'C'
+
+// here we create a var and use .filter and .startsWith to get the name beginning with C
+const results = restaurants.filter(restaurant => restaurant.name.startsWith('C'))
+console.log(results);
+
+// what it we want to get places that start with C and are within a 2mile radius?
+// we can use ternary for this inside the above filter method
+
+const results = restaurants.filter(
+	restaurant => restaurant.name.startsWith('C') && restaurant.milesAway < 2)
+
+console.log(results);
+
+
+// we want to return one item we can use .find()
+// unlike .filter() which returns many items that meet a condition, 
+// .find() will return one value that meets a condition
+// in other words when it iterates over an array, its stops and returns the first item that is validated
+
+// find a restaraunt that begins with 'north' and is less than 2miles away
+const restaurants = [
+	{ name: 'Cap City Diner', milesAway: 2.2 },
+	{ name: 'Chop Shop', milesAway: 4.1 },
+	{ name: 'Northstar Cafe', milesAway: 0.9 },
+	{ name: 'City Tavern', milesAway: 0.5 },
+	{ name: 'Shake Shack', milesAway: 5.3 }
+]
+
+
+const results = restaurants.find(
+	restaurant => restaurant.name.toLowerCase().includes('north') && restaurant.milesAway < 2)
+
+
+console.log(results);
+
+
+// or we can do something like this
+
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const found = arr.find(el => el > 5);
+
+console.log(found);
+
+
+
+
+// .indexOf();
+const arr = ['Nick', 'Frank', 'Joe', 'Frank'];
+const foundIndex = arr.indexOf('Frank');
+
+console.log(foundIndex); //result 1
+
+
+
+
+
+
+
+
+// reduce - probably the most important method for arrays
+// read up on reduce() here:  https://alligator.io/js/finally-understand-reduce/
+
+
+
+// previously if we want to add all values from an array we did this..
+let values = [3, 5, 6, 8, 6, 7, 8, 67]; // the array
+let total = 0; // base number set to zero
+
+for (let value of values) {
+	total += value;
+}
+
+console.log(total); // result 110
+
+
+
+// convert the above using the reduce() method 
+let values = [3, 5, 6, 8, 6, 7, 8, 67];
+
+const totalAmount = values.reduce((accumulator, initialValue) => {
+	return accumulator + initialValue;
+}, 0);
+
+console.log(totalAmount);
+
+/*
+ reduce takes a callback funtion. Inside the callback, it takes two parameters. Accumulator and initialValue (could be named anything)
+ Accumulator => holds the total
+ InitialValue => holds each individual item as it loops over the array because the value represents each item
+ So... as the loop it iterated, each VALUE is added to the ACCUMULATOR
+ FINALLY, we set an intial value after the callback which is in this case is 0, could be an array or an object!
+*/
+
+
+
+
+
+//. reduce() with array of objects
+// take the following array of objects, we want to iterate over the array and add the price values together
+
+const menuItems = [
+	{ item: "Blue Cheese Salad", price: 8 },
+	{ item: "Spicy Chicken Rigatoni", price: 18 },
+	{ item: "Ponzu Glazed Salmon", price: 23 },
+	{ item: "Philly Cheese Steak", price: 13 },
+	{ item: "Baked Italian Chicken Sub", price: 12 },
+	{ item: "Pan Seared Ribeye", price: 31 }
+];
+
+// reduce looks like this:  menuItems.reduce()
+
+// what we need to know is here is agin ...
+
+// reduce iterates over all elements of the array
+// reduce uses a callback function: array.reduce( () => {} );
+// reduce takes 2 parameters, the function and initial value of the operation we are doing
+
+//  so as we have price, we want to set the value to 0 as we are counting up to a total
+//  array.reduce( () => {}, 0 );
+
+// reduce uses whats called 'accumulator' which is basically a storage device that is returned to the function.
+
+// accumulator must be run
+// accumulator must be returned 
+
+// with the accumulator there needs to be a second argument, named like using map or filter
+// that is a target name for the iteration
+
+array.reduce((accumulator, value) => {
+	return accumulator + menuItem;
+}, 0);
+
+
+// so how do we get the value of all the price amounts in total?
+// we need to iterate over each item and add the price to the accumulator as it loops over each item
+
+// look at the array.
+// iterate over each item starting from the value 0 (the 2nd paramater we set already)
+// then add each price (menuItems.price) to the accumulator
+// return the accumulator to the reduce() function
+
+const menuItems = [
+	{ item: "Blue Cheese Salad", price: 8 },
+	{ item: "Spicy Chicken Rigatoni", price: 18 },
+	{ item: "Ponzu Glazed Salmon", price: 23 },
+	{ item: "Philly Cheese Steak", price: 13 },
+	{ item: "Baked Italian Chicken Sub", price: 12 },
+	{ item: "Pan Seared Ribeye", price: 31 }
+];
+
+
+menuItems.reduce((accumulator, menuItem) => {
+	// lets run accumulator and menuItem.price through the console to test
+	console.log(`accumulator: ${accumulator}, price: ${menuItem.price}`);
+	return accumulator + menuItem.price; //  add price value to the accumulator
+}, 0); // start the value of the menuItem at 0 and then add menuItem.price as per iteration
+
+
+//assign the above to a var
+
+const total = menuItems.reduce((accumulator, menuItem) => {
+	return accumulator + menuItem.price;
+}, 0);
+
+console.log(total); // result: 105
+
+
+
+
+
+
+// another example reduce() with an array of objects
+
+const users = [
+	{
+		id: 2345234,
+		name: "John",
+		age: 29
+	},
+	{
+		id: 8798129,
+		name: "Jane",
+		age: 42
+	},
+	{
+		id: 1092384,
+		name: "Jane",
+		age: 17
+	}
+];
+
+
+//iterate over the nested object and get a each person object ito an array
+// we could use .map() and .filter()
+
+// but if we need to chain then its best to use .reduce()
+
+
+
+const usersOver20 = Object.entries(users).reduce((accumulator, [id, user]) => {
+
+	if (user.age > 20) {
+		accumulator.push({ ...user, id }); // spread in the user and add the id
+	}
+
+	return accumulator;
+}, []); // the callback array is used as we want to start from an empty array
+
+
+console.log(usersOver20);
+// result: [{name: "John", age: 29, id: "2345234"}, {name: "Jane", age: 42, id: "8798129"}]
 
 
 
@@ -2473,7 +2575,7 @@ Plus:
 
 
 
-// The DOM
+/* The DOM */
 
 /*
 	What is the DOM - (DOM - Document Object Model)
@@ -3323,6 +3425,10 @@ async function getPostData() {
 getPostData().then((value) => console.log(value)); // result: works here too
 
 
+
+
+
+
 // lets use a promise inside the function so we can see how this all works
 
 async function getBlogPost() { // create the async function
@@ -3348,13 +3454,108 @@ getBlogPost(); // result: Blog post loaded, function completed
 
 
 
+// using 'await' with async - the final piece of the puzzle!
+
+/* In our last lesson we learned out to create a promise inside an async function
+ .. and that asyn only works with promises.
+ When async is used and executed we can then chain on then()
+ So when there is no error in the function the .then() is later called */
+
+async function blogPost() {
+
+	return 'function has executed';
+}
+
+// evoke the function, chain on then and get the value of the execution that is returned to the function
+blogPost().then((value) => console.log(value)) //result 'function was executed' => promise
+
+
+// So how does an async functions help with promises?
+
+// 1. write a promise inside an async function
+// 2. write a resolve , reject as per new promise
+// 3. add in a setTimeout()
+// 4. get the value of the solved promise
+// 5. use .finally(), to show the funcion has been executed
+
+
+async function myData() {
+
+	const allData = new Promise((resolve, reject) => {
+
+		setTimeout(() => {
+			resolve('data loaded')
+		}, 3000);
+	})
+
+	allData
+		.then((value) => console.log(value))
+		.finally(() => console.log('done'));
+
+}
+
+
+myData();
+
+// result is 'data loaded'.... then 'done' is executed
+
+// but the above code has three functions.
+// what if we could tell the function to 'pause' until the promise is executed, WITHOUT using then() and finallly() ??
+// THis is where we use 'await'
+
+
+// using 'await' pauses our code and runs after the funtion is executed
+// when we use 'await' we can do more with our code as we assign it to a variable
+// we DO NOT need to chain on then() or catch() or finally() anywhere as 
+
+async function getBlogPost() {
+
+	// create promise
+	const myBlogPromise = new Promise((resolve, reject) => {
+
+		setTimeout(() => {
+			resolve('this blog data has loaded')
+		}, 4000);
+
+	})
+
+	const results = await myBlogPromise;
+	console.log(results);
+	console.log('the blog is displayed');
+}
+
+getBlogPost();
+// result is: after a 4 second delay as per out setTimeout()
+// we get 'this blog has loaded', then we get 'the blog has beeb displayed'
+
+
+/* NOTE: this above code does not get rid of promises.
+   We are just wrapping promises in a better syntax.
+   We cannot use 'await' unless a function is prepended with the 'async' keyword
+*/
 
 
 
+// Now lets use ASYNC - AWAIT with FETCH
 
 
 
+const url = 'https://jsonplaceholder.typicode.com/posts/'
 
+const getPostData = async () => { // using async arrow function
+
+	const post = await fetch(url);
+	const data = await post.json();
+	console.log(data) // this will show the array of objects from the url
+	// now we can do anything with the const data w
+
+	for (let i = 0; i <= 6; i++) { // great a loop at is less or equal to 6
+		console.log(data[i].title); // get the data[i] being the index to 6 and then the title
+	}
+}
+
+//evoke the function
+getPostData(); // result is the post data from post 1
 
 
 
