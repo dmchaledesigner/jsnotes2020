@@ -313,9 +313,39 @@ console.log("allowedAccess: ", allowedAccess);
 
 // arrow function
 
+function add(a, b = 5) { // note we give b a default value of 5
+	const total = a + b;
+	return total;
+}
+
+add(15, undefined); // use undefined to call the default value of b, otherwise we can add in a different value in its place
+//result: 20 15 x 5
+
+
+// convert the above to an arrow function
+
+const add = (a, b = 5) => {
+	const total = a + b;
+	return total;
+}
+
+add(15, undefined);
+
+
+// without the return  keyword, IMPLICID return
+// remove the return keyword then replace the curly brackets with normal brackerts. WE can even remove the brackets altogether
+const add = (a, b = 5) => (total = a + b);
+add(15, undefined); // result 20
+
+const add = (a, b = 5) => total = a + b;
+add(15, 20); // result 35
+
+
+
+// Another example
 
 // regular function
-el.addEventListener('click', (event) => {
+el.addEventListener('click', function (event) {
 	console.log(event.target); //this will give us the <body> tag
 });
 
@@ -326,21 +356,21 @@ el.addEventListener('click', (event) => {
 
 
 // if the function has one parameter we can remove the additional brackers
-el.addEventListener('click', event => {
-	console.log(event.target);
-});
+btn.addEventListener('click', event => console.log(event.target.value);
 
 // implicid returning - removing the need for the return keyword
 
 // this is normal arrow function
 const myFunction = (a, b) => {
-	return a - b;
+	return a - b; // return the result to the function without using a variable
 }
+
 myFunction(14, 4); // result is 10;
+
 
 
 // implicit return is having to NOT use the return keyword and replacing the {} with ()
-const myFunction = (a, b) => (a - b);
+const myFunction = (a, b) => total = a - b;
 
 myFunction(14, 4); // result is 10;
 
@@ -348,10 +378,53 @@ myFunction(14, 4); // result is 10;
 
 
 
+// function with an object
+function makeAbaby(firstName, lastName) {
+	const baby = {
+		name: `${firstName} ${lastName}`,
+		age: 1
+	}
+	return baby;
+}
+
+makeAbaby('kevin', 'james'); // result {name: "kevin james", age: 1} is the object with the object data
+makeAbaby().age // result 1 ... remember the const baby is returned to the function so we just need to evoke the function and use dot notation to call the value of age
 
 
 
-// eg, chat app
+// converted to an arrow
+// remove instances to the const, wrap object in parenthesis as so the {} are not recognised as a function block
+const makeAbaby = (firstName, lastName) => ({ name: `${firstName} ${lastName}`, age: 1 });
+console.log(makeAbaby('kevin', 'james'));  // result: {name: "kevin james", age: 1} - we get our object
+
+
+
+
+
+// IIFE - immediately evoked functions - functions thst are called immediately (rare)
+// if we hace a function without a name is its an anonymous function like so
+function() {
+	console.log('this is an IIFE');
+}
+// but this will not run
+
+
+// to make it run we wrap parenthesis around it
+(function () {
+	console.log('this is an IIFE');
+})();
+
+// now to pass it a value
+(function (age) {
+	return `My age is ${age}`
+})(10); // we place the valaue inside the second set of parenthesis
+//result: "My age is 10"
+
+
+
+
+
+// chat app function
 
 const user1 = "Reed";
 const user2 = "Doug";
@@ -370,19 +443,82 @@ sendUserMessage(user2, "What's up?");
 
 
 
-let greeting = 'hello there'
+// if a function does not have a param (placeholder) it will go outside the function and look for same named variable,
+// otherwise, if the variable is declared inside the function it will take that value.
+
+let greeting = 'hello there' // global variable - outside the function
 
 function note() {
-	greeting = 'welcome to the show'
+	greeting = 'welcome to the show' // scoped variable - inside the function
 	console.log(`${greeting}`);
 }
 
-note(); // result is 'welcome to the show';
-console.log(`${greeting}`); // result is 'hello there';
+note(); // result is 'welcome to the show'; - because the function is called with the variable being inside the function
+console.log(`${greeting}`); // result is 'hello there' - a console. log from OUTSIDE the function so it recives the variable valued 'hello there'
 
 
 // note that vars created inside a function are scoped to inside the function only
 // if we try to call a var that is inside the function to outside, this will become 'undefined'.
+
+
+
+
+
+// function methods
+// a function method is a function that lives inside of an object
+
+
+
+const david = {
+	age: 42,
+	hair: 'brown',
+	subjects: function () {
+		console.log(this.age);
+		const hobbies = ['moto', 'bikes', 'sports'];
+		return hobbies;
+	}
+}
+
+console.log(david); // result: {age: 42, hair: "brown", subjects: ƒ}
+console.log(david.subjects()); // result ["moto", "bikes", "sports"]
+
+
+
+//callback functions
+// a function that is passed into another function to run, once the first function is completed
+
+btn.addEventListener('click', doSomething); // hey, when you click me, then run the function called doSomething
+
+doSomething(){
+	alert('you clicked me!!');
+}
+
+
+// another example
+
+const username = 'john';
+
+// capitalise the first letter of name (the first param of when the function is called
+function capitalize(name) { // this is the function to capitalize the first letter
+	return `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
+}
+
+
+// now the callback function as a second parameter
+// it take in the capitalize function
+function greetUser(name, callback) { //this is the greeting function that returns the capitalize function from outside
+	return callback(capitalize(name));
+}
+
+// greetUser function is assigned to a variable
+const result = greetUser(username, (name) => { // greeting function is assigned to a variable
+	return `Hi there, ${name}!`;
+});
+
+// that variable is now called to the console
+console.log(result); // Hi there John;
+
+
 
 
 
@@ -722,6 +858,27 @@ console.log(convertToCelcius(21, 2))
 
 
 
+// make a decimal to 2 places
+let number = 45.567843
+let twoDecimals = number.toFixed(2)
+console.log(twoDecimals) // result 45.56
+
+// make a string a number
+let string = "568";
+let number = parseInt(string);
+console.log(number);
+
+
+// make a decimal string to a decimal number
+let string = "56.75334";
+let number = parseFloat(string);
+console.log(number); // 56.75334
+
+let newNumber = number.toFixed(2);
+console.log(newNumber);
+
+
+
 
 
 
@@ -798,30 +955,7 @@ console.log(upper(user));
 
 
 
-// callback functions
-// are simply a function thats called after another function is called
 
-const username = 'john';
-
-// capitalise the first letter of name (the first param of when the function is called)
-function capitalize(name) {
-	return `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
-}
-
-
-// now the callback function as a second parameter
-// it take in the capitalize function
-function greetUser(name, callback) {
-	return callback(capitalize(name));
-}
-
-// greetUser function is assigned to a variable
-const result = greetUser(username, (name) => {
-	return `Hi there, ${name}!`;
-});
-
-// that variable is now called to the console
-console.log(result); // Hi there John;
 
 
 
@@ -2723,6 +2857,11 @@ el.addEventListener('click', event => {
 
 
 
+
+
+
+
+
 // click inside the document that has the class of post and console.log the message
 
 // lets say we have a html document which has muliple <div class="post">some content</div>
@@ -2746,7 +2885,7 @@ document.body.addEventListener('mouseover', event => {
 
 // Log the text from the element to the console.
 
-// To access text value of the event.target, use 
+// To access text value of the target we set the event on, use 
 event.target.value
 // or
 event.target.textContent
@@ -3260,8 +3399,8 @@ function getData(url) {
 }
 
 const allData = getData('https://jsonplaceholder.typicode.com');
-allData('/posts')
-allData('/comments')
+allData('/posts') // evoke to get the posts
+allData('/comments') // evoke to get the comments
 
 
 
