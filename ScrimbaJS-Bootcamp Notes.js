@@ -31,38 +31,122 @@ name = 'kevin';
 
 
 
-/* Scoping / Shadowing */
+/* Shadowing
 
-var price = 20;
-var isSale = true;
+Is where a two variables are declared of the same name. One in the window object and the other inside a block / function or statement block.
+The variable is 'shadowed' by another variable. Both are valid because its given another value inside a block
 
-// variable shadowing
-// let & const - block-scoped
+*/
+
+
+var price = 20; // global scope
+var isSale = true; // gloabal scope
+
 if (isSale) {
-	// discount price of product
-	const price = 20 - 2;
-	// do something 
-	console.log('sale price', price);
+	// discount
+	const price = 20 - 2; // function scope
+	console.log('sale price', price); // this result will come from the price variable inside so, 20 - 2 = 18
 }
 
-console.log('price', price);
-
-
-// const and let use block scoping which means that if they are within a block (if statement or function) then they
-// cannot be accessed from outside that block unlike the var keyword. Change the price inside the if statement to var and log
-// to the console to see the difference in results.
-
-
-
-
-// Hoisting - where using a variable etc is made before the variable is declared - this of course gives an error
-console.log(firstName);
-let firstName = 'david'; // will get an error of undefined because the console is first to execute
+console.log('price', price); // this result will come from the window because it will pick up the global value since its OUTSIDE the if block
 
 
 
 
 
+/* Function Scope 
+
+	If a variable inside a function does not exist, then it moves up a level to try and find it, however if the same var is declared inside then we get that value
+*/
+
+const hair = 'blonde'
+
+function go() {
+	const eyes = 'blue';
+	console.log(eyes);
+	console.log(hair); // the function picks the variable from the global scope because it cannot find it inside
+}
+
+go(); // result blue, blonde
+
+
+
+
+
+/* Block Scope
+
+Is where any var that is created outside cannot be taken inside and then pushed outside
+for example...
+*/
+
+
+if (1 === 1) {
+	const apple = 'apple'; // note we cannot use 'return' in a block. only a function so we cannot pass the variable up
+}
+console.log(apple); // also we cannot take a variable from inside a block and use it outside
+
+
+// SOLUTION - declare the variable outside, update it inside and then we can use it outside again
+let apple;
+
+if (1 === 1) {
+	apple = 'apple';
+}
+
+console.log(apple);
+
+
+
+
+
+// Hoisting - where function and variable declarations are moved to the top before they are created. This is not the case for function expressions where a function is assigned to a varaiable
+// The JS compiler when run, MOVES the functions up the callstack before the functions is called, even though we have written it opposite in our file
+
+add(4, 6); // evoked before the function was created. 
+
+function add(a, b) {
+	return a + b;
+}
+
+
+
+person(); // second function is called before both functions are declared
+
+// first function is created
+function firstName(first, last) {
+	return `${first} ${last}`;
+}
+
+// then passed to a second function
+function person() {
+	console.log(firstName('David', 'Mchale'));
+}
+
+// result is 'david mchale'
+
+
+
+totalAge(); // function call
+
+const totalAge = (person1, person2, person3) => { // function expression
+	return person1 + person2 + person3;
+}
+
+// this will break and will NOT work
+
+
+
+
+// variable hoisting
+
+let age;
+console.log(age);  // result 'undefined. JS recognises that a variable was created but no value was given, hense undefined
+
+age = 45;
+console.log(age) // result 45. age was now given a value
+
+
+console.log(address) // result: 'address is not defined'
 
 
 
