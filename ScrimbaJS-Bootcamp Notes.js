@@ -102,20 +102,28 @@ console.log(apple);
 // Hoisting - where function and variable declarations are moved to the top before they are created. This is not the case for function expressions where a function is assigned to a varaiable
 // The JS compiler when run, MOVES the functions up the callstack before the functions is called, even though we have written it opposite in our file
 
-add(4, 6); // evoked before the function was created. 
 
+
+add(4, 6); // function call
+
+
+// function declaration
 function add(a, b) {
 	return a + b;
 }
 
 
 
-person(); // second function is called before both functions are declared
+
+
+person(); // second function is called 
+
 
 // first function is created
 function firstName(first, last) {
 	return `${first} ${last}`;
 }
+
 
 // then passed to a second function
 function person() {
@@ -126,18 +134,22 @@ function person() {
 
 
 
+
+
+
 totalAge(); // function call
 
 const totalAge = (person1, person2, person3) => { // function expression
 	return person1 + person2 + person3;
 }
 
-// this will break and will NOT work
+// this will break and will NOT work because function is passed to a variable for a total value to use elsewhere, therefore not a regular function
 
 
 
 
 // variable hoisting
+
 
 let age;
 console.log(age);  // result 'undefined. JS recognises that a variable was created but no value was given, hense undefined
@@ -684,8 +696,8 @@ btn.addEventListener('click', btnClicked);
 /* closures in Functions  
 
 closures help us to keep track of certain values.
-	A clousre is just a function inside another function that:
-	1) uses variables from its parent scope and
+	A closure is just a function inside another function that:
+	1) the inner function can access the parent function scope params
 	2) is exposed to the outside world.
 
 */
@@ -695,11 +707,9 @@ closures help us to keep track of certain values.
 function outerFunc() {
 	let outerVar = 'I am outside!';
 
-	function innerFunc() {
+	return function innerFunc() {
 		console.log(outerVar); // => logs "I am outside!"
 	}
-
-	return innerFunc;
 }
 
 const myInnerFunc = outerFunc();
@@ -711,7 +721,7 @@ myInnerFunc();
 
 function outerFunction(outerVariable) {
 
-	return function InnerFunction(innerVariable) {
+	return function innerFunction(innerVariable) {
 		console.log(`This is the ${outerVariable}`);
 		console.log(`This is the ${innerVariable}`);
 
@@ -720,7 +730,7 @@ function outerFunction(outerVariable) {
 
 
 const outer = outerFunction('outer'); // call the param value of the outer function
-outer('Inner'); // now evoke the outer and THEN set a value for the inner param
+outer('inner'); // now evoke the outer and THEN set a value for the inner param
 // This is the outer
 // This is the Inner
 
@@ -731,7 +741,6 @@ outer('Inner'); // now evoke the outer and THEN set a value for the inner param
 Now innerFunc() is executed outside of its lexical scope. And what’s important:
 innerFunc() still has access to outerVar from its lexical scope, even being executed outside of its lexical scope.
 In other words, innerFunc() closes over (a.k.a. captures, remembers) the variable outerVar from its lexical scope.
-In other words, innerFunc() is a closure because it closes over the variable outerVar from its lexical scope.
 
 
 
@@ -786,7 +795,19 @@ console.log(like()); // call the function, result:  3
 
 
 
+// another example would be to great a game and a score
 
+function createGame(gameName) {
+	let score = 0;
+
+	return function () {
+		score++;
+		return `My favourite game is ${gameName}, and my score is ${score}`;
+	}
+}
+
+const hockeyGame = createGame('hockey');
+hockeyGame(); // result:  "My favourite game is hockey, and my score is 1"
 
 
 
@@ -877,7 +898,14 @@ function getData(url) {
 			.then((response) => response.json())
 			.then((data) => {
 				data.map((item) => {
-					console.log(item.title);
+					// console.log(item.title);
+					let title = item.title;
+					let div = createElement('div');
+					let heading = createElement('h2')
+					heading.textContent(title);
+					append(div, heading);
+					append(document.body, div);
+
 				})
 			})
 	}
@@ -2697,8 +2725,7 @@ const menuItems = [
 
 
 menuItems.reduce((accumulator, menuItem) => {
-	// lets run accumulator and menuItem.price through the console to test
-	console.log(`accumulator: ${accumulator}, price: ${menuItem.price}`);
+	//console.log(`accumulator: ${accumulator}, price: ${menuItem.price}`); // lets run accumulator and menuItem.price through the console to test
 	return accumulator + menuItem.price; //  add price value to the accumulator
 }, 0); // start the value of the menuItem at 0 and then add menuItem.price as per iteration
 
@@ -2745,11 +2772,9 @@ const users = [
 
 
 const usersOver20 = Object.entries(users).reduce((accumulator, [id, user]) => {
-
 	if (user.age > 20) {
 		accumulator.push({ ...user, id }); // spread in the user and add the id
 	}
-
 	return accumulator;
 }, []); // the callback array is used as we want to start from an empty array
 
@@ -3542,7 +3567,7 @@ postData(function (posts) { // create function inside the function
 
 
 
-// using partial application function (with callback and HTML)
+// using partial application function (with callback and HTML
 
 
 function getData(url) { // first function takes in the url placeholder
@@ -3719,6 +3744,8 @@ async function myData() {
 
 
 myData();
+
+
 
 // result is 'data loaded'.... then 'done' is executed
 
