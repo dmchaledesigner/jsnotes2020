@@ -2856,10 +2856,12 @@ p.addEventListener('click', () => console.log('clicked')); // add a click event 
   <a href="/signup">Signup</a>
 </header>*/
 
-// get the a tags
-const links = document.querySelectorAll('a');
+// get all elements 
+const links = document.querySelectorAll('a'); // returns a node list (not an array but a list of NODES)
+// NodeLIsts do NOT have the same methods as an array as it must be converted in order to use map(), reduce(), filter() etc
 
-// create the loop in a forEach which is used with working with the DOM
+
+// create the loop in a forEach which is used with working with the DOM on a NODELIST
 // then if one of the links has a href of '/login' - check to see if it meets the condition
 //remember we wrap a in [] as we are looking for an attribute of href='/login'
 // then assign it to a var and print it to the console
@@ -2870,7 +2872,9 @@ links.forEach((link) => {
 	}
 })
 
-// if we use getElementsbyTagName() - we cannot iterate over them
+
+
+// if we use getElementsbyTagName() - we cannot iterate over the NODELIST, we need to convert it to an an array
 const divs = document.getElementsByTagName('div')
 console.log(divs); // result: html collection which doesnt have a node list 
 // if we use divs.forEach(div => {console.log(div)}) result: foreach is not a function
