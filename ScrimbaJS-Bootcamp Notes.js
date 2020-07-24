@@ -2916,6 +2916,21 @@ console.log(p); // <p>This is some text this is added text</p>
 
 
 
+//insertAdjacent Element
+const list = document.createElement('ul');
+const li = document.createElement('li');
+
+
+li.textContent = 'three';
+list.appendChild(li); // place li inside the ul
+
+const li5 = document.createElement('li'); // create list element
+
+const li1 = li5.cloneNode(true); // clone the li5 const and use 'true' to carry over the text orherwise it will just clone the li element
+li1.textContent = 'one'; // change the li1 text
+
+list.insertAdjacentElement('afterbegin', li1); // add the li1 to the list
+
 
 
 
@@ -3008,6 +3023,8 @@ img.alt = 'this is the new alt text';
 console.log(img);
 
 
+
+
 // getting datatypes
 {/* <img src='somepath/somepicname.jpg' data-name="david/> */ }
 const img = document.querySelector('img');
@@ -3020,6 +3037,55 @@ img.dataset.name// returns david
 img.addEventListener('click', () => {
 	alert(img.dataset.name);
 })
+
+
+
+// Template Literals in the DOM
+
+const image = `https://picsum.photos/id/1/200/300`; // use back ticks instead of quote string as will only have qoutes inside quotes in the literal
+const width = 500;
+const alt = `this is alt image text`;
+
+
+const myHTML = `
+		<div class="wrapper">
+		<h2>This is a heading</h2>
+		<img src="${image}" alt="${alt}" width="${width}" /> 
+		</div>`
+
+
+const div = document.getElementById('myDiv');
+div.innerHTML = myHTML; // this will put the myHTML into the div already on the page and replace whatever is currently there
+
+/* Note on adding HTML literals in the DOM
+
+	Remember: we cannot get the class or target this specific code until it has been added to the DOM
+	console.log it using the typeof operator and you will see that it is just a sting console.log(typeof myHTML)
+	first we have to add it to the DOM, THEN we can add and remove classes or whatever we need to do
+
+	a way to void this issue is to convert it from a string to acual elements using .createRange.createContextualFragment();
+	Create a fragment and add the myHTML template literal to it
+	Then insert that inside the DOM
+
+	Note: fragment is just another way to say 'html'
+*/
+
+const fragment = createRange().createContextualFragment(myHTML);
+console.log(fragment)// now we can see we have html element
+// so now we can look inside this 'fragment' and get an image if we want to
+const fragImg = fragment.querySelector('img');
+console.log(fragment);
+
+// if we want to add the 'fragment' to the body we just need to append it to the DOM
+myDiv.appendChild(fragment);
+// or use 
+myDiv.insertAdjacentElement("afterbegin", fragment);
+
+
+
+
+
+
 
 // events
 
