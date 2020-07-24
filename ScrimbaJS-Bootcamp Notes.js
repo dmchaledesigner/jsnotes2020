@@ -2830,23 +2830,6 @@ Plus:
 
 
 
-
-
-
-// adding elements and manipulation
-
-const p = document.createElement('p'); // create an element
-p.innerText = 'Hello world'; // add text to the element
-document.body.append(p); // add the the element to the document body
-
-document.body.style.background = 'palegoldenrod'; // assign background color to the document body
-p.style.color = '#05f'; // assign style to the p element
-
-p.addEventListener('click', () => console.log('clicked')); // add a click event using arrow function to the p element 
-
-
-
-
 // looping over elements
 
 /*
@@ -2895,6 +2878,48 @@ let myArray = Array.from(elList).forEach(function (el) {
 
 
 
+// console.dir() 
+
+const p = document.querySelector('h2');
+console.dir(p.textContent); // will return object properties of the h2 considering an element is an object
+//from here we can do all sorts of things like see its classList and see its parentElement etc - REALLY USEFUL
+const newText = p.textContent = 'this is cool';
+console.log(p);
+
+
+
+
+
+
+
+
+// adding elements and manipulation
+// ==============================
+
+const p = document.createElement('p'); // create an element
+p.innerText = 'Hello world'; // add text to the element
+document.body.append(p); // add the the element to the document body at the end of the document
+
+document.body.style.background = 'palegoldenrod'; // assign background color to the document body
+p.style.color = '#05f'; // assign style to the p element
+
+p.addEventListener('click', () => console.log('clicked')); // add a click event using arrow function to the p element 
+
+
+// insertAdjacentext - will add text to the end of an adjacent string
+
+
+// <p>This is some text</p>
+const p = document.querySelector('p');
+p.insertAdjacentText('beforeend', 'this is added text'); // look up 'MDN elements'
+console.log(p); // <p>This is some text this is added text</p>
+
+
+
+
+
+
+
 
 
 // .prepend () and .append()
@@ -2912,6 +2937,10 @@ console.log(newPost.className);
 
 // classList
 
+// take an element and run console.log(classList) to view all the properties that we can do
+console.log(element.classList);
+
+// this will show us that we can add, remove, replace etc. its like console.dir() on an element which will show all properties we can work with
 
 element.classList.add("some-class"); // result <div id="my-element" class="some-class"></div>
 
@@ -2934,6 +2963,23 @@ var x = document.getElementById("myBtn").getAttribute("onClick");
 
 
 
+
+// example of using Toggle with a css class
+const p = document.querySelector('p');
+
+function toggleRound() {
+	p.classList.toggle('round');
+}
+
+p.addEventListener('click', toggleRound);
+
+// the css .round{border-radius: 50%, box-shadow: 0 0 10px black; rotate(1turn)};
+
+
+
+
+
+
 // DOM CSS
 
 
@@ -2950,12 +2996,41 @@ post.style.backgroundColor = '#555';
 
 
 
+
+// DOM attributes / datasets
+
+
+{/* <img src='somepath/somepicname.jpg' alt="some alt name" /> */ }
+
+const img = document.querySelector('img');
+console.dir(img); // to see the properties of the img object. thern select something like the alt
+img.alt = 'this is the new alt text';
+console.log(img);
+
+
+// getting datatypes
+{/* <img src='somepath/somepicname.jpg' data-name="david/> */ }
+const img = document.querySelector('img');
+console.dir(img); // look at the properties
+console.log(img.dataset); // will show is the object of the data- instances
+// then we can get the name by saying
+img.dataset.name// returns david
+
+
+img.addEventListener('click', () => {
+	alert(img.dataset.name);
+})
+
 // events
 
 // regular function
-el.addEventListener('click', (event) => {
-	// console.log(event.target); this will give us the <body> tag
-});
+el.addEventListener('click', function () {
+
+}
+
+// or we can just include a function like so
+el.addEventListener('click', someFunction);
+
 
 // arrow function
 el.addEventListener('click', (event) => {
@@ -2967,6 +3042,12 @@ el.addEventListener('click', (event) => {
 el.addEventListener('click', event => {
 	// console.log(event.target); this will give us the <body> tag
 });
+
+
+
+el.setTimeout(() => {
+	// do something
+}, 3000)
 
 
 
@@ -3008,14 +3089,16 @@ event.target.textContent
 // hover the mouse over the elements, instead of when clicking on them
 
 const title = document.querySelector('h1');
-title.addEventListener('click', event => {
+title.addEventListener('click', (event) => {
 	console.log(event.target.textContent);
 });
 
-document.body.addEventListener('mouseover', event => {
+document.body.addEventListener('mouseover', (event) => {
 	console.log(event.target.textContent);
 
 });
+
+
 
 
 
