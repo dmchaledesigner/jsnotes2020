@@ -3963,3 +3963,26 @@ getPostData(); // result is the post data from post 1
 
 
 
+
+
+
+//or 
+
+async function getData(url) {
+	return async function (route) { // inner function
+		await fetch(`${url}${route}`)
+			.then((response) => response.json())
+			.then((data) => {
+				const allData = data;
+				allData.map((item) => {
+					console.log([item.title, item.body]);
+				})
+			})
+
+	}
+};
+
+
+const myPosts = getData('https://jsonplaceholder.typicode.com'); // evoke the first function and url param
+
+myPosts('/posts');

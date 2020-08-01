@@ -1,211 +1,155 @@
-// OBJECTS
-// ============
+// basic object literal
+// =========================
 
+const book1 = {
+    title: 'Book 1',
+    name: 'john doe',
+    year: 2010,
+    getSummary: function () {
+        return `${this.title} was written by ${this.name} in the year ${this.year}`
+    }
+}
 
-// A LITERAL OBJECT
-//*******************
-// * Can only hold one object
-// * Cannot make other objects from a single literal object
+console.log(book1); // {title: 'Book 1', name: 'john doe', year: 2010, getSummary: [Function: getSummary]}
+console.log(book1.title); // 'Book 1'
+console.log(book1.getSummary()); // Book 1 was written by john doe in the year 2010
+console.log(Object.values(book1)); // [ 'Book 1', 'john doe', 2010, [Function: getSummary] ]
+console.log(Object.keys(book1)); // [ 'title', 'name', 'year', 'getSummary' ]
+console.log(Object.entries(book1)); // [ [ 'title', 'Book 1' ], [ 'name', 'john doe' ], [ 'year', 2010 ], [ 'getSummary', [Function: getSummary] ] ]
 
-(function () {
 
 
-	var person = {
-		firstName: "John",
-		lastName: "Doe",
-		age: 50,
-		eyeColor: "blue"
-	};
+// To create more than one book its, better to create a constructor, and instance of an object to create other other objects
 
-	console.log(person.firstName + " is " + person.age + " years old.");
 
-	// John is 50 years old
 
-}());
+// Constructor Function
 
+function Book(title, author, year) {
+    this.title = title;
+    this.author = author;
+    this.year = year,
+        this.getSummary = function () {
+            return `${this.title} was written by ${this.name} in the year ${this.year}`
+        }
+}
 
 
 
+//instantiate an object = create a copy
+const book1 = new Book('Book 1', 'John Doe', '2019');
+console.log(book1.getSummary());
 
-// OBJECT METHOD
-//*******************
-// * An Object Method are the actions / functions that are performed on objects
 
-//Eg1
+// However, if we console.log(book1) we can see we get the properties but we also get the function which even if we dont need, it is there
+// A better way to add this, is to place it inside the prototype so its hidden from the main constructor but accessible via the prototype
+// Sometimes we need to create new info for new objects based from the original constructor but not always the added info from the added function
+// Remove the function from the main constructor and use it as a prototype
 
-(function () {
+//create constructor
+function Book(title, author, year) {
+    this.title = title;
+    this.author = author;
+    this.year = year
+}
 
 
-	functio Car = {
+// create function prototype 
+Book.prototype.getSummary = function () {
+    return `${this.title} was written by ${this.author} in the year ${this.year}`
+}
 
-		model: "M3",
-		year: 2002,
-		color: "blue",
-		driver: function (name) {
-			var infront = "The person driving is " + name;
-			return infront;
-		}
+// create function to make a calculation on years old
+Book.prototype.getAge = function () {
+    const years = new Date().getFullYear() - this.year;
+    return `${this.title} is ${years} years old`;
+}
 
-	};
+// Manipulate the existing data - change the year
+Book.prototype.reviseYear = function (newYear) {
+    this.year = newYear;
+    this.revised = true;
+}
 
 
-	console.log("This BMW is a " + car.year + " " + car.model + ". " + car.driver('Dave'));
+//instantiate a new object and console.log the new object with prototype function
+const book1 = new Book('Book1', 'John Doe', '2010');
+console.log(book1); // {title: "Book1", author: "John Doe", year: "2010"} - in dev tools, open it up and see the protype holds the new function
 
-	// This BMW is a 2002 M3. The person driving is Dave
+console.log(book1.getSummary()); // call the getSummary Function - 'Book1 was written by John Doe in the year 2010
+console.log(book1.getAge());
 
+book1.reviseYear('2018'); // date update and note, from the function we are also adding revised: true to indicate the year has been revised
+console.log(book1); // {title: "Book1", author: "John Doe", year: "2018", revised: true}
 
-}());
 
 
+// Prototype Inheritance - passing one object keyvalue pairs to another object
 
-//Eg2
+//Parent Function
+function Book(title, author, year) {
+    this.title = title;
+    this.author = author;
+    this.year = year
+}
+// Book 1 added function using prototype
+Book.prototype.getSummary = function () {
+    return `${this.title} was written by ${this.author} in the year ${this.year}`
+}
 
 
-(function () {
 
+//Child function
+function Magazine(title, author, year, month) {
+    Book.call(this, title, author, year); // migrate the params from the Book function over
+    this.month = month // create new pair for the month paramater
+}
 
-	var thingsToDo = {
+// inherit prototype from book
+Magazine.prototype = Object.create(Book.prototype);
 
-		'motogp': function (name) {
-			alert('Lets go to see ' + name);
-		},
 
-		'formula1': function () {
-			alert('Lets go to see ' + name);
-		},
+//however if we look into the result using dev tools, we see in the constructor, the prototype is using the book constructor
+// we need to change this to the Magazine constructor. here is how we do it
 
-		'liverpool': function () {
-			alert('Lets go to see ' + name);
-		},
-	};
+Magazine.prototype.constructor = Magazine;
 
+// make the change and THEN call the new instance of the Magazine object. console.log to check
 
-	thingsToDo['motogp']("Rossi");
+const mag1 = new Magazine('magazine1', 'Jane Doe', '2013', 'january');
+console.log(mag1); // {title: "magazine1", author: "Jane Doe", year: "2013", month: "january"}
 
 
-}());
 
 
 
 
-// A CONTRUCTOR OBJECT
-//**********************
 
-// base object
-function bmw(model, body, speed, series) {
+//Constructors using ES6 classes
 
-	this.model = model;
-	this.body = body;
-	this.speed = speed;
-	this.speed = series;
+class Book {
 
-
-};
-
-
-//objects created based on the base object
-var car1 = new bmw("E92", "Coupe", 220, 3);
-var car2 = new bmw("E60", "Saloon", 280, 5);
-
-
-//result from object car1
-console.log("The model is " + car1.model + " has a top speed of " + car1.speed + " and is a " + car1.body);
-
-//result from object car2
-console.log("The model is " + car2.model + " has a top speed of " + car2.speed + " and is a " + car2.body);
-
-
-
-
-
-
-
-// A CONTRUCTOR OBJECT = The preffered Version (inside a variable)
-//***************************************************************
-
-var BmwCar = function car(model, body) {	// Note. When declaring an object inside a variable, the first letter of the var name must be in capitals.
-
-	this.model = model;
-	this.body = body;
-	this.speed = function (distance, time) {
-		var total = (distance * time);
-		return total;
-	}
-
-};
-
-
-var m3 = new BmwCar("M3", "Saloon");
-
-console.log("The model is " + m3.model + " " + " The average speed was " + m3.speed(30, 5));
-
-
-
-
-
-// add new properties to a contructor object
-//===========================================
-
-// the constructor prototype
-function Person(first, last, eyeColor, age) {
-
-	this.firstName = first;
-	this.lastName = last;
-	this.eyes = eyeColor;
-	this.years = age;
+    constructor(title, author, year) {
+        this.title = title;
+        this.author = author;
+        this.year = year;
+    }
+    // function is OUTSIDE of the constructor but inside the class still.
+    getSummary() {
+        return `${this.title} was written by ${this.author} in the year ${this.year}`
+    }
 
 }
 
-// new objects
-var myFather = new Person("David", "Mchale", "Blue", 37); //values from the function params
-var myMother = new Person("Patricia", "Mchale", "Blue", 63); //values from the function params
+class Magazine extends Book {
 
-//print the objects
-console.log("His name is " + myFather.firstName + " " + myFather.lastName + ". Aged: " + myFather.years + " with " + myFather.eyes + " eyes.");
-console.log("His name is " + myMother.firstName + " " + myMother.lastName + ". Aged: " + myMother.years + " with " + myMother.eyes + " eyes.");
-
-
-// new properties
-myMother.nationality = "Irish";
-console.log(myMother.nationality); // result irish
+    constructor(title, author, year, month) { // here we carry over and add another param
+        super(title, author, year) // params are also carried over here
+        this.month = month;
+    }
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const latestMag = new Magazine('Magazine1', 'John Doe', '2020', 'April');
+console.log(latestMag); // {title: "Magazine1", author: "John Doe", year: "2020", month: "April"}
+console.log(latestMag.getSummary()); // 'Magazine1 was written by John Doe in the year 2020'
