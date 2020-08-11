@@ -50,7 +50,7 @@ var position = str.search('locate');
 var str = 'Apple, Banana, Kiwi';
 var res = str.slice(-12, -6); //banana - this is because minus counts from the end of the string with an end point and a starting point
 var pos = str.slice(7) // banana, kiwi - this is because positive numbers start from the beginning of the string
-var point = substring(7,13) //banana, same as slice but cannot insert negative numbers. provide start and end point
+var point = substring(7, 13) //banana, same as slice but cannot insert negative numbers. provide start and end point
 
 
 
@@ -63,9 +63,9 @@ var x = str.replace('google', 'yahoo'); // please visit yahoo
 
 
 // upper and lowercase
- var n = 'Hello World';
- var x = n.toUpperCase() // HELLO WORLD
- var d = n.toLowerCase() // hello world
+var n = 'Hello World';
+var x = n.toUpperCase() // HELLO WORLD
+var d = n.toLowerCase() // hello world
 
 
 // split()
@@ -110,7 +110,7 @@ console.log(str); 'the secret to life is 42'
 // value of - returns a number as a number.
 var x = 123
 x.ValueOf(); // returns 123
-(100+23).ValueOf(); // returns 123
+(100 + 23).ValueOf(); // returns 123
 
 
 
@@ -185,8 +185,8 @@ var myNumber = 155;
 /*functions
 ===============*/
 
-function myFunction(a, b){
-return a + b;
+function myFunction(a, b) {
+  return a + b;
 }
 
 console.log(myFunction(2, 4));
@@ -194,7 +194,7 @@ console.log(myFunction(2, 4));
 
 // ES6 Arrow function
 myFunction = (a, b) => {
-return a + b;
+  return a + b;
 }
 
 console.log(myFunction(3, 4))
@@ -202,7 +202,7 @@ console.log(myFunction(3, 4))
 
 // arrow function assigned to an ES6 variable
 const myFunction = (a, b) => {
-return a + b;
+  return a + b;
 }
 
 console.log(myFunction(2, 4))
@@ -224,20 +224,20 @@ document.getElementById("demo").innerHTML = x;
 /*Arrow functions
 ===============*/
 
- // normal function
- hello = function(){
+// normal function
+hello = function () {
   return 'Hello World';
- }
+}
 
- // with arrow function
- hello = () => {
+// with arrow function
+hello = () => {
   return 'Hello World';
- }
+}
 
 
 //arrow function with parameter
 hello = (name) => {
-return `'Hello ${name}`;
+  return `'Hello ${name}`;
 }
 
 // without return, one parameter and shorthand brought further with template literals
@@ -332,10 +332,10 @@ allchidren = girls.concat(boys, men, women);
 
 
 // we can also use the spread operator like with objects
-let arr = [1,2,3]; 
-let arr2 = [4,5]; 
-        
-arr = [...arr, ...arr2]; 
+let arr = [1, 2, 3];
+let arr2 = [4, 5];
+
+arr = [...arr, ...arr2];
 console.log(arr); // [ 1, 2, 3, 4, 5 ] 
 
 
@@ -379,8 +379,8 @@ var list = fruits.concat(veg);
 
 // looping through an array
 var myArray = ['banana', 'orange', 'apple'];
-for(var i = 0; i < myArray.length; i++){
-    console.log(myArray[i]);
+for (var i = 0; i < myArray.length; i++) {
+  console.log(myArray[i]);
 } // banana, orange, apple
 
 
@@ -419,15 +419,15 @@ console.log(beasts.indexOf('giraffe'));
 
 // Associative Arrays
 const companies = [
-  {name: "Company One", category: "Finance", start: 1981, end: 2003},
-  {name: "Company Two", category: "Retail", start: 1992, end: 2008},
-  {name: "Company Three", category: "Auto", start: 1999, end: 2007},
-  {name: "Company Four", category: "Retail", start: 1989, end: 2010},
-  {name: "Company Five", category: "Technology", start: 2009, end: 2014},
-  {name: "Company Six", category: "Finance", start: 1987, end: 2010},
-  {name: "Company Seven", category: "Auto", start: 1986, end: 1996},
-  {name: "Company Eight", category: "Technology", start: 2011, end: 2016},
-  {name: "Company Nine", category: "Retail", start: 1981, end: 1989}
+  { name: "Company One", category: "Finance", start: 1981, end: 2003 },
+  { name: "Company Two", category: "Retail", start: 1992, end: 2008 },
+  { name: "Company Three", category: "Auto", start: 1999, end: 2007 },
+  { name: "Company Four", category: "Retail", start: 1989, end: 2010 },
+  { name: "Company Five", category: "Technology", start: 2009, end: 2014 },
+  { name: "Company Six", category: "Finance", start: 1987, end: 2010 },
+  { name: "Company Seven", category: "Auto", start: 1986, end: 1996 },
+  { name: "Company Eight", category: "Technology", start: 2011, end: 2016 },
+  { name: "Company Nine", category: "Retail", start: 1981, end: 1989 }
 ];
 
 
@@ -435,15 +435,15 @@ const companies = [
 const ages = [33, 12, 20, 16, 5, 54, 21, 44, 61, 13, 15, 45, 25, 64, 32];
 
 // old way of looping
-for(var i = 0 ; i < companies.length; i++){
-console.log(companies[i]);
+for (var i = 0; i < companies.length; i++) {
+  console.log(companies[i]);
 }
 
 
 
 // forEach() to iterate over an array
-companies.forEach(function(company){
-console.log(company.name);
+companies.forEach(function (company) {
+  console.log(company.name);
 })
 
 // arrow function
@@ -451,17 +451,17 @@ companies.forEach(company => console.log(company));
 
 
 // or another example
-let food = ['mango','rice','pepper','pear'];
-food.forEach(function(foodItem){
-    console.log('I want to eat '+ foodItem);
+let food = ['mango', 'rice', 'pepper', 'pear'];
+food.forEach(function (foodItem) {
+  console.log('I want to eat ' + foodItem);
 });
 
 
 // loop and push into a new array
 var otherArray = [];
-var fruits =  ["strawberry", "orange", "pear", "lemon"];
-fruits.forEach(function(item){
-otherArray.push(item);
+var fruits = ["strawberry", "orange", "pear", "lemon"];
+fruits.forEach(function (item) {
+  otherArray.push(item);
 });
 console.log(otherArray);
 
@@ -472,21 +472,21 @@ console.log(otherArray);
 
 // previous method - loop through the var and if the age is less or equal to 21 then show the answers using for loop and if statement
 let canDrink = []; // new array
-for(var i = 0; i < ages.length; i++){
+for (var i = 0; i < ages.length; i++) {
 
-if(ages[i] <= 21){
-canDrink.push(ages[i])
-}
+  if (ages[i] <= 21) {
+    canDrink.push(ages[i])
+  }
 }
 
 
 
 // using filter() checks every element in an array to see if it meets a certain criteria
 // and returns a new array with the elements that return truthy for the criteria.
-const canDrink = ages.filter(function(age){
-if(age >= 21){
-return true
-}
+const canDrink = ages.filter(function (age) {
+  if (age >= 21) {
+    return true
+  }
 })
 
 console.log(canDrink);
@@ -496,10 +496,10 @@ const canDrink = ages.filter((age) => age < 21);
 
 // filter retail companies
 
-const retailCompanies = companies.filter(function(company){
-if(company.category === 'Retail'){
-return true;
-}
+const retailCompanies = companies.filter(function (company) {
+  if (company.category === 'Retail') {
+    return true;
+  }
 })
 
 console.log(retailCompanies);
@@ -522,8 +522,8 @@ console.log(dated)
 
 // map() executes the same code on every element in an array and returns a new array with the updated elements.
 
-const ageTimesTwo = ages.map(function(age){ // when using {} we need to return the function
-return age * 2
+const ageTimesTwo = ages.map(function (age) { // when using {} we need to return the function
+  return age * 2
 })
 
 //shorthand of the above using arrow function
@@ -538,15 +538,19 @@ console.log(squareAge)
 
 
 // company name, then  minus end date from the start date
-const selected = companies.map(function(company){
-return `${company.name} [${company.start} - ${company.end}]`; // using template literals here as a string
+const selected = companies.map(function (company) {
+  return `${company.name} [${company.start} - ${company.end}]`; // using template literals here as a string
 });
 
 //using arrow function
 const selected = company.map((company) =>
-'${company.name} [${company.start} - ${company.end}]');
+  '${company.name} [${company.start} - ${company.end}]');
 
 console.log(selected);
+
+
+//remember to use filter to filter the items that meet a condition
+// THEN run map of the results to get different values from those filtered items
 
 
 
@@ -618,12 +622,12 @@ var date = d.setDate() // set the day as a number
 ===============*/
 
 
-if(condition 1){
- // if condition 1 is true, do this code
-}else if(condition 2){
-// if condition 1 is false and condition 2 is true, do this code
-}else{
-// if both conditions are false, then do this code
+if (condition 1) {
+  // if condition 1 is true, do this code
+}else if (condition 2) {
+  // if condition 1 is false and condition 2 is true, do this code
+}else {
+  // if both conditions are false, then do this code
 }
 
 
@@ -632,18 +636,18 @@ var d = new Date();
 var hours = d.getHours();
 
 
-if(hours < 10){
-alert("Good morning");
-}else if(hours > 10 && hours < 2){
-alert('Happy lunchtime');
-}else{
-alert('back to work');
+if (hours < 10) {
+  alert("Good morning");
+} else if (hours > 10 && hours < 2) {
+  alert('Happy lunchtime');
+} else {
+  alert('back to work');
 }
 
 
 
 // Terneray Operator - statement assigned to a variable
- // IF older than 21 say 'Old enough to Vote', if not say 'Not old enough';
+// IF older than 21 say 'Old enough to Vote', if not say 'Not old enough';
 
 var age = 21;
 var voteable = (age > 18) ? 'Old enough to Vote' : 'Not old enough';
@@ -670,22 +674,22 @@ console.log(voteable);
 
 const fruit = 'Papayas';
 
-switch(fruit){
+switch (fruit) {
 
-case 'Oranges':
-console.log('Oranges are $0.59 per pound');
-break;
+  case 'Oranges':
+    console.log('Oranges are $0.59 per pound');
+    break;
 
-case 'Mangoes':
-console.log('Mangoes are out of stock');
-break;
+  case 'Mangoes':
+    console.log('Mangoes are out of stock');
+    break;
 
-case 'Papayas':
-console.log('Papayas are $2.79 per pound and in stock'); // once this condition is run the statement will print and stop.
-break;
+  case 'Papayas':
+    console.log('Papayas are $2.79 per pound and in stock'); // once this condition is run the statement will print and stop.
+    break;
 
-default:
-console.log('sorry but that fruit we do not sell in our shop');
+  default:
+    console.log('sorry but that fruit we do not sell in our shop');
 
 }
 
@@ -708,12 +712,12 @@ console.log('sorry but that fruit we do not sell in our shop');
 ===============*/
 
 
- // for loop
+// for loop
 
 var cars = ["BMW", "Volvo", "Saab", "Ford", "Fiat", "Audi"];
 
-for(var i = 0; i < cars.length; i++){
-console.log(cars[i])
+for (var i = 0; i < cars.length; i++) {
+  console.log(cars[i])
 }
 
 
@@ -726,9 +730,9 @@ var cars = ["BMW", "Volvo", "Saab", "Ford", "Fiat", "Audi"];
 var i = 0;
 var txt = '';
 
-while(cars[i]){
-txt += cars[i] + '<br>';
-i++;
+while (cars[i]) {
+  txt += cars[i] + '<br>';
+  i++;
 }
 
 
@@ -765,11 +769,11 @@ Math.floor(Math.random() * 9) + 1; // returns a number 0 t o 10
 
 // a random function
 
-function getRndInteger(min, max){
-return Math.floor(Math.random() * (min - max + 1)) + 1;
+function getRndInteger(min, max) {
+  return Math.floor(Math.random() * (min - max + 1)) + 1;
 }
 
-console.log(getRndInteger(1,15));
+console.log(getRndInteger(1, 15));
 
 
 
@@ -799,7 +803,7 @@ let x = 10 // here x is also equal to 10;
 
 
 // const
-var x  = 10;
+var x = 10;
 const x = 10; // Constants are similar to let variables, except that the value cannot be changed.
 
 
@@ -807,20 +811,20 @@ const x = 10; // Constants are similar to let variables, except that the value c
 // Arrow functions
 // ES5
 var x = Function(x, y){
-return x * y;
+  return x * y;
 }
 
 // ES6
 const x = (x, y) => {
-return x * y;
+  return x * y;
 }
 
 
 
 // Array.find()
 var numbers = [1, 5, 35, 78, 54, 67];
-var age = numbers.find(function(ages){
-    return ages > 18;
+var age = numbers.find(function (ages) {
+  return ages > 18;
 });
 
 console.log(age); // will find the first item in the array that is over 28, which is 35.

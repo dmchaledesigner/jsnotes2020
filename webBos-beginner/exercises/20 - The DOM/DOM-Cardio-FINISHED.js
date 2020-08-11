@@ -36,12 +36,12 @@ const myHTML = `
     <p>Paragraph Two</p>
   </div>
 `;
-const ulElement = div.querySelector('ul');
+const ulElement = yDiv.querySelector('ul');
 console.log(ulElement);
 // put this div before the unordered list from above
 ulElement.insertAdjacentHTML('beforebegin', myHTML);
 // add a class to the second paragraph called warning
-const myDiv = div.querySelector('.myDiv');
+const myDiv = yDiv.querySelector('.myDiv');
 myDiv.children[1].classList.add('warning');
 // remove the first paragraph
 myDiv.firstElementChild.remove();

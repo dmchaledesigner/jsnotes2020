@@ -367,6 +367,25 @@ console.log(greeting);
 
 
 
+
+//ternary and switch together
+
+const x = 11; //value
+const color = x > 10 ? 'Red' : 'Blue'; // if color is great than 10, we have Red, if not then its Blue
+
+switch (color) { // if case value is based on the same value of the color ternary result, console.log() the message, if neither then set default message
+	case 'red':
+		console.log('The color is red');
+		break;
+	case 'blue':
+		console.log('The color is blue');
+		break;
+	default:
+		console.log('No color found');
+		break;
+}
+
+
 // Challenge 1: Check if the user is allowed to add an "iPad" to its shopping cart.
 // Write a ternary that sets the shoppingCart variable to "iPad" if the user is authenticated, 
 
@@ -1639,7 +1658,7 @@ const users = [
 ];
 
 
-//iterate over the nested object and get a each person object ito an array
+//iterate over the nested object and get a each person object in the array
 // we could use .map() and .filter()
 
 // but if we need to chain then its best to use .reduce()
@@ -2123,6 +2142,37 @@ const newArray = string.split(',', 1); // limits to 1 array element
 
 
 
+// slice() and splice()
+// =================================
+// The splice() method changes the original array
+// and slice() method doesn’t change the original array.
+
+
+// The splice() method can take n number of arguments:
+// (index, number of items to be removed-If set to 0(zero), no items will be removed.)
+let tomSmith = ["Tom Smith", "123 Main", "Australia", 120.50]; // main array
+
+let david = [...tomSmith]; // copy of main array as to not mutate the original
+
+david.splice(2, 1, 'ireland');
+console.log(david); // ["Tom Smith", "123 Main", "ireland", 120.5]
+
+
+// slice() - takes in one value and returns anything left AFTER that value
+let array = [1, 2, 3, 4, 5];
+let myArray = array.slice(2); // take everything after the index value of 2
+
+console.log(array); // [1, 2, 3, 4, 5] 
+console.log(myArray); // [3, 4, 5]
+
+
+
+
+
+const temperatures = [69, 82, 73, 64];
+
+
+
 // array - accessing elements in an array .includes()
 //=====================================
 const temperatures = [69, 82, 73, 64];
@@ -2177,7 +2227,20 @@ const result = temperatures.some((temperature) => temperature.isRecordTemp === t
 const result = temperatures.every((temperature) => temperature.isRecordTemp === true);
 
 
+/* RE-NOTE
+ if 'some' of your array values correspond to what you’re looking for, .some() will return true. If not, it’ll return false.
+ As soon as one true is returned, .some() will itself return true. If none of the values, when processed in your condition,
+ return true (if they all return false), then .some() will return false.
 
+ you can also check if every value of the array matches your condition by using .every() .
+ It works exactly like .some(), but will return true only if 'every occurence matches'.
+
+ .find() will return the first match. If more values match your condition, it won’t matter.
+ Only the first match will be returned. If you need a list of all matches,
+ then you should use .filter() instead of .find()
+
+
+*/
 
 
 
@@ -2698,6 +2761,7 @@ const menuItems = [
 // accumulator must be run
 // accumulator must be returned 
 
+
 // with the accumulator there needs to be a second argument, named like using map or filter
 // that is a target name for the iteration
 
@@ -2826,6 +2890,18 @@ Plus:
 	Create and modify HTML elements
 	Dynamically add CSS styles
 	Work with and understand events
+
+
+
+	DIFFERENCE BETWEEN HTML COLLECTION AND NODELIST 
+
+	nodelists are obtained by using document.querySelector - a nodeList is which is like an arrray but not an array - returns static nodes or childNodes
+	We can use a forEach loop over the elements
+
+	htmlCollection is a collection  of elements by using document.getElementsByClassName - returns a live HTMLCollection - does not include text nodes
+
+	Use console.log() and console.dir() over html collections or nodelists and check dev tools to see what functions can be run dependinbg on the output.
+
 */
 
 
@@ -2880,11 +2956,11 @@ let myArray = Array.from(elList).forEach(function (el) {
 
 // console.dir() 
 
-const p = document.querySelector('h2');
-console.dir(p.textContent); // will return object properties of the h2 considering an element is an object
+const heading = document.querySelector('h2');
+console.dir(heading); // will return object properties of the h2 considering an element is an object
 //from here we can do all sorts of things like see its classList and see its parentElement etc - REALLY USEFUL
-const newText = p.textContent = 'this is cool';
-console.log(p);
+const newText = heading.textContent = 'this is cool';
+console.log(newText);
 
 
 
@@ -3060,10 +3136,10 @@ div.innerHTML = myHTML; // this will put the myHTML into the div already on the 
 /* Note on adding HTML literals in the DOM
 
 	Remember: we cannot get the class or target this specific code until it has been added to the DOM
-	console.log it using the typeof operator and you will see that it is just a sting console.log(typeof myHTML)
+	console.log it using the typeof operator and you will see that it is just a string console.log(typeof myHTML)
 	first we have to add it to the DOM, THEN we can add and remove classes or whatever we need to do
 
-	a way to void this issue is to convert it from a string to acual elements using .createRange.createContextualFragment();
+	a way to void this issue is to convert it from a string to actual elements using .createRange.createContextualFragment();
 	Create a fragment and add the myHTML template literal to it
 	Then insert that inside the DOM
 
@@ -3091,10 +3167,16 @@ myDiv.insertAdjacentElement("afterbegin", fragment);
 
 // regular function
 el.addEventListener('click', function () {
-
+	console.log('clicked');
 }
 
+
 // or we can just include a function like so
+function someFunction() {
+		console.log('just a function passed into an event');
+	}
+
+
 el.addEventListener('click', someFunction);
 
 
@@ -3108,6 +3190,62 @@ el.addEventListener('click', (event) => {
 el.addEventListener('click', event => {
 	// console.log(event.target); this will give us the <body> tag
 });
+
+// removing listeners
+// to remove a listener we need to have passed a function directly. using anonymous functions will not work
+
+function someFunction() {
+	console.log('just a function passed into an event');
+}
+
+
+el.addEventListener('click', someFunction);
+el.removeEventListener('click', someFunction); // this works because a function was passed a a second param to the listener even
+
+
+el.addEventListener('click', function () {
+	console.log('click');
+})
+
+el.removeEventListener('click', function () { // this will not work because a full function was not passed
+	console.log('click');
+})
+
+
+
+/*
+
+  Event Targets
+
+
+  <button data-price="1" class="buy">buy-item 1</button>
+  <button data-price="2" class="buy">buy-item 2</button>
+  <button data-price="3" class="buy">buy-item 3</button>
+  <button data-price="4" class="buy">buy-item 4</button>
+  <button data-price="5" class="buy">buy-item 5</button>
+  <button data-price="6" class="buy">buy-item 6</button>
+  <button data-price="7" class="buy">buy-item 7</button>
+  <button data-price="8" class="buy">buy-item 8</button>
+  <button data-price="9" class="buy">buy-item 9</button>
+  <button data-price="10" class="buy">buy-item 10</button>
+  
+  */
+
+const buttons = document.querySelectorAll('.buy');
+
+
+function handleClick(event) {
+	// console.log(event.target);
+	// console.log(event.currentTarget);
+	console.log(parseFloat(event.target.dataset.price)); // dataset will get the data attribute and price is what the dataset-item is
+
+
+}
+
+
+buttons.forEach((button) => {
+	button.addEventListener('click', handleClick);
+})
 
 
 
@@ -3955,6 +4093,8 @@ const getPostData = async () => { // using async arrow function
 	for (let i = 0; i <= 6; i++) { // great a loop at is less or equal to 6
 		console.log(data[i].title); // get the data[i] being the index to 6 and then the title
 	}
+
+	//or use map() or forEach over the array
 }
 
 //evoke the function

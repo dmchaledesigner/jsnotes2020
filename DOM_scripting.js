@@ -6,6 +6,10 @@ DOM Scripting =======
 
 
 
+
+
+
+
 // the document in the console
 
 // go into dev tools and type 'document' to dislay full object of the DOM
@@ -18,7 +22,17 @@ document.title = "new site title";
 // type 'window' into the console and return the window object
 
 
+/*  DIFFERENCE BETWEEN HTML COLLECTION AND NODELIST 
 
+	nodelists are obtained by using document.querySelector - a nodeList is which is like an arrray but not an array - returns static nodes or childNodes
+	We can use a forEach loop over the elements
+
+	htmlCollection is a collection  of elements by using document.getElementsByClassName - returns a live HTMLCollection - does not include text nodes
+
+
+
+
+*/
 
 
 /* <p id='root'></p> */
@@ -179,7 +193,17 @@ var y = x.children;
 console.log(y); // will return all node inside the parent 
 
 
+
+
+// getting parentElement
+const el = childElement.parentElement;
+// or, we can give the parent a class and use closes()
+const el = childElement.closest('.wrapper');
 // looping over classes
+
+
+
+
 
 var list = document.querySelectorAll('.list-items'); // get all list items (<li class="list-items">)
 
