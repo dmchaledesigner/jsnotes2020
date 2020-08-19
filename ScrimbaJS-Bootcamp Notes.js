@@ -351,8 +351,10 @@ console.log(greeting);
 // we can chain all of this inside a ternary operator,
 // though its not recommended because of its legibility
 
+
 //single if condition
 let greeting = age < 10 ? "Hey there" : "Greetings";
+
 
 // multiple condition
 // if this condition is true, say this, if that condition is true, say that, if nothing else... : then say something else.
@@ -424,6 +426,50 @@ console.log("allowedAccess: ", allowedAccess);
 
 
 /* Functions */
+
+// https://medium.com/tfogo/advantages-and-pitfalls-of-arrow-functions-a16f0835799e
+// https://www.youtube.com/watch?v=G4lZSWssoqA
+
+// using arguments
+
+/* when we create a function, we use placeholders called 'params'
+  when we evoke or call a function we are giving it a value or 'arguments'
+*/
+
+function functionName(param1, param2) {
+	return param1 + param2; // when using curly brackets to declare a function, we need to 'return' a value to the function
+}
+
+
+functionName(argument1, argument2);  // evoke the function
+
+
+// using arguments
+// if we give a function more arguments that params we can see this via dev tool and call them inside our function as an argument even though not declared as parameters
+// note the function has 2 paramters, but we have 4 arguments. 
+// simply write console.dir(arguments) to get all values of the evoked function call
+
+function names(person1, person2) {
+
+	console.dir(arguments) // look in dev tools and see the toral arguments list
+	console.log(`The eldest is ${person1} and the next is ${person2}`)
+	console.log(arguments[2]) // will get index value of 2 the arguments which is shaun
+}
+
+names('david', 'gary', 'shaun', 'steven'); // result: The eldest is david and the next is gary
+// the conole returns : Arguments(4)
+
+// now we can use these arguments inside the function if we need to
+//Also note, these arguments is not an array, look at the prototype and see its actually an onject of the js object, but we call these args like an array
+
+
+
+
+
+
+
+
+
 
 
 // arrow function
@@ -1403,6 +1449,8 @@ const newUser = {
 	password: "mypassword"
 };
 
+
+
 // we use the object.assign()
 console.log(Object.assign(user, newUser));
 
@@ -1882,7 +1930,7 @@ class Student {
 		this.param3 = param3;
 	}
 
-	// additional functions can be placed here
+	// additional functions can be placed here, outside the consstructor but inside the function
 
 	myFunction() {
 		//this.param1 + this.param2 ......whatever
@@ -1919,8 +1967,8 @@ class Student {
 			this.subjects = subjects
 	}
 
-	addSubject() {
-		this.subjects = [...this.subjects, subjects];
+	addSubject(subject) {
+		this.subjects = [...this.subjects, subject];
 	}
 }
 
@@ -1933,8 +1981,8 @@ console.log(student1.prototype.addSubject) // result on the console is 'function
 
 // to access a value
 console.log(student1.name); // result is Reed
-console.log(student1.addSubject()); // would output whats in the function
-
+student1.addSubject('english'); // would output whats in the function
+console.log(student1.subjects); // english
 
 
 
@@ -2534,7 +2582,12 @@ numbers.forEach(number => {
 });
 
 
+// or we can use for 'of' loop
+const names = ["david", "gary", "shaun", "stephen"];
 
+for (let name of names) { // name can be any word, like with using a forEach() loop
+	console.log(name)
+}
 
 
 
@@ -2589,6 +2642,7 @@ console.log(array2); // result: [6, 7, 8]
 // find an item and replace it using .findIndex()
 
 // previously we could use .indexOf() to find an element
+// indexOF takes the actual value from an array and returns the index value
 const items = [23, 3452, 334, 31];
 
 var i = items.indexOf(3452);
@@ -2638,7 +2692,7 @@ const restaurants = [
 // we can use .filter() to get the name of all restaraunts beginning with 'C'
 
 // here we create a var and use .filter and .startsWith to get the name beginning with C
-const results = restaurants.filter(restaurant => restaurant.name.startsWith('C'))
+const results = restaurants.filter(restaurant => restaurant.name.startsWith('C'));
 console.log(results);
 
 // what it we want to get places that start with C and are within a 2mile radius?
@@ -3193,6 +3247,7 @@ el.addEventListener('click', event => {
 
 // removing listeners
 // to remove a listener we need to have passed a function directly. using anonymous functions will not work
+// // to use removeEventListener must have reference to the original function
 
 function someFunction() {
 	console.log('just a function passed into an event');
@@ -3207,10 +3262,9 @@ el.addEventListener('click', function () {
 	console.log('click');
 })
 
-el.removeEventListener('click', function () { // this will not work because a full function was not passed
+el.removeEventListener('click', function () {
 	console.log('click');
 })
-
 
 
 /*
@@ -3235,11 +3289,10 @@ const buttons = document.querySelectorAll('.buy');
 
 
 function handleClick(event) {
+	// console.log(event) - show all methods for the event object
 	// console.log(event.target);
 	// console.log(event.currentTarget);
-	console.log(parseFloat(event.target.dataset.price)); // dataset will get the data attribute and price is what the dataset-item is
-
-
+	console.log(parseFloat(event.target.dataset.price)); // dataset will get the data attribute and price is what the dataset-item is. parseFloat will turn a string into a number
 }
 
 
@@ -3249,13 +3302,66 @@ buttons.forEach((button) => {
 
 
 
-el.setTimeout(() => {
-	// do something
-}, 3000)
+// refactoring the above code
+
+const buttons = document.querySelectorAll('.buy');
+
+
+
+function handleClick() {
+	console.log('buyItem');
+}
+
+
+function handleClickItem(btn) {
+	btn.addEventListener('click', handleClick); // contains the function the console.log to print buy Item
+
+}
+
+buttons.forEach(handleClickItem); //foreach contains the handleClick function which runs the event listener and the param for the foreach loop
 
 
 
 
+// EVENT OBJECT
+// event. target and event.current target
+
+event.target // refers to the item being clicked
+event.currentTarget // refers to the item that fired the event
+
+// in other words currentTarget is always the object listening for the event, target is the actual target that received the event
+
+// lets say we have this code
+
+
+
+const buttons = document.querySelectorAll('.buy');
+
+
+buttons.forEach((btn) => {
+	btn.addEventListener('click', handleClick);
+})
+
+
+
+function handleClick(event) {
+	console.log(event.target); // will show the item that was clicked
+	console.log(event.currentTarget); // will show the event that fired the listener
+	console.log(event.target.dataset.price); // this will show the dataset from the atttribute
+	event.stopPropagation(); // this will stop the click event clashing with other event Listenters further up the DOM;
+}
+
+// using the 'this' keyword with function and listeners
+// when ever we use 'this', we refer it to what is on the left of the function or event/
+// for example
+allmyButtons.addEventListener('click', function () {
+	console.log(this); // this will refer to 'allmyButtons
+})
+
+// however , when we use an arrow function, this refers to the next available returned function, NOT the function containing 'this'
+allmyButtons.addEventListener('click', () => {
+	console.log(this); // this will NOT refer to the listener, but the window object
+})
 
 
 
@@ -3366,6 +3472,8 @@ const promise = new Promise((resolve, reject) => {
 });
 
 promise.then(value => console.log(value)).catch(() => console.log('failure')); // result: 'done' - from the setTimeout function
+
+
 
 
 // show a rejection
@@ -3536,11 +3644,15 @@ fetch('https://jsonplaceholder.typicode.com/posts', { // the function to add our
 	headers: {
 		"Content-Type": "application/json"
 	},
-	body: JSON.stringify(blogPost) // convert the post to json data
+	body: JSON.stringify(blogPost) // convert json data to a string
 })
 	.then(response => response.json())
 	.then(data => console.log(data))
 
+
+
+
+// stringify - what it does?: Converts an object to a Json object for 
 
 
 
@@ -3670,9 +3782,9 @@ fetch('https://jsonplaceholder.typicode.com/posts/')
 	.then(data => {
 
 		const results = data.map((item) => {
-			let number = item.id;
-			if (number <= 6) {
-				console.log(item);
+			let id = item.id; // get all the ID's
+			if (id <= 6) { // loop over them and if they are less or equal to 6
+				console.log(item); //then print the item or use item.title to print 6 titles
 			}
 
 		})
@@ -3854,6 +3966,38 @@ postData(function (posts) { // create function inside the function
 
 }) // close the postData function
 
+
+
+
+
+
+
+// Higher Order functions  - a partial application function using async and await
+const getData = (url) => {
+	return async (route) => { // inner function
+		try {
+
+			await fetch(`${url}${route}`)
+				.then((response) => response.json())
+				.then((data) => {
+					const allData = data;
+					allData.map((item) => {
+						console.log([item.title, item.body]);
+					})
+				})
+
+
+		} catch (error) {
+			console.log(error)
+		}
+
+	}
+};
+
+
+const myPosts = getData('https://jsonplaceholder.typicode.com'); // evoke the first function and url param
+
+myPosts('/posts'); // use myposts as a function and use the relative path as the url. then function is evoked and the result is all the posts from the complete url
 
 
 
@@ -4103,26 +4247,3 @@ getPostData(); // result is the post data from post 1
 
 
 
-
-
-
-//or 
-
-async function getData(url) {
-	return async function (route) { // inner function
-		await fetch(`${url}${route}`)
-			.then((response) => response.json())
-			.then((data) => {
-				const allData = data;
-				allData.map((item) => {
-					console.log([item.title, item.body]);
-				})
-			})
-
-	}
-};
-
-
-const myPosts = getData('https://jsonplaceholder.typicode.com'); // evoke the first function and url param
-
-myPosts('/posts');

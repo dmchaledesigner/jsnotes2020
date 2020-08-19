@@ -164,8 +164,8 @@ listUsers.pop() // The pop() method removes the last element of an array
 listUsers.push() // inside the params we can add an item or another to the array
 listUsers.shift() //removes the first element of an array
 listUsers.unshift() // adds new items to the beginning of an array
-listUsers.indexOf( // returns an index number of the element we are targetting
-    listUsers.find() // returns the value of the first element in an array that pass a test, (and does not check the remaining values)
+listUsers.indexOf('Gary') // returns 1 - the index number of the element we are targetting
+listUsers.find() // returns the value of the first element in an array that pass a test, (and does not check the remaining values)
 const myArray = [...listUsers, 'new item']; // spread operator. copies the array into a new var and adds a new item
 
 // well we could do something like this
@@ -197,11 +197,11 @@ const finalMenuItems = [
 ];
 
 const [winner, ...losers] = finalMenuItems;
+// winner is the first then spread operator in this case is called 'rest' to iadd the 'rest' of the array
 
 
 
-
-// looping over arrays -another way
+// looping over arrays - another way
 
 const numbers = [1, 2, 3, 4, 5];
 
@@ -227,14 +227,66 @@ food.forEach(function (foodItem) {
 
 
 // loop and push into a new array
-var otherArray = [];
-var fruits = ["strawberry", "orange", "pear", "lemon"];
+let otherArray = [];
+let fruits = ["strawberry", "orange", "pear", "lemon"];
 
 fruits.forEach(function (item) {
     otherArray.push(item);
 });
 console.log(otherArray);
 
+
+// filter out duplicates and reorder using Set();
+const numbers = [1, 2, 3, 4, 5, 7, 3, 2, 2, 5];
+const updated = [...new Set(numbers)]; // result [1, 2, 3, 4, 5, 7]
+
+
+
+// Truncating an array
+let fruits = ['apple', 'mango', 'rocket', 'moon', 'tiger'];
+let updatedArray = [...fruits]; // create a copy of the array and use length property to cut it down
+updatedArray.length = 3;
+console.log(updatedArray);
+
+// we can also use splice() or slice()
+// splice() will change the original array, where slice does not
+// splice can take 3 params (index value, number of values, replacement value)
+// slice() can only take one value and that is where we want to cut the array based on index value
+
+
+let fruits = ['apple', 'mango', 'rocket', 'moon', 'tiger'];
+let items = [...fruits]; // DO NOT CHAIN AS WE GET DIFFERENT RESULTS
+items.splice(0, 1, 'granny');
+console.log(items); // ["granny", "mango", "rocket", "moon", "tiger"]
+
+
+let fruits = ['apple', 'mango', 'rocket', 'moon', 'tiger'];
+const slicedItems = [...fruits].slice(2); // use a variable to hold the sliced items
+console.log(slicedItems); //  ["rocket", "moon", "tiger"]
+
+
+
+
+
+// get last item
+let fruits = ['apple', 'mango', 'rocket', 'moon', 'tiger'];
+let fruitsCopy = [...fruits];
+let lastItem = fruitsCopy[fruits.length - 1]; // index value of the array is 4 using .length - 1
+console.log(lastItem); // result: Tiger
+
+
+// get first item - we could use destructuring for this
+let fruits = ['apple', 'mango', 'rocket', 'moon', 'tiger'];
+let fruitsCopy = [...fruits];
+
+const [first, ...theRest] = fruitsCopy;
+console.log(first);
+
+// or 
+let fruits = ['apple', 'mango', 'rocket', 'moon', 'tiger'];
+let fruitsCopy = [...fruits];
+const first = fruitsCopy.splice(0, 1);
+console.log(first); // [apple]
 
 
 
@@ -259,8 +311,8 @@ switch (fruit) {
         count += 2;
         console.log(`The fruit number is ${count}`);
         break;
-
-    case 'banana': // correct value of fruit variable. code will run then stop when executed by 'break'
+    // correct value of fruit variable fruit. code will run then stop when executed by 'break'
+    case 'banana':
         count += 3;
         console.log(`The fruit number is ${count}`);
         break;
@@ -407,6 +459,90 @@ for (let name of myArray) { // name can be any word, its just to assign each ele
 
 
 
+
+// objects
+
+/* 
+Consists if key value pairs/
+Once an object is created, its name cannot be overwritten though its contents can
+*/
+
+const obj = {
+    one: 1,
+    two: 2, // always use a trailing comma unlike JS was before. Modern JS has changed to this.
+};
+
+
+// nested object
+const obj = {
+    name: 'david',
+    age: 42,
+    address: {
+        line1: 'unit 314',
+        line2: '8 lachlan street',
+        line3: 'waterloo'
+    }
+
+};
+
+// then to acess the nested object
+console.log(obj.address.line2) // result: 8 lachlan street
+
+//adding a new key value 
+obj.three = 3;
+obj.four = 4;
+
+
+// adding a varable to an object
+var three = 3;
+
+const obj = {
+    one: 1,
+    two: 2,
+    three: three,
+};
+
+//however if the var is same name as the key we can do this
+
+const obj = {
+    one: 1,
+    two: 2,
+    three,
+};
+
+
+// freezing and object
+/* the best thing to do here is make a clone of the object and freeze the original so there is a default key value structure */
+
+
+const originalObject = {
+    one: 1,
+    two: 2,
+    three: 3,
+};
+
+
+const clonedObject = Object.freeze(originalObject);
+// now we can see the contents of our cloned object
+console.log(clonedObject); // {one: 1, two: 2, three: 3}
+
+
+// better to use spread operator (same as array) to copy and edit an object
+const originalObject = {
+    one: 1,
+    two: 2,
+    three: 3,
+};
+
+const clone = { ...originalObject, four: 4, five: 5 };
+console.log(clone); // result
+
+
+
+
+
+
+
 // looping over objects
 
 const obj = {
@@ -432,13 +568,13 @@ var mySelectBox = function mySelectBox() {
     var list = ['item1', 'item2', 'item3', 'item4'];
     var box = "";
 
-    box += "<select id=\"mySelect\">";
+    box += `<select id="mySelect">`;
 
     for (var i = 0; i < list.length; i++) {
-        box += "<option>" + list[i] + "</option>";
+        box += `<option> ${list[i]} </option>`;
     }
 
-    box += "</select>";
+    box += `</select>`;
 
 };
 
@@ -1071,16 +1207,99 @@ console.log(newArray); //result: ["Banana", "Orange", "Apple", "Cherry"]
 
 
 
+// IF statement and rules of 'if' logic
+//===========================================
+
+if (condition) {
+    // do something
+} else if (condition) {
+    // do something
+} else {
+    // default value if the condition is not evaluated if any other condition is not met
+}
+
+// REMEMBER that if a single condition is true, the code is executed and stops. It doesnt run anything else. The rest of the IF statement is skipped.
+
+// IF statement to NOT need to have an else statement
+if (condition) {
+    // do something
+}
+
+
+// typical statement
+
+const age = 40;
+if (age > 24) {
+    console.log(`${age} is the age I am`);
+} else if (another condition) {
+    console.log(something);
+} else if (another condition) {
+    console.log(something);
+}else {
+
+}
+
+
+
+&& // and operator
+|| // 'or' operator
+
+// types of logid
+if (something || something else) {
+    // do something
+}
+
+if ((condition1) && (condition2)) { // note we use brackets to execute 2 conditions here
+    // do something
+}
 
 
 
 
 
+// if statement with functions
 
 
 
+// create a function to turn a sentence into a slug (used for wordpress ID names etc)
+function slugify(sentence, lowercase) {
+    let slug = sentence.replace(/\s/g, '-');
+    // rejex code = starts and ends with /. g means global and the \s means a space between. So replace means replace space with a '-';
+    if (lowercase) {
+        return slug.toLowerCase();
+    }
+    return slug;
+}
+
+slugify('I have said something To Please you');
+// result "I-have-said-something-To-Please-you"
+
+slugify('I have said something To Please you', true);
+// result "i-have-said-something-to-please-you"
 
 
+// using variables with if statement
+const hasAwesomeName = 'transportation'.includes('transport'); // returns value of true or false
+if (hasAwesomeName) { // which returns true becuse the value of the includes() is true
+    console.log('Super Cool Name!');
+}
+
+
+
+//Coersion - the ability to turn a number or string into a truty or falsy value
+const name = 'david';
+
+if (name) { // now check if it exists -returns true
+    // do something
+}
+
+if (!name) { // checks if it DOESNT exists - returns false
+    // do something
+}
+
+if (!!name) { //flips from false to true
+    // do something
+}
 
 
 
@@ -1124,9 +1343,40 @@ console.log(myGame);
 
 
 
+// if statement and functions
+
+// we can also use a function here
+function hasAwesomeName(word, phrase) {
+    if (word.includes(phrase)) {
+        console.log('It works!')
+    }
+}
+hasAwesomeName('transportation', 'transport')
 
 
 
+// ternary using function
+
+function showAdminBar() {
+    const el = el.classList.add('show-admin-bar');
+}
+
+const isAdmin = true
+isAdmin ? isloggedIn() : null // this means if loggedin is true , then log in. if not then do nothing
+
+
+
+
+// function inside an if statement
+const isAdmin = true
+if (isAdmin) {
+    function showAdminBar();
+}
+
+
+
+// the 'and and' trick! - conditional abuse
+function
 
 
 

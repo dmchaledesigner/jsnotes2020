@@ -90,7 +90,7 @@ console.log(book1); // {title: "Book1", author: "John Doe", year: "2018", revise
 function Book(title, author, year) {
     this.title = title;
     this.author = author;
-    this.year = year
+    this.year = year;
 }
 // Book 1 added function using prototype
 Book.prototype.getSummary = function () {
@@ -153,3 +153,42 @@ class Magazine extends Book {
 const latestMag = new Magazine('Magazine1', 'John Doe', '2020', 'April');
 console.log(latestMag); // {title: "Magazine1", author: "John Doe", year: "2020", month: "April"}
 console.log(latestMag.getSummary()); // 'Magazine1 was written by John Doe in the year 2020'
+
+
+
+
+//constructor with adding to an array inside parameters
+// from help on facebook 
+
+
+class Person {
+    constructor(id, name, course, subjects) {
+        this.id = id;
+        this.name = name;
+        this.course = course;
+        subjects.length > 0 ? this.subjects = subjects : null;
+    }
+    addSubjects(subject) {
+        this.subjects = [...this.subjects, subject];
+    }
+
+    personIdentity() {
+        return `Know by ${this.name} with the ID of ${this.id}`;
+    }
+}
+
+class Student extends Person {
+    constructor(id, name, course, subjects, age) {
+        super(id, name, course, subjects);
+        this.age = age
+    }
+}
+
+const student1 = new Student(32, 'Dave', 'javascript', [], 43);
+console.log(student1) //{ id: 32, name: 'Dave', course: 'javascript', age: 43 }
+const student2 = new Student(32, 'Dave', 'javascript', ['math', 'chemistry'], 43);
+console.log(student2)/*{  id: 32,
+                              name: 'Dave',
+                              course: 'javascript',
+                              subjects: [ 'math', 'chemistry' ],
+                              age: 43 }*/
