@@ -4,12 +4,108 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title></title>
+  <title>turtle mover</title>
   <link rel="stylesheet" href="../base.css">
+  <link rel="shortcut icon" href="#" />
 </head>
 
 
 <body>
+
+  <style>
+    /* css for the turtle using css3 variable */
+
+    .turtle {
+      position: relative;
+      width: 180px;
+      /* double dash declares the variable */
+      --x: 0;
+      --x: 0;
+      transform: translateX(var(--x)) translateY(var(--y));
+      transition: transform 0.2s;
+    }
+  </style>
+
+
+
+
+  <img src="./turtle.png" alt="turtle" class="turtle">
+
+
+
+  <script>
+    const turtle = document.querySelector('.turtle');
+
+    // keyboard movement variables
+    let x = 0; // the x axis (width the viewport)
+    let y = 0; // the y axis (height of viewport)
+    let speed = 20 // this is to multiply the x or y movents by a single keydown press
+
+
+
+    window.addEventListener('keydown', handleKeyDown);
+
+
+
+    function handleKeyDown(event) {
+      // console.log(event.key); // test for keys - remember to click inside the window then hit a key
+      const keydown = event.key;
+
+
+
+      if (!keydown.includes('Arrow')) { return; } // if does NOT(using bang operator) include Arrow, then stop (return value).
+      console.log(keydown); //- again check only Arrow keys will show
+
+      switch (keydown) {
+        case 'ArrowUp':
+          y -= 1;
+          rotate = -90;
+          break;
+        case 'ArrowDown':
+          y += 1;
+          rotate = 90;
+          break;
+        case 'ArrowLeft':
+          x -= 1;
+          rotate = 0;
+          flipped = true;
+          break;
+        case 'ArrowRight':
+          x += 1;
+          rotate = 0;
+          flipped = false;
+          break;
+        default:
+          console.log('That is not a valid move');
+          break;
+      }
+
+
+
+      // now set style attrivbute to the turtle now that we have positioning done
+      // using setAttribute - we set it to 'style' and then css with back-ticks
+      // we set the --x and --y css variables to the value of let x and let y
+
+      // turtle.setAttribute('style',
+      //   `--x: ${x}px; 
+      //    --y: ${y}px;
+      //   `
+      // )
+
+
+      // now lets create a variable of speed and add a value
+      // we declare this in our keyboard variable
+      // then we can include this in our turtle Atributes
+
+      turtle.setAttribute('style',
+        `--x: ${x * speed}px; 
+         --y: ${y * speed}px;
+        `
+      )
+
+    }; // close handleKeyDown function
+
+  </script>
 
 </body>
 

@@ -361,6 +361,147 @@ switch (str) { // input the value of the answer the user enters
 
 
 
+// switch using key events and css3 variables
+// ========================
+
+
+// create an image with html =   <img src="./turtle.png" alt="turtle" class="turtle">
+
+
+// create listener on the window that looks for the keydown event
+window.addEventListener('keydown', handleKeyDown);
+
+// create the function and console.log(event.key)
+// then click in the window and then, press any keyboard
+function handleClickDown(event) {
+    // console.log(event.key); // will show any key pressed in the console
+    // assign to a var
+    let keyEvent = event.key;
+
+    // now create an 'if', where if any keyPress down not have 'Arrow' hide this value
+    // so if does NOT include (! use bang operator to get revise of true) then 'return' the value (hide)
+    if (keyEvent.includes('Arrow')) {
+        return;
+    }
+
+    // now use a switch statement to say if button press is up, down, left and right
+
+    switch (keydown) {
+        case 'ArrowUp':
+            y -= 1;
+            rotate = -90;
+            break;
+        case 'ArrowDown':
+            y += 1;
+            rotate = 90;
+            break;
+        case 'ArrowLeft':
+            x -= 1;
+            rotate = 0;
+            flipped = true;
+            break;
+        case 'ArrowRight':
+            x += 1;
+            rotate = 0;
+            flipped = false;
+            break;
+        default:
+            console.log('That is not a valid move');
+            break;
+    }
+
+
+    // now lets create a variable of speed and add a value
+    // we declare this in our keyboard variable
+    // then we can include this in our turtle Atributes
+
+    turtle.setAttribute('style',
+        `--x: ${x * speed}px;
+         --y: ${y * speed}px;
+        `
+    )
+
+} // close function
+
+
+
+
+
+// Intervals and timers
+// ========================
+
+
+//setTimeOut() method takes in a anonymous function or a function itself. It is an event that excutes code inside when a time value is specified.
+
+setTimeout(function () { //callback function which waits and then it is 'called back'
+    console.log('buuuzzzzzzzz');
+}, 3000); // result is a console.log after a delay of 3 seconds
+
+
+// function inside a setTImeout
+function buzzMe() {  // create a function
+    console.log('Buuuuzzzzed')
+}
+
+setTimeout(buzzMe, 3000); // then add the function
+
+
+
+
+// callbacks
+
+//This is a classic example of async js using a callback as setTimout and setInterval is
+function buzzMe() {
+    console.log('Buuuuzzzzed')
+}
+
+console.log('starting!'); //this runs first
+setTimeout(buzzMe, 3000); // this is waited and held because of the time delay of 300 'its called back'
+console.log('finishing!') // then is one runs as JS continues the code, THEN the buzzMe function is called
+
+// result - 'starting!' 'finishing!'  'Buuuuzzzzed'
+
+
+
+
+
+// setTimeout arrow function
+function buzzMe() {
+    console.log('Buuuuzzzzed');
+}
+
+setTimeout(() => {
+    return buzzMe();
+}, 300);
+
+
+// with promise function
+const promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve('done'), 1000);
+});
+
+promise
+    .then((value) => console.log(value))
+    .catch((error) => console.log(error));
+
+console.log(promise);
+
+
+
+
+// setInterval()
+
+// Works same as setTimeout. Takes anonymous function or function itself and 'continues to execute' at a specific time value
+setInternv
+
+
+
+
+
+
+
+
+
 
 
 
@@ -461,6 +602,7 @@ for (let name of myArray) { // name can be any word, its just to assign each ele
 
 
 // objects
+// ========================
 
 /* 
 Consists if key value pairs/
@@ -663,6 +805,7 @@ console.log(items()); // evoke the items function - result: apple
 
 
 // events
+// ========================
 
 /*  
     <h2 class="header">Website header</h2>
@@ -1182,8 +1325,8 @@ console.log(myArray); //result: ["this is the first", "this is the second", "thi
 
 
 const fruit = ['Banana', 'Orange', 'Apple', 'Mango']
-const myFruits = [...fruits.slice(0, 2)];
-console.log(myFruits); // result ["Banana", "Orange"]
+const myFruits = [...fruit].slice(0, 2);
+console.log(myFruits); // result ["Banana", "Orange"] 
 
 
 
@@ -1280,6 +1423,7 @@ slugify('I have said something To Please you', true);
 
 // using variables with if statement
 const hasAwesomeName = 'transportation'.includes('transport'); // returns value of true or false
+
 if (hasAwesomeName) { // which returns true becuse the value of the includes() is true
     console.log('Super Cool Name!');
 }
@@ -1355,6 +1499,8 @@ hasAwesomeName('transportation', 'transport')
 
 
 
+
+
 // ternary using function
 
 function showAdminBar() {
@@ -1370,13 +1516,17 @@ isAdmin ? isloggedIn() : null // this means if loggedin is true , then log in. i
 // function inside an if statement
 const isAdmin = true
 if (isAdmin) {
-    function showAdminBar();
+    showAdminBar();
 }
 
 
 
-// the 'and and' trick! - conditional abuse
-function
+
+
+
+
+
+
 
 
 
@@ -1630,7 +1780,7 @@ console.log(myTodo.nationality); //result: Irish
 
 
 // Prototypal Inheritence
-//============
+// ========================
 // The method of creating a second constructor object and
 // inheriting (or passing) the key:value pairs and prototypes from the first constructor object
 
@@ -1882,6 +2032,7 @@ dragon1.allDragon(); // My name is Devil
 
 
 // Using constructor with Classes
+// ========================
 
 /* An easier way to create constructors with ES6 is classes.
 Similar to creating classes in React!
@@ -1970,7 +2121,7 @@ console.log(dragoon.getInfo());  // result: 10 50% Dragooon 5 , which is life, n
 
 
 // Async JS
-
+// ========================
 
 /* SYNC CODE is when code runes line by line, from top to bottom
 once something is evoked it is removed from the page unless needed later on, is recalled
@@ -2044,6 +2195,7 @@ another example is addEventListener... event is held but not triggered but rest 
 
 
 // fixing Callback with promises
+// ========================
 
 
 // States of a promise:
