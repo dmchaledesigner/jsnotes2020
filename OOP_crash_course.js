@@ -192,3 +192,42 @@ console.log(student2)/*{  id: 32,
                               course: 'javascript',
                               subjects: [ 'math', 'chemistry' ],
                               age: 43 }*/
+
+
+
+// obejct using date
+function Person(firstName, lastName, dob) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.dob = dob;
+
+    this.getBirthDate = function () {
+        return this.dob.getFullYear();
+    }
+
+}
+
+const person1 = new Person('john', 'doe', '4-3-1980');
+
+
+
+
+
+class Person {
+    constructor(firstName, lastName, dob) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+    }
+
+    getBirthDate() {
+        return this.dob.getFullYear();
+    }
+
+}
+
+const person1 = new Person('john', 'doe', '4-3-1980');
+
+
+
+

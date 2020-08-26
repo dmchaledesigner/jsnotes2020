@@ -16,8 +16,8 @@ buttons.forEach((btn) => {
 
 
 function handleClick(event) {
-    console.log(event.target);
-    console.log(event.target.dataset.price);
+    console.log(event.target.classList.value);
+    // console.log(event.target.dataset.price);
 }
 
 

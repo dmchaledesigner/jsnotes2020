@@ -1447,6 +1447,7 @@ if (!!name) { //flips from false to true
 
 
 
+
 // ternary operator - shorthand if statement
 //===========================================
 
