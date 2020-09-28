@@ -398,6 +398,7 @@ document.write("Year : ", curDate.getFullYear(), "<br />");
 document.write("Time : ", curDate.getHours(), ":", curDate.getMinutes(),
   ":", curDate.getSeconds(), ":", curDate.getMilliseconds(), "<br />");
 
+
 // Create a Date object for my birthday
 var myBD = new Date("December 21, 2015");
 
@@ -407,18 +408,23 @@ var tilMyBD = msForBD - timeNow;
 
 document.write("Days til Birthday : ", tilMyBD / (1000 * 60 * 60 * 24), "<br />");
  
-</script >
+// </script >
  
-< !-- ----------CHANGING ELEMENTS & EVENT HANDLING---------- -->
-< !--All the events can be found here http://www.w3schools.com/jsref/dom_obj_event.asp -->
+// < !-- ----------CHANGING ELEMENTS & EVENT HANDLING---------- -->
+// < !--All the events can be found here http://www.w3schools.com/jsref/dom_obj_event.asp -->
  
-< !--Open alert on click-- >
+
+
+// < !--Open alert on click-- >
   <a href="JavaScript:void(0)" onClick="alert('Hello');">Say Hello</a><br />
 
-  <!--Call a function on click-- >
+  // <!--Call a function on click-- >
+
     <a href="JavaScript:void(0)" onClick="openAlert('Hi how are you');">Say Something</a><br />
 
-    <!--Change text color on mouse rollover and roll out-- >
+
+    // <!--Change text color on mouse rollover and roll out-- >
+
       <a href="JavaScript:void(0)" onmouseover="this.style.color='red';"
         onmouseout="this.style.color='blue';"
         ondblclick="this.text='You Double Clicked Me'"
@@ -429,7 +435,11 @@ document.write("Days til Birthday : ", tilMyBD / (1000 * 60 * 60 * 24), "<br />"
         <input type="text" id="randInput"
           onChange="var dataEntered=document.getElementById('randInput').value; alert('User Typed ' + dataEntered);"><br /><br />
 
-          <!-- When a user clicks a key provide info on the key clicked -->
+
+
+
+          {/* <!-- When a user clicks a key provide info on the key clicked --> */}
+          
 <form action="#" id="sampForm">
             <input id='charInput' type="text">
               <p id="keyData">Key Data Here</p>
@@ -448,8 +458,10 @@ Mouse Y: <input type="text" id="mouseY"><br />
 
                         <script>
 
-                          function getChar(event) {
 
+
+
+function getChar(event) {
   // event.which returns the key or mouse button clicked
   if (event.which == null) {
 

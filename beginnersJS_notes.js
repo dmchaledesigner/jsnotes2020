@@ -30,7 +30,7 @@ var monthsPerYear = 12;
 
 var age = 39;
 
-var secondsAlive =  secondsPerMin * minsPerHour * hoursPerDay * daysPerWeek * weeksPeryear * monthsPerYear * age;
+var secondsAlive = secondsPerMin * minsPerHour * hoursPerDay * daysPerWeek * weeksPeryear * monthsPerYear * age;
 
 document.write(secondsAlive);
 
@@ -42,16 +42,16 @@ document.write(secondsAlive);
 //=============================================================================
 
 
-function isMailEmpty(){
+function isMailEmpty() {
 
 	// get the field inside a var
-	var field  = getElementById('email');
+	var field = getElementById('email');
 
 	// test is the field is empty or not
-	if(field.value === ''){
+	if (field.value === '') {
 		return true;
 
-	}else{
+	} else {
 		return false;
 	}
 
@@ -59,9 +59,9 @@ function isMailEmpty(){
 
 
 var fieldTest = isMailEmpty(); // assign the function to a variable
-if(fieldTest === true){ // if the field is empty...
+if (fieldTest === true) { // if the field is empty...
 	alert('Please provide your email address'); // alert the user
-	}
+}
 
 
 
@@ -73,9 +73,9 @@ if(fieldTest === true){ // if the field is empty...
 
 // remember: 0 based index starts at 0 so we need to add 1!
 
-function getRandomNumber(upper){ // use the upper param as a number when calling the function
+function getRandomNumber(upper) { // use the upper param as a number when calling the function
 
-	var randomNumber = Math.floor(Math.random() * upper ) + 1; // we use +1 to start from 1 and not 0 (index)!
+	var randomNumber = Math.floor(Math.random() * upper) + 1; // we use +1 to start from 1 and not 0 (index)!
 	//Math.random returns a decimal between 0 and 1. Math.floor returns a whole number so we place .random inside .floor for a random whole number
 	return randomNumber; // return the var to the function
 }
@@ -88,10 +88,10 @@ getRandomNumber(7); // call the function
 
 // call a random number with 2 params & TEST that both arguments are numbers, not strings
 //=========================================================================================
-function getRandomNumber(upper, lower){
+function getRandomNumber(upper, lower) {
 
 	// create the conditional statement to make sure both upper and lower are numbers using isNan();
-	if (isNan(upper) || isNan(lower) ){ // if upper or lower is not a number...
+	if (isNan(upper) || isNan(lower)) { // if upper or lower is not a number...
 		throw new error("Both arguments must be numbers"); // ... throw the error
 	}
 
@@ -101,8 +101,8 @@ function getRandomNumber(upper, lower){
 }
 
 
-console.log( getRandomNumber(5, 7) );
-console.log( getRandomNumber('nine', 'twelve') );
+console.log(getRandomNumber(5, 7));
+console.log(getRandomNumber('nine', 'twelve'));
 
 
 
@@ -112,7 +112,7 @@ console.log( getRandomNumber('nine', 'twelve') );
 // function with 3 params
 //=================================
 
-function getArea(width, length, unit){
+function getArea(width, length, unit) {
 
 	var area = width * length;
 	return area + " " + unit;
@@ -120,7 +120,7 @@ function getArea(width, length, unit){
 }
 
 
-console.log( getArea(10, 20, 'sq ft') );
+console.log(getArea(10, 20, 'sq ft'));
 
 
 
@@ -133,28 +133,28 @@ alert("Let's do some math!");
 
 // first number prompt and use parseInt / parseFloat to convert to a number
 var firstQuestion = prompt("Enter a number!");
-     firstQuestion = parseFloat(firstQuestion);
+firstQuestion = parseFloat(firstQuestion);
 
 // first number prompt and use parseInt / parseFloat to convert to a number
 var secondQuestion = prompt("Enter a second number!");
-    secondQuestion = parseFloat(secondQuestion);
+secondQuestion = parseFloat(secondQuestion);
 
 
 var message = "<h1>Math  with the numbers " + firstQuestion + " and " + secondQuestion + "</h1>";
-    
-    message += firstQuestion + " + "  + secondQuestion  + " = " + (firstQuestion + secondQuestion);
 
-    message += "<br>";
+message += firstQuestion + " + " + secondQuestion + " = " + (firstQuestion + secondQuestion);
 
-    message += firstQuestion + " - "  + secondQuestion  + " = " + (firstQuestion - secondQuestion);
+message += "<br>";
 
-    message += "<br>";
+message += firstQuestion + " - " + secondQuestion + " = " + (firstQuestion - secondQuestion);
 
-    message += firstQuestion + " * "  + secondQuestion  + " = " + (firstQuestion * secondQuestion);
+message += "<br>";
 
-    message += "<br>";
+message += firstQuestion + " * " + secondQuestion + " = " + (firstQuestion * secondQuestion);
 
-    message += firstQuestion + " / "  + secondQuestion  + " = " + (firstQuestion / secondQuestion);
+message += "<br>";
+
+message += firstQuestion + " / " + secondQuestion + " = " + (firstQuestion / secondQuestion);
 
 // 8. Add a linebreak tag -- <br> -- to the message variable
 
@@ -170,7 +170,7 @@ var message = "<h1>Math  with the numbers " + firstQuestion + " and " + secondQu
 //     to see what the completed output should look like
 
 
-      document.write(message);
+document.write(message);
 
 
 
@@ -205,24 +205,24 @@ num2 += parseFloat(num2);
 
 
 // conditional statement
-if(num2 === 0){
- alert("The second number is 0. You can't divide by zero. Reload and try again.");
-}else if(isNaN(num1) || isNaN(num2)){
-   alert("At least one of the values you typed is not a number. Reload and try again.");
-}else{
+if (num2 === 0) {
+	alert("The second number is 0. You can't divide by zero. Reload and try again.");
+} else if (isNaN(num1) || isNaN(num2)) {
+	alert("At least one of the values you typed is not a number. Reload and try again.");
+} else {
 
-// build an HTML message
-message = "<h1>Math with the numbers " + num1 + " and " + num2 + "</h1>";
-message += num1 + " + " + num2 + " = " + (num1 + num2);
-message += "<br>";
-message += num1 + " * " + num2 + " = " + (num1 * num2);
-message += "<br>";
-message += num1 + " / " + num2 + " = " + (num1 / num2);
-message += "<br>";
-message += num1 + " - " + num2 + " = " + (num1 - num2);
-  
-// write message to web page
-document.write(message);
+	// build an HTML message
+	message = "<h1>Math with the numbers " + num1 + " and " + num2 + "</h1>";
+	message += num1 + " + " + num2 + " = " + (num1 + num2);
+	message += "<br>";
+	message += num1 + " * " + num2 + " = " + (num1 * num2);
+	message += "<br>";
+	message += num1 + " / " + num2 + " = " + (num1 / num2);
+	message += "<br>";
+	message += num1 + " - " + num2 + " = " + (num1 - num2);
+
+	// write message to web page
+	document.write(message);
 
 
 

@@ -19,6 +19,88 @@ console.log(Object.entries(book1)); // [ [ 'title', 'Book 1' ], [ 'name', 'john 
 
 
 
+
+
+// If we copy and object then we can change its value etc without having the orinal object beinbg altered
+// there is copying and cloning
+// an object copy only copies over its initial key values
+// an object deep clone copies over its initial key values AND its nested objects
+
+
+
+// A deep copying means that value of the new variable is disconnected from the original variable,
+// while a shallow copy means that some values are still connected to the original variable.
+
+// Consider the following example:
+
+
+let person = {
+    firstName: 'John', // primative / top level key values
+    lastName: 'Doe',
+    address: {
+        street: 'North 1st street',
+        city: 'San Jose',
+        state: 'CA',
+        country: 'USA'
+    }
+};
+
+
+let personCopy = Object.assign({}, person); //takes two params - a new blank object to copy, and the name of the original object we want to copy
+console.log(person); // now we have a 'shallow copy' of our original person object
+
+personCopy.firstName = 'Kevin';
+personCopy.address.street = '8 Lachlan Street';
+console.log(personCopy);
+
+
+
+/*
+result:
+
+{firstName: "Kevin", lastName: "Doe", address: {…}}
+address:
+city: "San Jose"
+country: "USA"
+state: "CA"
+street: "8 Lachlan Street"
+__proto__: Object
+firstName: "Kevin"
+lastName: "Doe"
+__proto__: Object
+
+
+NOTE firstname and street has changed sinse we updated them however,
+if we console.log the person object we can see the street value has changed so the original is being altered
+
+
+{firstName: "John", lastName: "Doe", address: {…}}
+address: {street: "8 Lachlan Street", city: "San Jose", state: "CA", country: "USA"}
+firstName: "John"
+lastName: "Doe"
+__proto__: Object
+
+
+*/
+
+
+
+// to delete a key from an object
+delete personCopy.firstName;
+
+
+
+
+
+// A deep clone can will eliminate all aspects of unwanted changes on the original object
+// here is how we do it
+
+
+const copiedPerson = JSON.parse(JSON.stringify(person));
+// this will give us a complete copy of the original person object
+
+
+
 // To create more than one book its, better to create a constructor, and instance of an object to create other other objects
 
 

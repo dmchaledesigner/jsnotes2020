@@ -227,7 +227,7 @@ getPostData(); // result is the post data from post 1
 
 
 
-
+// This is probably the best way to use fetch (with try and catch error) with a url and a relative path
 
 // Higher Order functions  - a partial application function using params in both parent and child function to get url and relative path combined - using async and await
 const getData = (url) => {
@@ -255,3 +255,51 @@ const getData = (url) => {
 const myPosts = getData('https://jsonplaceholder.typicode.com'); // evoke the first function and url param
 
 myPosts('/posts'); // use myposts as a function and use the relative path as the url. then function is evoked and the result is all the posts from the complete url
+
+
+
+
+
+
+
+// other useful tips and notes
+// ==============================
+
+
+
+// converting data from an api from a string to json object
+
+
+/* Download JSON VIEWER for Chrome
+   Copy the raw data from the browser and using back ticks, assign it to a variable such as below.
+   Then if we paste this into your console and use 'typeof data', the result is a string
+    Note if we try to access any of the values of any key we get undefined
+
+    example: data.id or, data.title will result in 'undefined'
+
+
+   To convert this back to an object for using with JS and the web we need to parse it back to JSON
+   Create a new variable and use the JSON.parse(data) to convert back to JSON data
+
+*/
+
+const data = `[
+    {
+      "userId": 1,
+      "id": 1,
+      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+      "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+    },
+    {
+      "userId": 1,
+      "id": 2,
+      "title": "qui est esse",
+      "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
+    }
+]`;
+
+// conver the data above from a string to an actual JSON object
+const dataObject = JSON.parse(data);
+
+
+

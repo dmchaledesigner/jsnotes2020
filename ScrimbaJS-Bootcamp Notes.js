@@ -1506,6 +1506,11 @@ console.log(myObj);
 
 
 
+// to copy a complete object including nested object data
+
+const copiedObject = JSON.parse(JSON.stringify(originalObject));
+// this will give us a complete copy of the original person object
+
 // the 'this' keyword
 
 //'this' refers to the object in which a function sits in.
@@ -1728,7 +1733,40 @@ console.log(usersOver20);
 
 
 
+// using map and filter on an object
+// task: filter over an object depending on a condition and map over it to output the results;
+//REMEMEBER using filter returns a true or false value
 
+
+const toDos = [
+
+	{
+		id: 1,
+		text: 'take out the trash',
+		completed: true,
+	},
+	{
+		id: 2,
+		text: 'Meeting with boss',
+		completed: false,
+	},
+	{
+		id: 3,
+		text: 'Do laundry',
+		completed: true,
+	},
+];
+
+
+const completedTodos = toDos.filter((toDo) => {
+	return toDo.completed === true;
+}).map((item) => {
+	return item.text;
+});
+
+
+console.log(completedTodos);
+// result: ["take out the trash", "Do laundry"]
 
 
 
@@ -2222,8 +2260,20 @@ const temperatures = [69, 82, 73, 64];
 
 
 // array - accessing elements in an array .includes()
+/* The includes() method determines whether a string contains the characters of a specified string.
+This method returns 'true' if the string contains the characters, and 'false' if not.
+
+*/
+
+let string = 'this is the last day';
+let condition = string.includes('the');
+console.log(condition); // result is true
+
 //=====================================
 const temperatures = [69, 82, 73, 64];
+console.log(temperatures.includes(82)); // result: true
+
+
 
 
 //indexOf() only works for single numbers and strings and gives an index as a result
@@ -3431,6 +3481,57 @@ document.body.addEventListener('mouseover', (event) => {
 
 
 
+// Events Contd.....scroll
+
+
+//using the window object to find the height of the browser and alert something when it reaches the end
+// https://www.youtube.com/watch?time_continue=384&v=V9CY0F4Wc7M&feature=emb_logo - looks at scrolling on the window object
+
+
+
+window.addEventListener('scroll', myFunction);
+
+
+function myFunction() {
+
+	const scrollAmount = event.currentTarget.scrollY; // this will get the number of the amount scrolled on the window object;
+	// console.log(scrollAmount); //result is an increasing number
+
+	// get the total scrollable height of the document: document scroll height - inner window height
+	const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+	// console.log(scrollableHeight); // result is a fixed number
+
+	// if both consts are equal then alert
+	if (Math.ceil(scrollableHeight) === scrollAmount) {
+		alert('This is the end of the document');
+	}
+
+	// we use math.ceil() to round off the scrollableHeoight number
+
+}
+
+
+
+/* REMEMBER difference between scrollY / X and scrollTop 
+	- scrollY and scrollX are methods on the window object
+	- scrollTop is for a overflow:scroll style on a DIV where a DOM element has a scroll bar
+*/
+
+
+// Scrolling on elements and using intersectionObserver method
+
+// get a div wrapper as an example
+const elWrap = document.querySelector('.wrapper');
+
+elWrap.addEventListener('scroll', scrollFunction);
+
+function scrollFunction(event) {
+	const scrollAmount = event.currentTarget.scrollTop;
+	console.log(scrollAmount);
+}
+
+
+
 
 
 
@@ -3506,9 +3607,9 @@ promise.then(value => console.log(value)).catch(() => console.log('failure'));
 /* 
 this will call two or more promises to execute at the same time.
 If one promise is delayed, then the one that isnt will wait, til they run together
-
+	
 example....
-
+	
 */
 
 const youTube = new Promise((resolve, reject) => {
@@ -3534,14 +3635,14 @@ console.log(theConsole);
 
 /* 
 Result: 
-
+	
 getting stuff from youtube // our console logs fom the youtube
 Now facebook feed has loaded // our console log  from the facebook
-
+	
 (2) [{…}, {…}]
 0: {videos: Array(5)} then we get the videos array from the resolve
 1: {feed: Array(3)} then we get the feed array from facebook
-
+	
 */
 
 
@@ -3714,7 +3815,7 @@ fetch('https://jsonplaceholder.typicode.com/posts/')
 
 
 /* the html
-
+	
 <body>
 <h1>Authors</h1>
 <ul id="authors"></ul>
@@ -4058,11 +4159,11 @@ postsData((posts) => { // this is the final function, the callback where we use 
 /* Using async and await are ways to simplify promises. 
 Basically we are using our promise inside a function. This is the ONLY way async will work.
 We cannot use await until we are inside a function that is declared using the await keyword
-
+	
 Async functions are promises by default and is a cleaner way of creating promises
-
+	
 Take this code for example...
-
+	
 */
 
 
