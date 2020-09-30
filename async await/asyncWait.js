@@ -283,7 +283,7 @@ myPosts('/posts'); // use myposts as a function and use the relative path as the
 
 */
 
-const data = `[
+const data = [
     {
       "userId": 1,
       "id": 1,
@@ -296,7 +296,7 @@ const data = `[
       "title": "qui est esse",
       "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
     }
-]`;
+];
 
 // conver the data above from a string to an actual JSON object
 const dataObject = JSON.parse(data);
