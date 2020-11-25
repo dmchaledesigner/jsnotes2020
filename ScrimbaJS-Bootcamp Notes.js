@@ -645,7 +645,19 @@ console.log(david.subjects()); // result ["moto", "bikes", "sports"]
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 //callback functions
+// ======================
 // a function that is passed into another function to run, once the first function is completed
 
 btn.addEventListener('click', doSomething); // hey, when you click me, then run the function called doSomething
@@ -682,6 +694,30 @@ console.log(result); // Hi there John;
 
 
 
+// callbacks explained easier: 
+//===============================
+
+/* When we are using functions like map(), find(), filter(), reduce() etc .. these are callback functions 
+	we can say something like...
+
+*/
+const numbers = numbersArray.map((num) => {
+	return num * 2
+})
+
+// however these are all callback functions which are just normal functions that can be passed to each other
+
+
+// ...like this
+
+function multiply(item) {
+	return item * 2
+}
+
+const numbers = numbersArray.map(multiply);
+console.log(numbers)
+
+
 
 
 // Challenge: Write a function splitBill() that lets you know how much 
@@ -710,9 +746,66 @@ console.log(splitBill(500, 20)); // result: Amount per person will pay is 25
 
 
 
+// when using callbacks in an aray of objects such as the below we can create a return function
+
+// Find comments with the word 'burg' inside
 
 
-/* callback functions */
+const feedback = [
+	{ comment: 'Love the burgs', rating: 4 },
+	{ comment: 'Horrible Service', rating: 2 },
+	{ comment: 'Smoothies are great, liked the burger too', rating: 5 },
+	{ comment: 'Ambiance needs work', rating: 3 },
+	{ comment: 'I DONT LIKE BURGERS', rating: 1 },
+];
+
+
+const burgWord = feedback.find((item) => {
+	return item.comment.includes('burg');
+})
+
+console.log(burgWord)
+
+
+// but what if we wanted to find other words? Best to create a function and pass that into the find() as it is a callback function
+// create a function and use the word as the param
+//inside create another return function that will hold the 'item' or the iterator for the find() callback
+// then pass that function into the find method
+
+// one function for the work and then another inside to hold the iterator 'item'
+
+function findWord(word) {
+	return function (item) {
+		return item.comment.includes(word);
+	}
+}
+
+const burgWord = feedback.find(findWord('Smoothies')); // {comment: "Smoothies are great, liked the burger too", rating: 5}
+
+
+
+
+// filter rating that is not equal to 1
+const rating = feedback.filter((item) => {
+	return item.rating !== 1;
+})
+
+
+
+// using a callback
+function rating(number) {
+	return function (item) {
+		return item.rating !== number;
+	}
+}
+
+const rating = feedback.filter(rating(1));
+
+
+
+
+
+/* callback functions ES6 */
 
 // In JavaScript, the callback function is that. Which is called after some block of code is executed.
 
@@ -750,6 +843,18 @@ function btnClicked() {
 }
 
 btn.addEventListener('click', btnClicked);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2212,6 +2317,7 @@ console.log(favouriteSongs[favouriteSongs.length - 1]) // again 0 based index
 
 
 
+
 // array to string and back again using .split()
 // =================================
 
@@ -2265,7 +2371,9 @@ This method returns 'true' if the string contains the characters, and 'false' if
 
 */
 
-let string = 'this is the last day';
+
+
+
 let condition = string.includes('the');
 console.log(condition); // result is true
 
@@ -2365,6 +2473,58 @@ console.log(allMegaHits);
 
 
 
+// more some(); - note we can also use Object.entries(), values and keys here
+
+const meats = {
+	beyond: 10,
+	beef: 5,
+	pork: 7
+};
+
+
+
+// check if there is at one of at least 5 type of meat
+// Looping over an Object requires using Object.values, Object.keys and Object.entries
+// loop over the values and if there is meets over 5, then say true . NOte: some() returns a boolean
+const someMeats = Object.values(meats).some((item) => {
+	return item >= 5;
+})
+console.log(someMeats); // true
+
+
+
+// check if all has meets over 5
+const allmeats = Object.values(meats).every((item) => {
+	return item >= 5;
+})
+console.log(allmeats); // true
+
+
+
+
+// sort() prices inside an object but also include the name, not just the price itself
+const prices = {
+	hotDog: 453,
+	burger: 765,
+	sausage: 634,
+	corn: 234,
+};
+
+
+// testing for array positioning of a and b
+const allPricesSorted = Object.entries(prices).sort(function (a, b) {
+	debugger;
+})
+console.log(allPricesSorted); // look at adev tools and see 
+
+
+const allPricesSorted = Object.entries(prices).sort(function (a, b) {
+	const priceA = a[1]
+	const priceB = b[1];
+	return priceA - priceB;
+})
+
+console.table(allPricesSorted);
 
 
 
@@ -2455,6 +2615,7 @@ arr.forEach(item => {
 });
 
 console.log(newArray);
+
 
 
 
@@ -2630,6 +2791,17 @@ for (let i = 0; i < numbers.length; i++) {
 numbers.forEach(number => {
 	console.log(number);
 });
+
+
+// we can also do a forEach as a callback function and add it to the forEach paramaters
+
+// remember: function can be used as function(item, index, wholeArray)
+
+function loop(item, index, array) {
+	console.log(item, index, array);
+}
+
+numbers.forEach(loop);
 
 
 // or we can use for 'of' loop
@@ -2825,6 +2997,21 @@ const totalAmount = values.reduce((accumulator, initialValue) => {
 
 console.log(totalAmount);
 
+
+// or we can do this with a function and just add it to the reduce()
+
+
+function getTotal(acc, value) {
+	return acc + value;
+}
+
+const amount = values.reduce(getTotal);
+console.log(amount) // result 110
+
+
+
+
+
 /*
  reduce takes a callback funtion. Inside the callback, it takes two parameters. Accumulator and initialValue (could be named anything)
  Accumulator => holds the total
@@ -2870,7 +3057,7 @@ const menuItems = [
 // that is a target name for the iteration
 
 array.reduce((accumulator, value) => {
-	return accumulator + menuItem;
+	return accumulator + menuItem[prop];
 }, 0);
 
 
@@ -2949,6 +3136,14 @@ const usersOver20 = Object.entries(users).reduce((accumulator, [id, user]) => {
 
 console.log(usersOver20);
 // result: [{name: "John", age: 29, id: "2345234"}, {name: "Jane", age: 42, id: "8798129"}]
+
+
+
+
+
+
+
+
 
 
 
@@ -3393,8 +3588,8 @@ buttons.forEach(handleClickItem); //foreach contains the handleClick function wh
 // EVENT OBJECT
 // event. target and event.current target
 
-event.target // refers to the item being clicked
-event.currentTarget // refers to the item that fired the event
+event.target // refers to the item being clicked - returns a nodelist
+event.currentTarget // refers to the item that fired the event = returns html DOM element
 
 // in other words currentTarget is always the object listening for the event, target is the actual target that received the event
 
@@ -3415,7 +3610,7 @@ function handleClick(event) {
 	console.log(event.target); // will show the item that was clicked
 	console.log(event.currentTarget); // will show the event that fired the listener
 	console.log(event.target.dataset.price); // this will show the dataset from the atttribute
-	event.stopPropagation(); // this will stop the click event clashing with other event Listenters further up the DOM;
+	event.stopPropagation(); // this will stop the click event clashing with other event Listeners further up the DOM;
 }
 
 // using the 'this' keyword with function and listeners

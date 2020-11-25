@@ -106,6 +106,8 @@
     console.log(toppingsCopy);
     // Make a copy of the toppings array with a spread
     const toppingsCopy2 = [...toppings];
+
+
     // take out items 3 to 5 of your new toppings array with splice()
     toppingsCopy.splice(3, 3);
     console.log(toppingsCopy);
@@ -159,6 +161,8 @@
     const smoothieRating = feedback.find(findByWord('Smoothie'));
 
     console.log(burgRating);
+
+
     // find all ratings that are above 2 with filter()
     function filterByMinRating(minRating) {
       return function (singleFeedback) {
@@ -181,6 +185,9 @@
     // make sure we have at least 3 of every meat with every()
     const isThereEnoughOfEveryMeat = Object.values(meats).every(meatValue => meatValue >= 3);
     console.log(isThereEnoughOfEveryMeat);
+
+
+
     // sort the toppings alphabetically with sort()
     const numbers = [1, 2, 100, 3, 200, 400, 155];
     const numbersSorted = numbers.sort((firstItem, secondItem) => firstItem - secondItem);

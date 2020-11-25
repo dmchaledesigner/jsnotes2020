@@ -46,6 +46,13 @@ let person = {
 };
 
 
+// never use something like this where we create a new object and assign a previous object to that object
+// const person2 = person // this will only reference the first object therefore, if we change person2 properties then we are changing the original person properties also
+// we can use spread operator '...', object.assign({}, originalObject) or we can use, const copiedObject = JSON.parse(JSON.stringify(orginalOBject));
+// the latter is the best one as nested properties of an object are copied over and there are no weird results
+
+
+
 let personCopy = Object.assign({}, person); //takes two params - a new blank object to copy, and the name of the original object we want to copy
 console.log(person); // now we have a 'shallow copy' of our original person object
 
@@ -82,6 +89,51 @@ __proto__: Object
 
 
 */
+
+
+
+
+
+// comparing 2 objects
+// when we compare two objects we will get false. why? because comparison of an object is not based on its values,
+// but its reference only
+
+const object1 = {
+    firstname: 'david',
+    lastname = 'mchale',
+}
+
+const object2 = {
+    firstname: 'david',
+    lastname = 'mchale',
+}
+
+
+console.log(object1 === object2);
+// result: false .. depsite the same values, the object reference is different
+
+
+
+
+// merging objects - use spread operator
+const meatDishes = {
+    sausage: 2,
+    bacon: 3,
+}
+
+const veggieDishes = {
+    lettuce: 3,
+    tomato: 2,
+}
+
+const allDishes = {
+    ...meatDishes,
+    ...veggieDishes,
+    special: 4,
+}
+
+console.log(allDishes); //result:  sausage: 2, bacon: 3,  lettuce: 3, tomato: 2, special: 4,
+
 
 
 

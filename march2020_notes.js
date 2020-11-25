@@ -71,7 +71,7 @@ var d = n.toLowerCase() // hello world
 // split()
 // If you want to work with a string spacing
 var text = 'a,b,c,d';
-text.split(' '); // a b c d split with space
+text.split(' '); // [a, b, c, d]
 text.split("|"); // a|b|c|d split on pipe
 
 
@@ -830,3 +830,29 @@ var age = numbers.find(function (ages) {
 console.log(age); // will find the first item in the array that is over 28, which is 35.
 
 
+
+
+
+// media query wuith matchMedia() and  .matches
+
+// query for any element at any given screen size
+
+function mediaQuery(element, value) {
+  let x = document.querySelector(element);
+
+  x.forEach((item) => {
+    if (window.matchMedia(`(max-width: ${value}px)`).matches) {
+      item.classList.add('mobile');
+
+    } else {
+      item.classList.remove('mobile');
+    }
+
+  })
+
+  return x;
+
+}
+
+// add class mobile to the element class hero on the screensize 600px
+mediaQuery(".hero", 600);

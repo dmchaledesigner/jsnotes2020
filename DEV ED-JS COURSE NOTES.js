@@ -1272,6 +1272,7 @@ const allnewArray = [
 // sort() - orderng arrays by numberic or alphabetical order
 //===========================================
 
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 
 const items = ['Banana', 'Orange', 'Apple', 'Mango']
 items.sort(); // result "Apple", "Banana", "Mango", "Orange"
@@ -1291,6 +1292,9 @@ console.log(ordered);
 // using an arrow function
 const ordered = ratings.sort((a, b) => a.rating - b.rating);
 console.log(ordered);
+
+
+
 
 
 
@@ -1430,7 +1434,7 @@ if (hasAwesomeName) { // which returns true becuse the value of the includes() i
 
 
 
-//Coersion - the ability to turn a number or string into a truty or falsy value
+//Coersion - the ability to turn a number or string into a truthy or falsy value
 const name = 'david';
 
 if (name) { // now check if it exists -returns true
@@ -2340,3 +2344,149 @@ console.log(allVideos);
 
 // wait a total of 6 seconds for the longest time
 // Result: ["this is video 1", "this is video 2", "this is video 4"] array
+
+
+
+
+
+
+
+
+
+// intersection Observer
+// Enables us to do something when an element appears on the page or is revealed
+
+
+
+/* previously we wanted to use scroll events, we would have to 
+add a scroll event listener on the window. 
+
+get the height of the button inside the window and then,
+get the height of the window.
+
+then do something with the two values */
+
+const section = document.querySelector('section');
+
+
+window.addEventListener('scroll', () => {
+
+    const sectionHeight = section.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight / 1.5; // threshold
+
+    // if the section height is less than the window height / 1.5 - then do something
+    if (sectionHeight < windowHeight) {
+        //get an element and do something with it like add a class etc
+    } else {
+        //reverse the initial condition
+    }
+
+
+})
+
+
+// Now we can use 'ES6 intersection Observer'
+
+
+
+
+const section = document.querySelector('section');
+
+
+
+
+// define an observer
+let observer = new IntersectionObserver(colorChange, options);
+
+
+
+
+let options = {
+    //root: null or leave empty
+    rootMargin: '0px',
+    threshold: 1.0 // the threshold can be changed from 0.1 - 1
+}
+
+
+function colorChange(e) {
+    console.log(e.currentTarget);
+
+}
+
+
+
+
+// then we observe an element by passing the target inside the observe parameter
+observer.observe(element)
+
+
+
+
+// example
+const element = document.querySelector('.element'); // the container
+const button = document.querySelector('.button'); // button inside the container
+
+
+
+let options = {
+    root: null,
+    threshold: 0.5,
+    rootMargin: '0px',
+}
+
+
+const observer = new IntersectionObserver(changeColor, options);
+
+function changeColor(entries) { // this is the array from the items called
+    //then loop of the entries array
+    entries.forEach((entry) => {
+        // console.log(entry) to show the proerties / isIntersecting: true / false
+        if (entry.isIntersecting) {
+            button.style.color = 'red';
+        } else {
+            button.style.color = 'white';
+        }
+    })
+}
+
+// then call the observer on the element
+observer.observe(element);
+
+
+
+
+
+
+
+//scrolling to the bottom of a scrolling element
+let options = {
+    rootMargin: '0px',
+    threshold: 0.5,
+}
+
+function reveal(entries) {
+    entries.forEach((item) => {
+        // console.log(item.isIntersecting);
+        // console.log(item.intersectionRatio); - shows number 0 or 1
+
+        if (item.intersectionRatio === 1) {
+            button.disabled = false;
+        } else {
+            button.disabled = true;
+        }
+
+
+    })
+}
+
+const observer = new IntersectionObserver(reveal, options);
+
+observer.observe(terms.lastElementChild);
+
+
+// note: terms variable is the wrapper
+// terms.lastElementChils is the last element inside the wrapper
+// when that last element is revealed, 
+
+//  <button class="accept" disabled autocomplete="off">Accept</button>
+// the disabled feature is removed by changing it to false.
